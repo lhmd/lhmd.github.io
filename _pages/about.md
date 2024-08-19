@@ -17,10 +17,11 @@ redirect_from:
 
 <span class='anchor' id='about-me'></span>
 
-I am a junior student at <a href='https://www.zju.edu.cn/english/'>Zhejiang University</a>, majoring in **Software Engineering**, minor in Advanced Honor Class of Engineering Education(ACEE) at <a href='https://ckc.zju.edu.cn/ckcen/'>Chu Kochen Honors College</a>, and will graduate from Zhejiang University with a B.S. in Engineering in 2025!
+I am a senior student at <a href='https://www.zju.edu.cn/english/'>Zhejiang University</a>, majoring in **Software Engineering**, minor in Advanced Honor Class of Engineering Education(ACEE) at <a href='https://ckc.zju.edu.cn/ckcen/'>Chu Kochen Honors College</a>, and will graduate from Zhejiang University with a B.S. in Engineering in 2025! Additionally, I am an incoming PhD student at <a href='https://ziplab.github.io/'>ZIP Lab</a>@Zhejiang University, advised by <a href='https://bohanzhuang.github.io/'>Prof. Bohan Zhuang</a>.
 
 
 # 🔥 News
+- *2023.11*: &nbsp;🎉🎉 The national university student research project ***Research on 3D scene reconstruction and decoupling technology based on implicit neural representation***, which I am responsible for, is successfully completed!
 - *2023.11*: &nbsp;🎉🎉 I win the **Zhejiang Government Scholarship**!
 - *2023.11*: &nbsp;🎉🎉 I win the **Second Class Scholarship** in Zhejiang University!
 - *2023.08*: &nbsp;🎉🎉 I completed the <a href='https://cgpc2023.github.io/index.html'>**CCF Computer Graphics Starter Program Summer Camp**</a> at Tsinghua University!
@@ -49,7 +50,7 @@ Kehua Feng†, Keyan Ding†, **Weijie Wang**†, Xiang Zhuang, Zeyuan Wang, Min
 Yunzhi Yan, Haotong Lin, Chenxu Zhou, **Weijie Wang**, Haiyang Sun, Kun Zhan, Xianpeng Lang, Xiaowei Zhou, Sida Peng
 
 [**Project**](https://zju3dv.github.io/street_gaussians/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:u5HHmVD_uO8C'></span></strong>
-- This paper aims to tackle the problem of modeling dynamic urban street scenes from monocular videos. We introduce Street Gaussians, a new explicit scene representation that tackles all these limitations.
+- This paper aims to tackle the problem of modeling dynamic urban street scenes from monocular videos. We introduce Street Gaussians, a new explicit scene representation that tackles some major limitations.
 
 </div>
 </div>
