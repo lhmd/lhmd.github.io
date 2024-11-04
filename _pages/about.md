@@ -56,6 +56,9 @@ Yunzhi Yan, Haotong Lin, Chenxu Zhou, **Weijie Wang**, Haiyang Sun, Kun Zhan, Xi
 </div>
 
 # 🎖 Honors and Awards
+- *2024.10* Outstanding Students of Zhejiang University
+- *2024.10* Innovation and Entrepreneurship Pioneer of Zhejiang University
+- *2024.10* Academic Excellence Pioneer of Zhejiang University
 - *2023.11* Zhejiang Government Scholarship
 - *2023.11* Zhejiang University Jiecang Linear Motion Technology Scholarship 
 - *2023.11* Second Class Scholarship in Zhejiang University 
