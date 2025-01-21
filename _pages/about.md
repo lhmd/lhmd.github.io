@@ -82,4 +82,5 @@ Yunzhi Yan, Haotong Lin, Chenxu Zhou, **Weijie Wang**, Haiyang Sun, Kun Zhan, Xi
 - *2018.09 - 2021.06*, <a href='https://cadyzx.a.101.com/'>Xian Changan No.1 High School</a>. I was a student in the experimental class of Chang'an No. 1 High School and was tutored for high school competitions at the same time.
 
 # 🎹 Teaching Assistant
-- *Spring 2024* **Database System**, with Prof. <a href='https://person.zju.edu.cn/0096086'>Bo Zhou</a>
+- *Spring 2025* **Database System**, with Prof. <a href='https://person.zju.edu.cn/en/miaoxy_en'>Xiaoye Miao</a>
+- *Spring 2024* **Database System**, with Prof. <a href='https://person.zju.edu.cn/en/bzhou'>Bo Zhou</a>
