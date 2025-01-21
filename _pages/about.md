@@ -36,7 +36,7 @@ I am a senior student at <a href='http://www.en.cs.zju.edu.cn/'>College of Compu
 
 Kehua Feng†, Keyan Ding†, **Weijie Wang**†, Xiang Zhuang, Zeyuan Wang, Ming Qin, Yu Zhao, Jianhua Yao, Qiang Zhang, Huajun Chen(† equal contribution)
 
-[**Project**](http://scimind.ai/sciknoweval/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:u-x6o8ySG0sC'></span></strong>
+[**Project Page**](http://scimind.ai/sciknoweval/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:u-x6o8ySG0sC'></span></strong>
 - This paper introduce the SciKnowEval benchmark, a novel framework that systematically evaluates LLMs across five progressive levels of scientific knowledge. Specifically, we take biology and chemistry as the two instances of SciKnowEval and construct a dataset encompassing 50K multi-level scientific problems and solutions.
 
 </div>
@@ -49,13 +49,17 @@ Kehua Feng†, Keyan Ding†, **Weijie Wang**†, Xiang Zhuang, Zeyuan Wang, Min
 
 Yunzhi Yan, Haotong Lin, Chenxu Zhou, **Weijie Wang**, Haiyang Sun, Kun Zhan, Xianpeng Lang, Xiaowei Zhou, Sida Peng
 
-[**Project**](https://zju3dv.github.io/street_gaussians/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:u5HHmVD_uO8C'></span></strong>
+[**Project Page**](https://zju3dv.github.io/street_gaussians/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:u5HHmVD_uO8C'></span></strong>
 - This paper aims to tackle the problem of modeling dynamic urban street scenes from monocular videos. We introduce Street Gaussians, a new explicit scene representation that tackles some major limitations.
 
 </div>
 </div>
 
 # 🎖 Honors and Awards
+- *2024.11* Third Class Scholarship in Zhejiang University 
+- *2024.10* Outstanding Students of Zhejiang University
+- *2024.10* Innovation and Entrepreneurship Pioneer of Zhejiang University
+- *2024.10* Academic Excellence Pioneer of Zhejiang University
 - *2023.11* Zhejiang Government Scholarship
 - *2023.11* Zhejiang University Jiecang Linear Motion Technology Scholarship 
 - *2023.11* Second Class Scholarship in Zhejiang University 
