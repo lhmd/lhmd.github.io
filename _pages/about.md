@@ -60,11 +60,13 @@ Yunzhi Yan, Haotong Lin, Chenxu Zhou, **Weijie Wang**, Haiyang Sun, Kun Zhan, Xi
 - *2024.10* Outstanding Students of Zhejiang University
 - *2024.10* Innovation and Entrepreneurship Pioneer of Zhejiang University
 - *2024.10* Academic Excellence Pioneer of Zhejiang University
+- *2024.06* Third Prize of Zhejiang University "Dandelion" University Student Entrepreneurship Competition
 - *2023.11* Zhejiang Government Scholarship
 - *2023.11* Zhejiang University Jiecang Linear Motion Technology Scholarship 
 - *2023.11* Second Class Scholarship in Zhejiang University 
 - *2023.10* Academic Excellence Pioneer of Zhejiang University
 - *2023.10* Academic Progressive Role Model in Zhejiang University
+- *2023.08* Third Prize of Asia and Pacific Mathematical Contest in Modeling
 - *2023.06* Third Prize in the Final of the 16th Mock Mayor's Forum of Zhejiang University
 - *2023.01* Meritorious Winner of The Interdisciplinary Contest in Modeling
 - *2023.01* Second Prize of National College Students Mathematics Competition in Zhejiang Province
