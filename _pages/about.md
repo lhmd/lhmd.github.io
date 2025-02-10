@@ -37,20 +37,7 @@ I am a senior student at <a href='http://www.en.cs.zju.edu.cn/'>College of Compu
 Yicheng Xiao†, Haoxuan Ma†, Zhenhao Shen, Jinfei Qi, RuiFeng Xie, Zixiang Zhang, Haoxiao Wang, **Weijie Wang**, Peilin Sun, Jiale Hong, Jingyang Fan, Xiaolin Fang, Haiyun Guo, Jinqiao Wang(† equal contribution)
 
 [**Project Page**](https://lhmd.top) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
-- 
-
-</div>
-</div>
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICRA2025</div><img src='images/transdiff.jpg' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
-
-[TransDiff: Diffusion-Based Method for Manipulating Transparent Objects Using a Single RGB-D Image](https://lhmd.top)
-
-Haoxiao Wang†, Kaichen Zhou†, Binrui Gu, Zhiyuan Feng, **Weijie Wang**, Peilin Sun, Yicheng Xiao, Jianhua Zhang, Hao Dong(† equal contribution)
-
-[**Project Page**](https://lhmd.top) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
-- 
+- TBD...
 
 </div>
 </div>
@@ -64,6 +51,19 @@ Kehua Feng†, Keyan Ding†, **Weijie Wang**†, Xiang Zhuang, Zeyuan Wang, Min
 
 [**Project Page**](http://scimind.ai/sciknoweval/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:u-x6o8ySG0sC'></span></strong>
 - This paper introduce the SciKnowEval benchmark, a novel framework that systematically evaluates LLMs across five progressive levels of scientific knowledge. Specifically, we take biology and chemistry as the two instances of SciKnowEval and construct a dataset encompassing 50K multi-level scientific problems and solutions.
+
+</div>
+</div>
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICRA2025</div><img src='images/transdiff.jpg' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[TransDiff: Diffusion-Based Method for Manipulating Transparent Objects Using a Single RGB-D Image](https://lhmd.top)
+
+Haoxiao Wang†, Kaichen Zhou†, Binrui Gu, Zhiyuan Feng, **Weijie Wang**, Peilin Sun, Yicheng Xiao, Jianhua Zhang, Hao Dong(† equal contribution)
+
+[**Project Page**](https://lhmd.top) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
+- TBD...
 
 </div>
 </div>
