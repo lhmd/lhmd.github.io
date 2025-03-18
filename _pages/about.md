@@ -58,12 +58,12 @@ Kehua Feng†, Keyan Ding†, **Weijie Wang**†, Xiang Zhuang, Zeyuan Wang, Min
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICRA2025</div><img src='images/transdiff.jpg' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
-[TransDiff: Diffusion-Based Method for Manipulating Transparent Objects Using a Single RGB-D Image](https://lhmd.top)
+[TransDiff: Diffusion-Based Method for Manipulating Transparent Objects Using a Single RGB-D Image](https://arxiv.org/abs/2503.12779)
 
 Haoxiao Wang†, Kaichen Zhou†, Binrui Gu, Zhiyuan Feng, **Weijie Wang**, Peilin Sun, Yicheng Xiao, Jianhua Zhang, Hao Dong(† equal contribution)
 
-[**Project Page**](https://lhmd.top) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
-- TBD...
+[**Project Page**](https://wang-haoxiao.github.io/TransDiff/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
+- We propose a single-view RGB-D-based depth completion framework, TransDiff, that leverages the Denoising Diffusion Probabilistic Models(DDPM) to achieve material-agnostic object grasping in desktop. 
 
 </div>
 </div>
