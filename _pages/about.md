@@ -34,7 +34,7 @@ I am a senior student at <a href='http://www.en.cs.zju.edu.cn/'>College of Compu
 
 [WonderTurbo:Generating Interactive 3D World in 0.72 Seconds](https://www.arxiv.org/abs/2504.02261)
 
-Chaojun Ni†, Xiaofeng Wang†, Zheng Zhu†, Weijie Wang†, Haoyun Li, Guosheng Zhao, Jie Li, Wenkang Qin, Guan Huang, Wenjun Mei († equal contribution)
+Chaojun Ni†, Xiaofeng Wang†, Zheng Zhu†, **Weijie Wang**†, Haoyun Li, Guosheng Zhao, Jie Li, Wenkang Qin, Guan Huang, Wenjun Mei († equal contribution)
 
 [**Project Page**](https://wonderturbo.github.io/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:UeHWp8X0CEIC'></span></strong>
 - We introduce WonderTurbo, the first real-time interactive 3D scene generation framework capable of generating novel perspectives of 3D scenes within 0.72 seconds. Specifically, WonderTurbo accelerates both geometric and appearance modeling in 3D scene generation.
