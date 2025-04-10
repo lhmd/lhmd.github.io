@@ -50,7 +50,7 @@ Chaojun Ni†, Xiaofeng Wang†, Zheng Zhu†, Weijie Wang†, Haoyun Li, Guoshe
 Yicheng Xiao†, Haoxuan Ma†, Zhenhao Shen, Jinfei Qi, RuiFeng Xie, Zixiang Zhang, Haoxiao Wang, **Weijie Wang**, Peilin Sun, Jiale Hong, Jingyang Fan, Xiaolin Fang, Haiyun Guo, Jinqiao Wang († equal contribution)
 
 [**Project Page**](https://lhmd.top) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
-- TBD...
+- We propose a new self-supervised monocular depth estimation framework, which innovatively proposes that the framework enhances spatial interaction information and applies multi-layer feature fusion information to extract potential geometric priors of scenes in images, and finally classifies them into multiple depth bin to obtain probabilities, which are combined to form depth. 
 
 </div>
 </div>
