@@ -55,6 +55,32 @@ Yicheng Xiao†, Haoxuan Ma†, Zhenhao Shen, Jinfei Qi, RuiFeng Xie, Zixiang Zh
 </div>
 </div>
 
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Preprint</div><img src='images/zpressor.jpg' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[ZPressor: Bottleneck-Aware Compression for Scalable Feed-Forward 3DGS](https://arxiv.org/abs/2505.23734)
+
+**Weijie Wang**, Donny Y. Chen, Zeyu Zhang, Duochao Shi, Akide Liu, Bohan Zhuang
+
+[**Project Page**](https://lhmd.top/zpressor/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
+- In this work, we analyze feed-forward 3DGS frameworks through the lens of the Information Bottleneck principle and introduce ZPressor, a lightweight architecture-agnostic module that enables efficient compression of multi-view inputs into a compact latent state Z that retains essential scene information while discarding redundancy.
+
+</div>
+</div>
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Preprint</div><img src='images/pmloss.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[Revisiting Depth Representations for Feed-Forward 3D Gaussian Splatting](https://lhmd.top)
+
+Duochao Shi, **Weijie Wang**†, Donny Y. Chen, Zeyu Zhang, Jia-Wang Bian, Bohan Zhuang, Chunhua Shen († equal contribution)
+
+[**Project Page**](https://dc-walker.github.io/pmloss/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
+- We introduce PM-Loss, a novel regularization loss based on a pointmap predicted by a pre-trained transformer. It effectively enforces geometric smoothness, especially around object boundaries. With the improved depth map, our method significantly improves the feed-forward 3DGS across various architectures and scenes, delivering consistently better rendering results.
+
+</div>
+</div>
+
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">Preprint</div><img src='images/sciknoweval.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
