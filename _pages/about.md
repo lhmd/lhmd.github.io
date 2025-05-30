@@ -47,7 +47,7 @@ I am a senior student at <a href='http://www.en.cs.zju.edu.cn/'>College of Compu
 
 [Revisiting Depth Representations for Feed-Forward 3D Gaussian Splatting](https://lhmd.top)
 
-Duochao Shi, **Weijie Wang**†, Donny Y. Chen, Zeyu Zhang, Jia-Wang Bian, Bohan Zhuang, Chunhua Shen († equal contribution)
+Duochao Shi†, **Weijie Wang**†, Donny Y. Chen, Zeyu Zhang, Jia-Wang Bian, Bohan Zhuang, Chunhua Shen († equal contribution)
 
 [**Project Page**](https://dc-walker.github.io/pmloss/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
 - We introduce PM-Loss, a novel regularization loss based on a pointmap predicted by a pre-trained transformer. It effectively enforces geometric smoothness, especially around object boundaries. With the improved depth map, our method significantly improves the feed-forward 3DGS across various architectures and scenes, delivering consistently better rendering results.
