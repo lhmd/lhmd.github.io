@@ -29,25 +29,64 @@ I am a senior student at <a href='http://www.en.cs.zju.edu.cn/'>College of Compu
 
 # 📝 Publications 
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Preprint</div><img src='images/segbins.png' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Preprint</div><img src='images/zpressor.jpg' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[ZPressor: Bottleneck-Aware Compression for Scalable Feed-Forward 3DGS](https://arxiv.org/abs/2505.23734)
+
+**Weijie Wang**, Donny Y. Chen, Zeyu Zhang, Duochao Shi, Akide Liu, Bohan Zhuang
+
+[**Project Page**](https://lhmd.top/zpressor/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
+- In this work, we analyze feed-forward 3DGS frameworks through the lens of the Information Bottleneck principle and introduce ZPressor, a lightweight architecture-agnostic module that enables efficient compression of multi-view inputs into a compact latent state Z that retains essential scene information while discarding redundancy.
+
+</div>
+</div>
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Preprint</div><img src='images/pmloss.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[Revisiting Depth Representations for Feed-Forward 3D Gaussian Splatting](https://lhmd.top)
+
+Duochao Shi†, **Weijie Wang**†, Donny Y. Chen, Zeyu Zhang, Jia-Wang Bian, Bohan Zhuang, Chunhua Shen († equal contribution)
+
+[**Project Page**](https://dc-walker.github.io/pmloss/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
+- We introduce PM-Loss, a novel regularization loss based on a pointmap predicted by a pre-trained transformer. It effectively enforces geometric smoothness, especially around object boundaries. With the improved depth map, our method significantly improves the feed-forward 3DGS across various architectures and scenes, delivering consistently better rendering results.
+
+</div>
+</div>
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Preprint</div><img src='images/wonderturbo.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[WonderTurbo:Generating Interactive 3D World in 0.72 Seconds](https://www.arxiv.org/abs/2504.02261)
+
+Chaojun Ni†, Xiaofeng Wang†, Zheng Zhu†, **Weijie Wang**†, Haoyun Li, Guosheng Zhao, Jie Li, Wenkang Qin, Guan Huang, Wenjun Mei († equal contribution)
+
+[**Project Page**](https://wonderturbo.github.io/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:UeHWp8X0CEIC'></span></strong>
+- We introduce WonderTurbo, the first real-time interactive 3D scene generation framework capable of generating novel perspectives of 3D scenes within 0.72 seconds. Specifically, WonderTurbo accelerates both geometric and appearance modeling in 3D scene generation.
+
+</div>
+</div>
+
+<!-- <div class='paper-box'><div class='paper-box-image'><div><div class="badge">Preprint</div><img src='images/segbins.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [SegBins: Self-Supervised Monocular Depth Estimation Based On Depth Bins And Semantic Segmentation](https://lhmd.top)
 
-Yicheng Xiao†, Haoxuan Ma†, Zhenhao Shen, Jinfei Qi, RuiFeng Xie, Zixiang Zhang, Haoxiao Wang, **Weijie Wang**, Peilin Sun, Jiale Hong, Jingyang Fan, Xiaolin Fang, Haiyun Guo, Jinqiao Wang(† equal contribution)
+Yicheng Xiao†, Haoxuan Ma†, Zhenhao Shen, Jinfei Qi, RuiFeng Xie, Zixiang Zhang, Haoxiao Wang, **Weijie Wang**, Peilin Sun, Jiale Hong, Jingyang Fan, Xiaolin Fang, Haiyun Guo, Jinqiao Wang († equal contribution)
 
 [**Project Page**](https://lhmd.top) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
-- TBD...
+- We propose a new self-supervised monocular depth estimation framework, which innovatively proposes that the framework enhances spatial interaction information and applies multi-layer feature fusion information to extract potential geometric priors of scenes in images, and finally classifies them into multiple depth bin to obtain probabilities, which are combined to form depth. 
 
 </div>
-</div>
+</div> -->
 
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">Preprint</div><img src='images/sciknoweval.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [SciKnowEval: Evaluating Multi-level Scientific Knowledge of Large Language Models](https://arxiv.org/abs/2406.09098)
 
-Kehua Feng†, Keyan Ding†, **Weijie Wang**†, Xiang Zhuang, Zeyuan Wang, Ming Qin, Yu Zhao, Jianhua Yao, Qiang Zhang, Huajun Chen(† equal contribution)
+Kehua Feng†, Keyan Ding†, **Weijie Wang**†, Xiang Zhuang, Zeyuan Wang, Ming Qin, Yu Zhao, Jianhua Yao, Qiang Zhang, Huajun Chen († equal contribution)
 
 [**Project Page**](http://scimind.ai/sciknoweval/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:u-x6o8ySG0sC'></span></strong>
 - This paper introduce the SciKnowEval benchmark, a novel framework that systematically evaluates LLMs across five progressive levels of scientific knowledge. Specifically, we take biology and chemistry as the two instances of SciKnowEval and construct a dataset encompassing 50K multi-level scientific problems and solutions.
@@ -58,12 +97,12 @@ Kehua Feng†, Keyan Ding†, **Weijie Wang**†, Xiang Zhuang, Zeyuan Wang, Min
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICRA2025</div><img src='images/transdiff.jpg' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
-[TransDiff: Diffusion-Based Method for Manipulating Transparent Objects Using a Single RGB-D Image](https://lhmd.top)
+[TransDiff: Diffusion-Based Method for Manipulating Transparent Objects Using a Single RGB-D Image](https://arxiv.org/abs/2503.12779)
 
-Haoxiao Wang†, Kaichen Zhou†, Binrui Gu, Zhiyuan Feng, **Weijie Wang**, Peilin Sun, Yicheng Xiao, Jianhua Zhang, Hao Dong(† equal contribution)
+Haoxiao Wang†, Kaichen Zhou†, Binrui Gu, Zhiyuan Feng, **Weijie Wang**, Peilin Sun, Yicheng Xiao, Jianhua Zhang, Hao Dong († equal contribution)
 
-[**Project Page**](https://lhmd.top) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
-- TBD...
+[**Project Page**](https://wang-haoxiao.github.io/TransDiff/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
+- We propose a single-view RGB-D-based depth completion framework, TransDiff, that leverages the Denoising Diffusion Probabilistic Models(DDPM) to achieve material-agnostic object grasping in desktop. 
 
 </div>
 </div>
