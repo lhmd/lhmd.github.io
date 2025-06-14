@@ -45,11 +45,11 @@ I am a senior student at <a href='http://www.en.cs.zju.edu.cn/'>College of Compu
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">Preprint</div><img src='images/pmloss.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
-[Revisiting Depth Representations for Feed-Forward 3D Gaussian Splatting](https://lhmd.top)
+[Revisiting Depth Representations for Feed-Forward 3D Gaussian Splatting](https://arxiv.org/abs/2506.05327)
 
 Duochao Shi†, **Weijie Wang**†, Donny Y. Chen, Zeyu Zhang, Jia-Wang Bian, Bohan Zhuang, Chunhua Shen († equal contribution)
 
-[**Project Page**](https://dc-walker.github.io/pmloss/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
+[**Project Page**](https://aim-uofa.github.io/PMLoss/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:'></span></strong>
 - We introduce PM-Loss, a novel regularization loss based on a pointmap predicted by a pre-trained transformer. It effectively enforces geometric smoothness, especially around object boundaries. With the improved depth map, our method significantly improves the feed-forward 3DGS across various architectures and scenes, delivering consistently better rendering results.
 
 </div>
@@ -63,6 +63,19 @@ Duochao Shi†, **Weijie Wang**†, Donny Y. Chen, Zeyu Zhang, Jia-Wang Bian, Bo
 Chaojun Ni†, Xiaofeng Wang†, Zheng Zhu†, **Weijie Wang**†, Haoyun Li, Guosheng Zhao, Jie Li, Wenkang Qin, Guan Huang, Wenjun Mei († equal contribution)
 
 [**Project Page**](https://wonderturbo.github.io/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:UeHWp8X0CEIC'></span></strong>
+- We introduce WonderTurbo, the first real-time interactive 3D scene generation framework capable of generating novel perspectives of 3D scenes within 0.72 seconds. Specifically, WonderTurbo accelerates both geometric and appearance modeling in 3D scene generation.
+
+</div>
+</div>
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Preprint</div><img src='images\revisual_r1.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[Advancing Multimodal Reasoning: From Optimized Cold Start to Staged Reinforcement Learning](https://arxiv.org/abs/2506.04207)
+
+Shuang Chen†, Yue Guo†, Zhaochen Su, Yafu Li, Yulun Wu, Jiacheng Chen, Jiayu Chen, **Weijie Wang**, Xiaoye Qu, Yu Cheng († equal contribution)
+
+[**Project Page**](https://github.com/CSfufu/Revisual-R1) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:UeHWp8X0CEIC'></span></strong>
 - We introduce WonderTurbo, the first real-time interactive 3D scene generation framework capable of generating novel perspectives of 3D scenes within 0.72 seconds. Specifically, WonderTurbo accelerates both geometric and appearance modeling in 3D scene generation.
 
 </div>
