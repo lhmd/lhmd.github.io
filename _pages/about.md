@@ -76,7 +76,7 @@ Chaojun Ni†, Xiaofeng Wang†, Zheng Zhu†, **Weijie Wang**†, Haoyun Li, Gu
 Shuang Chen†, Yue Guo†, Zhaochen Su, Yafu Li, Yulun Wu, Jiacheng Chen, Jiayu Chen, **Weijie Wang**, Xiaoye Qu, Yu Cheng († equal contribution)
 
 [**Project Page**](https://github.com/CSfufu/Revisual-R1) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:UeHWp8X0CEIC'></span></strong>
-- We introduce WonderTurbo, the first real-time interactive 3D scene generation framework capable of generating novel perspectives of 3D scenes within 0.72 seconds. Specifically, WonderTurbo accelerates both geometric and appearance modeling in 3D scene generation.
+- We introduce ReVisual-R1, achieving a new state-of-the-art among open-source 7B MLLMs on challenging benchmarks including MathVerse, MathVision, WeMath, LogicVista, DynaMath, and challenging AIME2024 and AIME2025.
 
 </div>
 </div>
