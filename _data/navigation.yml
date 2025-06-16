@@ -15,11 +15,11 @@ main:
   - title: "Educations"
     url: "/#-educations"
 
-  - title: "Academic Service"
-    url: "/#-academic-service"
-
   - title: "Talks"
     url: "/#-talks"
+
+  - title: "Academic Service"
+    url: "/#-academic-service"
 
   - title: "Teaching Assistant"
     url: "/#-teaching-assistant"

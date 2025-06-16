@@ -161,12 +161,12 @@ Yunzhi Yan, Haotong Lin, Chenxu Zhou, **Weijie Wang**, Haiyang Sun, Kun Zhan, Xi
 - *2021.09 - 2025.06 (now)*, <a href='https://www.zju.edu.cn/english/'>Zhejiang University</a>. I am currently pursuing a Bachelor's degree in Software Engineering with a minor in Advanced Honor Class of Engineering Education at <a href='https://ckc.zju.edu.cn/ckcen/'>Chu Kochen Honors College</a>. 
 - *2018.09 - 2021.06*, <a href='https://cadyzx.a.101.com/'>Xian Changan No.1 High School</a>. I was a student in the experimental class of Chang'an No. 1 High School and was tutored for high school competitions at the same time.
 
+# 💬Talks
+- *06/16/2025* Invited talk <a href='https://www.bilibili.com/video/BV1NLN8zpENu'>ZPressor: Bottleneck-Aware Compression for Scalable Feed-Forward 3DGS</a> at <a href='https://www.3dcver.com/'>3DCVer</a>, you can find the slides <a href='https://lhmd.top/pdfs/ZPressor.pdf'>here</a>.
+
 # 🪑Academic Service
 - **Journal Reviewer**: IEEE Transactions on Visualization and Computer Graphics (TVCG)
 - **Conference Reviewer**: NeurIPS 2025
-
-# 💬Talks
-- *06/16/2025* Invited talk <a href='https://www.bilibili.com/video/BV1NLN8zpENu'>ZPressor: Bottleneck-Aware Compression for Scalable Feed-Forward 3DGS</a> at <a href='https://www.3dcver.com/'>3DCVer</a>, you can find the slides <a href='https://lhmd.top/pdfs/ZPressor.pdf'>here</a>
 
 # 💻 Teaching Assistant
 - *Spring 2025* **Database System**, with Prof. <a href='https://person.zju.edu.cn/en/miaoxy_en'>Xiaoye Miao</a>
