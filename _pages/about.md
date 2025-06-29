@@ -21,11 +21,9 @@ I am a senior student at <a href='http://www.en.cs.zju.edu.cn/'>College of Compu
 
 
 # 🔥 News
+- *2025.06*: &nbsp;🎉🎉 Our paper <a href='https://wonderturbo.github.io/'>WonderTurbo</a> has been accepted to ICCV 2025!
 - *2024.05*: &nbsp;🎉🎉 The national university student research project ***Research on 3D scene reconstruction and decoupling technology based on implicit neural representation***, which I am responsible for, is successfully completed!
 - *2023.11*: &nbsp;🎉🎉 I win the **Zhejiang Government Scholarship**!
-- *2023.11*: &nbsp;🎉🎉 I win the **Second Class Scholarship** in Zhejiang University!
-- *2023.08*: &nbsp;🎉🎉 I completed the <a href='https://cgpc2023.github.io/index.html'>**CCF Computer Graphics Starter Program Summer Camp**</a> at Tsinghua University!
-- *2023.01*: &nbsp;🎉🎉 I win the **Meritorious Winner** of The Interdisciplinary Contest in Modeling, teamed up with Shuai Yang and Wei Zhou.
 
 # 📝 Publications 
 
