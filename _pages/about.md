@@ -55,19 +55,6 @@ Duochao Shi†, **Weijie Wang**†, Donny Y. Chen, Zeyu Zhang, Jia-Wang Bian, Bo
 </div>
 </div>
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Preprint</div><img src='images/wonderturbo.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
-
-[WonderTurbo:Generating Interactive 3D World in 0.72 Seconds](https://www.arxiv.org/abs/2504.02261)
-
-Chaojun Ni†, Xiaofeng Wang†, Zheng Zhu†, **Weijie Wang**†, Haoyun Li, Guosheng Zhao, Jie Li, Wenkang Qin, Guan Huang, Wenjun Mei († equal contribution)
-
-[**Project Page**](https://wonderturbo.github.io/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:UeHWp8X0CEIC'></span></strong>
-- We introduce WonderTurbo, the first real-time interactive 3D scene generation framework capable of generating novel perspectives of 3D scenes within 0.72 seconds. Specifically, WonderTurbo accelerates both geometric and appearance modeling in 3D scene generation.
-
-</div>
-</div>
-
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">Preprint</div><img src='images\revisual_r1.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
@@ -103,6 +90,19 @@ Kehua Feng†, Keyan Ding†, **Weijie Wang**†, Xiang Zhuang, Zeyuan Wang, Min
 
 [**Project Page**](http://scimind.ai/sciknoweval/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:u-x6o8ySG0sC'></span></strong>
 - This paper introduce the SciKnowEval benchmark, a novel framework that systematically evaluates LLMs across five progressive levels of scientific knowledge. Specifically, we take biology and chemistry as the two instances of SciKnowEval and construct a dataset encompassing 50K multi-level scientific problems and solutions.
+
+</div>
+</div>
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICCV2025</div><img src='images/wonderturbo.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[WonderTurbo:Generating Interactive 3D World in 0.72 Seconds](https://www.arxiv.org/abs/2504.02261)
+
+Chaojun Ni†, Xiaofeng Wang†, Zheng Zhu†, **Weijie Wang**†, Haoyun Li, Guosheng Zhao, Jie Li, Wenkang Qin, Guan Huang, Wenjun Mei († equal contribution)
+
+[**Project Page**](https://wonderturbo.github.io/) <strong><span class='show_paper_citations' data='Hsxmwr0AAAAJ:UeHWp8X0CEIC'></span></strong>
+- We introduce WonderTurbo, the first real-time interactive 3D scene generation framework capable of generating novel perspectives of 3D scenes within 0.72 seconds. Specifically, WonderTurbo accelerates both geometric and appearance modeling in 3D scene generation.
 
 </div>
 </div>
