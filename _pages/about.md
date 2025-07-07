@@ -17,7 +17,7 @@ redirect_from:
 
 <span class='anchor' id='about-me'></span>
 
-I am a senior student at <a href='http://www.en.cs.zju.edu.cn/'>College of Computer Science and Technology</a>, <a href='https://www.zju.edu.cn/english/'>Zhejiang University</a>, majoring in **Software Engineering**, minor in Advanced Honor Class of Engineering Education(ACEE) at <a href='https://ckc.zju.edu.cn/ckcen/'>Chu Kochen Honors College</a>, and will graduate from Zhejiang University with a B.S. in Engineering in 2025! Additionally, I am an incoming PhD student at <a href='https://ziplab.github.io/'>ZIP Lab</a>@<a href='https://www.zju.edu.cn/english/'>Zhejiang University</a>, advised by Prof. <a href='https://bohanzhuang.github.io/'>Bohan Zhuang</a>.
+I am a senior student at <a href='http://www.en.cs.zju.edu.cn/'>College of Computer Science and Technology</a>, <a href='https://www.zju.edu.cn/english/'>Zhejiang University</a>, majoring in **Software Engineering**, minor in Advanced Honor Class of Engineering Education(ACEE) at <a href='https://ckc.zju.edu.cn/ckcen/'>Chu Kochen Honors College</a>, and will graduate from Zhejiang University with a B.S. in Engineering in 2025! Additionally, I am an incoming PhD student at <a href='https://ziplab.github.io/'>ZIP Lab</a>@<a href='https://www.zju.edu.cn/english/'>Zhejiang University</a>, advised by Prof. <a href='https://bohanzhuang.github.io/'>Bohan Zhuang</a>
 
 
 # 🔥 News
