@@ -1,1 +1,1 @@
-This is the source code to Jon Barron's public academic website: https://jonbarron.info/. Feel free to clone this code for your own personal use.
+This is the source code to Weijie Wang's academic website: https://lhmd.top/. This repo is developed with https://jonbarron.info/.

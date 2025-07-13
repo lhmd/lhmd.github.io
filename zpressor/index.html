@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta content="ZPressor" name="title" />
+  <meta content="ZPressor is a plug-and-play module that compresses multi-view inputs for scalable feed-forward 3DGS." name="description" />
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="English" name="language" />
+  <meta content="Weijie Wang" name="author" />
+  <title>ZPressor - Bottleneck-Aware Compression for Scalable Feed-Forward 3DGS</title>
+  <!-- Bootstrap -->
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap-4.4.1.js"></script>
+  <link href="css/bootstrap-4.4.1.css" rel="stylesheet" />
+
+  <!-- Add-ones -->
+  <script src="js/video-carousel.js"></script>
+  <script src="js/highlight-kw.js"></script>
+  <link href="css/highlight-kw.css" rel="stylesheet" />
+  <link href="css/theme.css" rel="stylesheet"/>
+
+  <link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" rel="stylesheet" />
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css" rel="stylesheet" />
+  <link href="assets/favicon.svg" rel="icon" sizes="any" type="image/svg+xml" />
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/contrib/auto-render.min.js"></script>
+
+  </link>
+</head>
+
+<body>
+  <!-- cover -->
+  <section>
+    <div class="jumbotron text-center mt-0">
+      <div class="container">
+        <div class="row">
+          <div class="col-10" style="margin: auto;">
+            <!-- add logo favicon.svg at left -->
+            <img src="assets/favicon.svg" alt="ZPressor Logo" style="width: 50px; height: 50px; margin-right: 20px;">
+            <h1 style="font-weight: bold">
+              <b>
+                <span style="color: #e9908b">Z</span>Pressor: <span style="color: #97ADBA">Bottleneck-Aware</span> Compression for<br><span style="color: #D4B1AF">Scalable</span> Feed-Forward 3DGS
+              </b>
+            </h1>
+            <!-- <h4 style="color:#5a6268;">Arxiv 2025</h4> -->
+            <hr>
+            <a href="https://lhmd.top">Weijie Wang</a><sup>1</sup>&nbsp;
+            <a href="https://donydchen.github.io">Donny Y. Chen</a><sup>2</sup>&nbsp;
+            <a href="https://steve-zeyu-zhang.github.io">Zeyu Zhang</a><sup>2</sup>&nbsp;
+            <a href="https://openreview.net/profile?id=~Duochao_Shi1">Duochao Shi</a><sup>1</sup>&nbsp;
+            <a href="https://github.com/AkideLiu">Akide Liu</a><sup>2</sup>
+            <a href="https://bohanzhuang.github.io">Bohan Zhuang</a><sup>1</sup>
+            <p><sup>1</sup>ZIP Lab, Zhejiang University&nbsp;&nbsp;&nbsp;<sup>2</sup>Monash University</p>
+            <div class="row justify-content-center">
+
+              <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="https://arxiv.org/abs/2505.23734" role="button">
+                    <i class="ai ai-arxiv"></i>
+                    <b>Paper</b>
+                  </a>
+                </p>
+              </div>
+
+              <!-- <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="https://arxiv.org/abs/" role="button">
+                    <i class="fas fa-file-pdf"></i>
+                    <b>SupMat</b>
+                  </a>
+                </p>
+              </div> -->
+
+              <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="https://github.com/ziplab/ZPressor" role="button">
+                    <i class="fas fa-code"></i>
+                    <b>Code</b>
+                  </a>
+                </p>
+              </div>
+
+              <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="https://huggingface.co/lhmd/ZPressor" role="button">
+                    <i class="fa fa-gamepad"></i>
+                    <b>Models</b>
+                  </a>
+                </p>
+              </div>
+
+              <!-- <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="https://colab.research.google.com/drive/1RDA9iKckCDKh_bbaKjO8bQ0-Lv5fw1CB?usp=sharing" role="button">
+                    <i class="fa fa-play"></i>
+                    <b>Colab</b>
+                  </a>
+                </p>
+              </div> -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+          <h3>TL;DR</h3>
+          <hr style="margin-top: 0px" />
+
+          <p class="text-left">
+            <strong>ZPressor</strong> is a plug-and-play module that compresses multi-view inputs for scalable feed-forward 3DGS.
+          </p>
+
+          <!-- <div id="TeaserVideos"></div>
+          <br> -->
+
+          <img src="assets/teaser.jpg" width="100%" />
+          <!-- 图片下面加一个空格 -->
+          <br><br>
+
+          <p class="text-left">
+            We visualize the result of DepthSplat with 36 view input for novel view synthesis and after adding ZPressor.  We report PSNR, inference time and memory usage before and after simply adding the ZPressor, where the radius of the bubble corresponds to memory.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+
+          <h3>Abstract</h3>
+          <hr style="margin-top: 0px" />
+
+
+          <p class="text-align: justify;">
+            Feed-forward 3D Gaussian Splatting (3DGS) models have recently emerged as a promising solution for novel view synthesis, enabling one-pass inference without the need for per-scene 3DGS optimization. However, their scalability is fundamentally constrained by the limited capacity of their encoders, leading to degraded performance or excessive memory consumption as the number of input views increases. In this work, we analyze feed-forward 3DGS frameworks through the lens of the Information Bottleneck principle and introduce <strong>ZPressor</strong>, a <span style="color: #97ADBA"><strong>lightweight</strong></span> <span style="color: #D4B1AF"><strong>architecture-agnostic</strong></span> module that enables efficient compression of multi-view inputs into a compact latent state that retains essential scene information while discarding redundancy. Concretely, ZPressor enables existing feed-forward 3DGS models to scale to over 100 input views at 480P resolution on an 80GB GPU, by partitioning the views into anchor and support sets and using cross attention to compress the information from the support views into anchor views, forming the compressed latent state. We show that integrating ZPressor into several state-of-the-art feed-forward 3DGS models consistently improves performance under moderate input views and enhances robustness under dense view settings on two large-scale benchmarks DL3DV-10K and RealEstate10K. <br>
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Methods -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+
+          <h3>Method</h3>
+          <hr style="margin-top: 0px" />
+          <div style="display: flex; justify-content: center;">
+            <img src="assets/pipeline.jpg" width="100%" />
+          </div>
+          <br><br>
+
+          <p>
+            <strong>Overview of our ZPressor</strong>.
+            Our proposed ZPressor is a plug-and-play module designed for feed-forward 3DGS frameworks. It addresses the challenge of processing dense input views by strategically grouping input view features <strong>X</strong> based on selected anchor views, then features within each respective group are compressed as <strong>Z</strong>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+
+
+          <h3>Training & Evaluation Metrics</h3>
+          <hr style="margin-top: 0px" />
+          <p><strong>Training</strong>:
+            GVHMR is trained on a mixed dataset consisting of AMASS, BEDLAM, H36M, and 3DPW.
+            The model is trained from scratch and converges after 420 epochs with a batch size of 256.
+            Training takes 13 hours on 2 RTX 4090 GPUs.
+          </p>
+          <p><strong>World-grounded Metrics</strong>
+          <div style="display: flex; justify-content: center;">
+            <img src="assets/table1.png" width="80%" />
+          </div>
+          </p>
+          <p><strong>Camera-space Metrics</strong>
+          <div style="display: flex; justify-content: center;">
+            <img src="assets/table2.png" width="70%" />
+          </div>
+          </p>
+
+
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+
+  <!-- Visualization Results -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+
+          <h3>Comparison Experiments</h3>
+          <hr style="margin-top: 0px" />
+
+          <center>Visualization on DL3DV-10K with DepthSplat</center>
+          
+          <div class="video-comparison-container" style="position: relative; width: 50%; max-width: 800px; margin: 0 auto; height: 450px;">
+            <video id="video1_dl3dv" style="position: absolute; width: 100%; height: 100%; object-fit: cover;" muted loop poster="assets/spinner.svg">
+              <source src="" type="video/mp4">
+            </video>
+            <video id="video2_dl3dv" style="position: absolute; width: 100%; height: 100%; object-fit: cover;" muted loop poster="assets/spinner.svg">
+              <source src="" type="video/mp4">
+            </video>
+            <div class="slider" style="position: absolute; width: 2px; height: 100%; background-color: #ffffff29 !important; cursor: ew-resize; left: 50%; transform: translateX(-50%); box-shadow: 0 0 20px rgba(255,255,255,0.8); border: 2px solid #ffffff; z-index: 1000;"></div>
+            <div style="position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.7); color: white; padding: 8px 15px; border-radius: 4px; font-weight: bold; font-size: 16px;">DepthSplat</div>
+            <div style="position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.7); color: white; padding: 8px 15px; border-radius: 4px; font-weight: bold; font-size: 16px;">DepthSplat + ZPressor</div>
+          </div>
+
+          <!-- 视频切换按钮 -->
+          <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+            <button class="video-btn active" data-index="0" style="padding: 8px 15px; border: none; border-radius: 4px; background: #97ADBA; color: white; cursor: pointer;">Scene 1</button>
+            <button class="video-btn" data-index="1" style="padding: 8px 15px; border: none; border-radius: 4px; background: #97ADBA; color: white; cursor: pointer;">Scene 2</button>
+            <button class="video-btn" data-index="2" style="padding: 8px 15px; border: none; border-radius: 4px; background: #97ADBA; color: white; cursor: pointer;">Scene 3</button>
+            <button class="video-btn" data-index="3" style="padding: 8px 15px; border: none; border-radius: 4px; background: #97ADBA; color: white; cursor: pointer;">Scene 4</button>
+            <button class="video-btn" data-index="4" style="padding: 8px 15px; border: none; border-radius: 4px; background: #97ADBA; color: white; cursor: pointer;">Scene 5</button>
+            <button class="video-btn" data-index="5" style="padding: 8px 15px; border: none; border-radius: 4px; background: #97ADBA; color: white; cursor: pointer;">Scene 6</button>
+            <button class="video-btn" data-index="6" style="padding: 8px 15px; border: none; border-radius: 4px; background: #97ADBA; color: white; cursor: pointer;">Scene 7</button>
+            <button class="video-btn" data-index="7" style="padding: 8px 15px; border: none; border-radius: 4px; background: #97ADBA; color: white; cursor: pointer;">Scene 8</button>
+          </div>
+
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              // DL3DV-10K 视频数据
+              const videoDataDL3DV = [
+                {
+                  video1: "https://lhmd.top/zpressor/assets/videos/dl3dv-baseline-1.mov",
+                  video2: "https://lhmd.top/zpressor/assets/videos/dl3dv-1.mov"
+                },
+                {
+                  video1: "https://lhmd.top/zpressor/assets/videos/dl3dv-baseline-2.mov",
+                  video2: "https://lhmd.top/zpressor/assets/videos/dl3dv-2.mov"
+                },
+                {
+                  video1: "https://lhmd.top/zpressor/assets/videos/dl3dv-baseline-3.mov",
+                  video2: "https://lhmd.top/zpressor/assets/videos/dl3dv-3.mov"
+                },
+                {
+                  video1: "https://lhmd.top/zpressor/assets/videos/dl3dv-baseline-4.mov",
+                  video2: "https://lhmd.top/zpressor/assets/videos/dl3dv-4.mov"
+                },
+                {
+                  video1: "https://lhmd.top/zpressor/assets/videos/dl3dv-baseline-5.mov",
+                  video2: "https://lhmd.top/zpressor/assets/videos/dl3dv-5.mov"
+                },
+                {
+                  video1: "https://lhmd.top/zpressor/assets/videos/dl3dv-baseline-6.mov",
+                  video2: "https://lhmd.top/zpressor/assets/videos/dl3dv-6.mov"
+                },
+                {
+                  video1: "https://lhmd.top/zpressor/assets/videos/dl3dv-baseline-7.mov",
+                  video2: "https://lhmd.top/zpressor/assets/videos/dl3dv-7.mov"
+                },
+                {
+                  video1: "https://lhmd.top/zpressor/assets/videos/dl3dv-baseline-8.mov",
+                  video2: "https://lhmd.top/zpressor/assets/videos/dl3dv-8.mov"
+                }
+              ];
+
+              const container = document.querySelector('.video-comparison-container');
+              const video1 = document.getElementById('video1_dl3dv');
+              const video2 = document.getElementById('video2_dl3dv');
+              const slider = container.querySelector('.slider');
+              const buttons = document.querySelectorAll('.video-btn');
+
+              // 设置视频高度的函数
+              function setVideoHeight() {
+                const width = container.offsetWidth;
+                const height = width * (9/16);
+                container.style.height = height + 'px';
+              }
+
+              // 初始化视频高度
+              setVideoHeight();
+              window.addEventListener('resize', setVideoHeight);
+
+              // 切换视频函数
+              function switchVideo(index) {
+                // 更新视频源
+                video1.querySelector('source').src = videoDataDL3DV[index].video1;
+                video2.querySelector('source').src = videoDataDL3DV[index].video2;
+                
+                // 重新加载视频
+                video1.load();
+                video2.load();
+                
+                // 播放视频
+                video1.play();
+                video2.play();
+
+                // 更新按钮状态
+                buttons.forEach(btn => {
+                  btn.classList.remove('active');
+                  btn.style.opacity = '0.7';
+                });
+                buttons[index].classList.add('active');
+                buttons[index].style.opacity = '1';
+              }
+
+              // 初始化第一个视频
+              switchVideo(0);
+
+              // 为按钮添加点击事件
+              buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                  const index = parseInt(btn.dataset.index);
+                  switchVideo(index);
+                });
+              });
+
+              // 同步视频
+              video1.addEventListener('timeupdate', function() {
+                video2.currentTime = video1.currentTime;
+              });
+
+              // 鼠标移动事件处理
+              container.addEventListener('mousemove', function(e) {
+                const rect = container.getBoundingClientRect();
+                const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+                const percentage = x / rect.width;
+                
+                slider.style.left = x + 'px';
+                video1.style.clipPath = `inset(0 ${(1 - percentage) * 100}% 0 0)`;
+                video2.style.clipPath = `inset(0 0 0 ${percentage * 100}%)`;
+              });
+            });
+          </script>
+
+          <br>
+          <hr />
+
+          <center>Visualization on RealEstate10K with MVSplat</center>
+          
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; width: 90%; margin: 0 auto;">
+            <div class="video-comparison-container2" style="position: relative; width: 45%; max-width: 500px; margin: 0 auto; height: 400px;">
+              <video id="video1_re10k_1" style="position: absolute; width: 100%; height: 100%; object-fit: cover;" muted loop poster="assets/spinner.svg">
+                <source src="" type="video/mp4">
+              </video>
+              <video id="video2_re10k_1" style="position: absolute; width: 100%; height: 100%; object-fit: cover;" muted loop poster="assets/spinner.svg">
+                <source src="" type="video/mp4">
+              </video>
+              <div class="slider2_1" style="position: absolute; width: 2px; height: 100%; background-color: #ffffff29 !important; cursor: ew-resize; left: 50%; transform: translateX(-50%); box-shadow: 0 0 20px rgba(255,255,255,0.8); border: 2px solid #ffffff; z-index: 1000;"></div>
+              <div style="position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.7); color: white; padding: 8px 15px; border-radius: 4px; font-weight: bold; font-size: 16px;">MVSplat</div>
+              <div style="position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.7); color: white; padding: 8px 15px; border-radius: 4px; font-weight: bold; font-size: 16px;">MVSplat + ZPressor</div>
+            </div>
+
+            <div class="video-comparison-container2" style="position: relative; width: 45%; max-width: 500px; margin: 0 auto; height: 400px;">
+              <video id="video1_re10k_2" style="position: absolute; width: 100%; height: 100%; object-fit: cover;" muted loop poster="assets/spinner.svg">
+                <source src="" type="video/mp4">
+              </video>
+              <video id="video2_re10k_2" style="position: absolute; width: 100%; height: 100%; object-fit: cover;" muted loop poster="assets/spinner.svg">
+                <source src="" type="video/mp4">
+              </video>
+              <div class="slider2_2" style="position: absolute; width: 2px; height: 100%; background-color: #ffffff29 !important; cursor: ew-resize; left: 50%; transform: translateX(-50%); box-shadow: 0 0 20px rgba(255,255,255,0.8); border: 2px solid #ffffff; z-index: 1000;"></div>
+              <div style="position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.7); color: white; padding: 8px 15px; border-radius: 4px; font-weight: bold; font-size: 16px;">MVSplat</div>
+              <div style="position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.7); color: white; padding: 8px 15px; border-radius: 4px; font-weight: bold; font-size: 16px;">MVSplat + ZPressor</div>
+            </div>
+          </div>
+
+          <!-- 视频切换按钮 -->
+          <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+            <button class="video-btn-re10k active" data-index="0" style="padding: 8px 15px; border: none; border-radius: 4px; background: #e9908b; color: white; cursor: pointer; opacity: 1;">Scene 1-2</button>
+            <button class="video-btn-re10k" data-index="1" style="padding: 8px 15px; border: none; border-radius: 4px; background: #e9908b; color: white; cursor: pointer; opacity: 0.5;">Scene 3-4</button>
+            <button class="video-btn-re10k" data-index="2" style="padding: 8px 15px; border: none; border-radius: 4px; background: #e9908b; color: white; cursor: pointer; opacity: 0.5;">Scene 5-6</button>
+          </div>
+
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              // RealEstate10K 视频数据
+              const videoDataRE10K = [
+                {
+                  video1_1: "https://lhmd.top/zpressor/assets/videos/re10k-baseline-1.mov",
+                  video2_1: "https://lhmd.top/zpressor/assets/videos/re10k-1.mov",
+                  video1_2: "https://lhmd.top/zpressor/assets/videos/re10k-baseline-2.mov",
+                  video2_2: "https://lhmd.top/zpressor/assets/videos/re10k-2.mov"
+                },
+                {
+                  video1_1: "https://lhmd.top/zpressor/assets/videos/re10k-baseline-3.mov",
+                  video2_1: "https://lhmd.top/zpressor/assets/videos/re10k-3.mov",
+                  video1_2: "https://lhmd.top/zpressor/assets/videos/re10k-baseline-4.mov",
+                  video2_2: "https://lhmd.top/zpressor/assets/videos/re10k-4.mov"
+                },
+                {
+                  video1_1: "https://lhmd.top/zpressor/assets/videos/re10k-baseline-5.mov",
+                  video2_1: "https://lhmd.top/zpressor/assets/videos/re10k-5.mov",
+                  video1_2: "https://lhmd.top/zpressor/assets/videos/re10k-baseline-6.mov",
+                  video2_2: "https://lhmd.top/zpressor/assets/videos/re10k-6.mov"
+                }
+              ];
+
+              // 获取视频元素
+              const video1RE10K_1 = document.getElementById('video1_re10k_1');
+              const video2RE10K_1 = document.getElementById('video2_re10k_1');
+              const video1RE10K_2 = document.getElementById('video1_re10k_2');
+              const video2RE10K_2 = document.getElementById('video2_re10k_2');
+              const containers = document.querySelectorAll('.video-comparison-container2');
+              const slider1 = document.querySelector('.slider2_1');
+              const slider2 = document.querySelector('.slider2_2');
+              const buttonsRE10K = document.querySelectorAll('.video-btn-re10k');
+
+              // 设置视频高度的函数
+              function setVideoHeightRE10K() {
+                containers.forEach(container => {
+                  const width = container.offsetWidth;
+                  container.style.height = width + 'px'; // 正方形视频
+                });
+              }
+
+              // 初始化视频高度
+              setVideoHeightRE10K();
+              window.addEventListener('resize', setVideoHeightRE10K);
+
+              // 切换视频函数
+              function switchVideoRE10K(index) {
+                // 更新视频源
+                video1RE10K_1.querySelector('source').src = videoDataRE10K[index].video1_1;
+                video2RE10K_1.querySelector('source').src = videoDataRE10K[index].video2_1;
+                video1RE10K_2.querySelector('source').src = videoDataRE10K[index].video1_2;
+                video2RE10K_2.querySelector('source').src = videoDataRE10K[index].video2_2;
+                
+                // 重新加载视频
+                video1RE10K_1.load();
+                video2RE10K_1.load();
+                video1RE10K_2.load();
+                video2RE10K_2.load();
+                
+                // 播放视频
+                video1RE10K_1.play();
+                video2RE10K_1.play();
+                video1RE10K_2.play();
+                video2RE10K_2.play();
+
+                // 更新按钮状态
+                buttonsRE10K.forEach(btn => {
+                  btn.classList.remove('active');
+                  btn.style.opacity = '0.5';
+                });
+                buttonsRE10K[index].classList.add('active');
+                buttonsRE10K[index].style.opacity = '1';
+              }
+
+              // 初始化第一个视频
+              switchVideoRE10K(0);
+
+              // 为按钮添加点击事件
+              buttonsRE10K.forEach(btn => {
+                btn.addEventListener('click', () => {
+                  const index = parseInt(btn.dataset.index);
+                  switchVideoRE10K(index);
+                });
+              });
+
+              // 同步视频
+              video1RE10K_1.addEventListener('timeupdate', function() {
+                video2RE10K_1.currentTime = video1RE10K_1.currentTime;
+              });
+              video1RE10K_2.addEventListener('timeupdate', function() {
+                video2RE10K_2.currentTime = video1RE10K_2.currentTime;
+              });
+
+              // 鼠标移动事件处理
+              containers.forEach((container, index) => {
+                container.addEventListener('mousemove', function(e) {
+                  const rect = container.getBoundingClientRect();
+                  const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+                  const percentage = x / rect.width;
+                  
+                  const slider = index === 0 ? slider1 : slider2;
+                  const video1 = index === 0 ? video1RE10K_1 : video1RE10K_2;
+                  const video2 = index === 0 ? video2RE10K_1 : video2RE10K_2;
+                  
+                  slider.style.left = x + 'px';
+                  video1.style.clipPath = `inset(0 ${(1 - percentage) * 100}% 0 0)`;
+                  video2.style.clipPath = `inset(0 0 0 ${percentage * 100}%)`;
+                });
+              });
+            });
+          </script>
+
+          <br>
+          <hr />
+
+          <center>Results on DL3DV-10K with DepthSplat</center>
+          <div style="display: flex; justify-content: center;">
+            <img src="assets/table1.png" width="70%" />
+          </div>
+
+          <br>
+          <hr />
+
+          <center>Results on RealEstate10K with MVSplat</center>
+          <div style="display: flex; justify-content: center;">
+            <img src="assets/table2.png" width="70%" />
+          </div>
+
+          <br>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+
+          <h3>Analysis Experiments</h3>
+          <hr style="margin-top: 0px" />
+
+          <!-- 图片assets/bottleneck.svg -->
+          <div style="display: flex; justify-content: center;">
+            <img src="assets/efficiency.svg" width="80%" />
+          </div>
+          <br>
+
+          <p>
+            <strong>Model Efficiency.</strong>
+            Compressing the input view information not only improves robustness and performance, but also enhances efficiency. To validate this, we compare the model efficiency of DepthSplat with and without ZPressor under 480P resolution, evaluating the number of 3D Gaussians, the test-time inference latency, and the peak memory usage. As shown in the figure, the benefits of integrating ZPressor are clear. In particular, as the number of context views increases, the baseline model's predicted 3D Gaussian numbers, memory usage, and inference time all grow linearly, whereas ZPressor helps maintain stable resource consumption across all aspects.
+          </p>
+
+          <div style="display: flex; justify-content: center;">
+            <img src="assets/bottleneck.svg" width="40%" />
+          </div>
+
+          <p>
+            <strong>Bottleneck Constraint Analysis.</strong>
+            We conduct experiments under two settings, Context Gap 50 (CG50, in blue) and Context Gap 100 (CG100, in pink), where context gap refers to the frame distance between input views. CG100 thus contains more information than CG50. Under CG50, increasing the number of anchor views from 7 to 9 leads to a performance drop, suggesting that 7 clusters are sufficient and additional ones introduce redundancy. In contrast, under CG100, increasing anchors from 7 to 9 improves performance, indicating a higher information bottleneck for scenes with more information. These results highlight the effectiveness of our ZPressor in implementing the IB principle and show that the information bottleneck is critical in balancing compression and information preservation.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Citing -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10" style="margin: auto;">
+
+        <h3>Citation</h3>
+        <hr style="margin-top: 0px" />
+        <pre class="selectable" style="background-color: #e9eeef; padding: 1.5em 1.5em; border-radius: 15px"><code>@article{wang2025zpressor,
+  title={ZPressor: Bottleneck-Aware Compression for Scalable Feed-Forward 3DGS},
+  author={Wang, Weijie and Chen, Donny Y. and Zhang, Zeyu and Shi, Duochao and Liu, Akide and Zhuang, Bohan},
+  journal={arXiv preprint arXiv:2505.23734},
+  year={2025}
+}</code></pre>
+        <hr />
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center" style="margin-bottom: 10px">
+    Thanks to
+    <a href="https://lioryariv.github.io/">Lior Yariv</a>
+    for the website template. 
+    Thanks to the
+    <a href="https://isshikihugh.github.io/HSMR/">HSMR</a>'s
+    and
+    <a href="https://zju3dv.github.io/4k4d/">4K4D</a>'s
+    project pages for the useful add-ons.
+  </footer>
+
+  <!-- Auxiliary scripts. -->
+  <script>
+    // Highlight system name.
+    replaceHSMR(document.body);
+
+    // Add videos carousels.
+    const tesaer_videos = [
+      { src: "assets/demo_video_1.mp4" },
+      { src: "assets/demo_video_2.mp4" },
+      { src: "assets/demo_video_3.mp4" },
+      { src: "assets/demo_video_4.mp4" },
+      { src: "assets/demo_video_5.mp4" },
+      { src: "assets/demo_video_6.mp4" }
+    ];
+    const results_videos_dl3dv = [
+      { src: "assets/demo_video_1.mp4" },
+      { src: "assets/demo_video_2.mp4" },
+      { src: "assets/demo_video_3.mp4" },
+      { src: "assets/demo_video_4.mp4" }
+    ];
+    const results_videos_re10k = [
+      { src: "assets/demo_video_5.mp4" },
+      { src: "assets/demo_video_6.mp4" }
+    ];
+    createVideoCarousel(tesaer_videos, 'TeaserVideos', { controls: false, interval: 10000 });
+    createVideoCarousel(results_videos_dl3dv, 'ResultsVideosDL3DV', { controls: false, interval: 5000 });
+    createVideoCarousel(results_videos_re10k, 'ResultsVideosRE10K', { controls: false, interval: 5000 });
+  </script>
+</body>
+
+</html>
