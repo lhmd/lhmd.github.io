@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta content="ZPressor" name="title" />
+  <meta content="ZPressor is a plug-and-play module that compresses multi-view inputs for scalable feed-forward 3DGS." name="description" />
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="English" name="language" />
+  <meta content="Weijie Wang" name="author" />
+  <title>VolSplat - Rethinking Feed-Forward 3D Gaussian Splatting with Voxel-Aligned Prediction</title>
+  <!-- Bootstrap -->
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="js/bootstrap-4.4.1.js"></script>
+  <link href="css/bootstrap-4.4.1.css" rel="stylesheet" />
+  <style>
+    /* 使 navbar 背景透明以消除与旁边背景的色差 */
+    .navbar.bg-transparent,
+    .navbar.navbar-light {
+      background-color: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+    /* 桌面端：悬停展开下拉菜单，保持点击在移动端可用 */
+    @media (min-width: 992px) {
+      .navbar .dropdown:hover > .dropdown-menu {
+        display: block;
+      }
+      .navbar .dropdown-toggle::after {
+        vertical-align: 0.12em;
+      }
+    }
+    /* 下拉菜单背景与 jumbotron 背景保持一致（Bootstrap 4 默认 #e9ecef） */
+    .jumbotron .navbar .dropdown-menu,
+    .navbar .dropdown-menu {
+      background-color: #e9ecef !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+      min-width: 12rem;
+    }
+    .navbar .dropdown-item {
+      color: inherit;
+    }
+    .navbar .dropdown-item:hover, .navbar .dropdown-item:focus {
+      background-color: rgba(0, 0, 0, 0.06);
+    }
+  </style>
+
+  <!-- Add-ones -->
+  <script src="js/video-carousel.js"></script>
+  <script src="js/highlight-kw.js"></script>
+  <link href="css/highlight-kw.css" rel="stylesheet" />
+  <link href="css/theme.css" rel="stylesheet"/>
+
+  <link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" rel="stylesheet" />
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css" rel="stylesheet" />
+  <link href="assets/favicon.svg" rel="icon" sizes="any" type="image/svg+xml" />
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/contrib/auto-render.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 为每一行视频添加同步播放功能
+      const videoRows = document.querySelectorAll('.video-row');
+
+      videoRows.forEach(row => {
+        const videos = row.querySelectorAll('video');
+
+        // 为每个视频添加loadeddata事件监听器
+        videos.forEach(video => {
+          video.addEventListener('loadeddata', function() {
+            // 确保所有视频都加载完成后同步播放
+            const allLoaded = Array.from(videos).every(v => v.readyState >= 2);
+            if (allLoaded) {
+              videos.forEach(v => {
+                v.currentTime = 0;
+                v.play();
+              });
+            }
+          });
+
+          // 添加hover事件来同步播放/暂停
+          video.addEventListener('mouseenter', function() {
+            videos.forEach(v => v.play());
+          });
+
+          video.addEventListener('mouseleave', function() {
+            videos.forEach(v => v.pause());
+          });
+        });
+      });
+    });
+  </script>
+
+  </link>
+</head>
+
+<body>
+
+  <!-- cover -->
+  <section>
+    <div class="jumbotron text-center mt-0">
+      <div class="container">
+        <div class="row">
+          <nav class="navbar navbar-expand-lg navbar-light bg-transparent" role="navigation" aria-label="main navigation" style="margin: auto;">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center w-100" id="mainNavbar">
+              <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="https://lhmd.top">
+                    <i class="fas fa-home"></i>
+                  </a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="relatedDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Related Research
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="relatedDropdown">
+                    <a class="dropdown-item" href="https://lhmd.top/zpressor" target="_blank">ZPressor (NeurIPS 25)</a>
+                    <a class="dropdown-item" href="https://aim-uofa.github.io/PMLoss/" target="_blank">PM-Loss (arXiv 25)</a>
+                    <a class="dropdown-item" href="https://wonderturbo.github.io/" target="_blank">WonderTurbo (ICCV 25)</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <div class="col-10" style="margin: auto;">
+            <!-- add logo favicon.svg at left -->
+            <!-- <img src="assets/favicon.svg" alt="VolSplat Logo" style="width: 50px; height: 50px; margin-right: 20px;"> -->
+            <h1 style="font-weight: bold">
+              <b>
+                <span style="color: #97baa3">Vol</span>Splat: Rethinking Feed-Forward 3D Gaussian Splatting with Voxel-Aligned Prediction
+              </b>
+            </h1>
+            <!-- <h4 style="color:#5a6268;">NeurIPS 2025</h4> -->
+            <hr>
+
+            <a href="https://lhmd.top">Weijie Wang</a><sup>1,2*</sup>&nbsp;
+            <a href="https://github.com/Alresd">Yeqing Chen</a><sup>3*</sup>&nbsp;
+            <a href="https://steve-zeyu-zhang.github.io">Zeyu Zhang</a><sup>2</sup>&nbsp;
+            <a href="https://liuhengyu321.github.io">Hengyu Liu</a><sup>2,4</sup>&nbsp;
+            <a href="https://wang-haoxiao.github.io">Haoxiao Wang</a><sup>1</sup>&nbsp;
+            <a href="https://scholar.google.com/citations?user=4HaLG0oAAAAJ">Zhiyuan Feng</a><sup>5</sup>&nbsp;
+            <br>
+            <a href="https://scholar.google.com/citations?user=TE9stNgAAAAJ">Wenkang Qin</a><sup>2</sup>&nbsp;
+            <a href="http://www.zhengzhu.net/">Zheng Zhu</a><sup>2&#8224;</sup>&nbsp;
+            <a href="https://donydchen.github.io">Donny Y. Chen</a><sup>6</sup>&nbsp;
+            <a href="https://bohanzhuang.github.io">Bohan Zhuang</a><sup>1&#8224;</sup>
+            <p><sup>1</sup>Zhejiang University&nbsp;&nbsp;&nbsp;<sup>2</sup>GigaAI&nbsp;&nbsp;&nbsp;<sup>3</sup>University of Electronic Science and Technology of China&nbsp;&nbsp;&nbsp;<br><sup>4</sup>The Chinese University of Hong Kong&nbsp;&nbsp;&nbsp;<sup>5</sup>Tsinghua University&nbsp;&nbsp;&nbsp;<sup>6</sup>Monash University</p>
+            <p>* Equal contribution <sup>&#8224;</sup> Corresponding authors</p>
+            <div class="row justify-content-center">
+
+              <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="https://arxiv.org/abs/2505.23734" role="button">
+                    <i class="ai ai-arxiv"></i>
+                    <b>Paper</b>
+                  </a>
+                </p>
+              </div>
+
+              <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="https://github.com/ziplab/VolSplat" role="button">
+                    <i class="fas fa-code"></i>
+                    <b>Code</b>
+                  </a>
+                </p>
+              </div>
+
+              <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="https://huggingface.co/lhmd/VolSplat" role="button">
+                    <i class="fa fa-gamepad"></i>
+                    <b>Models</b>
+                  </a>
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+          <h3>TL;DR</h3>
+          <hr style="margin-top: 0px" />
+
+          <p class="text-left">
+            <strong>VolSplat</strong> improves multi-view consistency and geometric accuracy for feed-forward 3DGS with voxel-aligned prediction.
+          </p>
+
+          <!-- <div id="TeaserVideos"></div>
+          <br> -->
+
+          <img src="assets/teaser_horizontal.jpg" width="100%" />
+          <!-- 图片下面加一个空格 -->
+          <br><br>
+
+          <p class="text-left">
+            Pixel-aligned feed-forward 3DGS methods suffer from two primary limitations: <span style="color: #D4B1AF"><strong>1) 2D feature matching struggles to effectively resolve the multi-view alignment problem</strong></span>, and <span style="color: #97ADBA"><strong>2) the Gaussian density is constrained and cannot be adaptively controlled according to scene complexity</strong></span>. We propose <strong>VolSplat</strong>, a method that directly regresses Gaussians from 3D features based on a voxel-aligned prediction strategy. This approach achieves adaptive control over scene complexity and resolves the multi-view alignment challenge.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <!-- <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+
+          <h3>Abstract</h3>
+          <hr style="margin-top: 0px" />
+
+
+          <p class="text-align: justify;">
+            Feed-forward 3D Gaussian Splatting (3DGS) has emerged as a highly effective solution for novel view synthesis. Existing methods predominantly rely on a <span style="color: #97ADBA"><strong>pixel-aligned</strong></span> Gaussian prediction paradigm, where each 2D pixel is mapped to a 3D Gaussian. We rethink this widely adopted formulation and identify several inherent limitations: it renders the reconstructed 3D models heavily dependent on the number of input views, leads to view-biased density distributions, and introduces alignment errors, particularly when source views contain occlusions or low texture. To address these challenges, we introduce VolSplat, a new multi-view feed-forward paradigm that replaces pixel alignment with voxel-aligned Gaussians. By directly predicting Gaussians from a predicted 3D voxel grid, it overcomes pixel alignment's reliance on error-prone 2D feature matching, ensuring robust multi-view consistency. Furthermore, it enables adaptive control over Gaussian density based on 3D scene complexity, yielding more faithful Gaussian point clouds, improved geometric consistency, and enhanced novel-view rendering quality. Experiments on widely used benchmarks including RealEstate10K and ScanNet demonstrate that VolSplat achieves state-of-the-art performance while producing more plausible and view-consistent Gaussian reconstructions. In addition to superior results, our approach establishes a more scalable framework for feed-forward 3D reconstruction with denser and more robust representations, paving the way for further research in wider communities. <br>
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Methods -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+
+          <h3>Architecture</h3>
+          <hr style="margin-top: 0px" />
+          <div style="display: flex; justify-content: center;">
+            <img src="assets/pipeline.jpg" width="100%" />
+          </div>
+          <br><br>
+
+          <p>
+            <strong>Overview of our VolSplat</strong>.
+            Given multi-view images as input, we first extract 2D features for each image using a Transformer-based network and construct per-view cost volumes with plane sweeping. Depth Prediction Module then estimates a depth map for each view, which is used to unproject the 2D features into 3D space to form a voxel feature grid. Subsequently, we employ a sparse 3D decoder to refine these features in 3D space and predict the parameters of a 3D Gaussian for each occupied voxel. Finally, novel views are rendered from the predicted 3D Gaussians.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+
+
+          <h3>Training & Evaluation Metrics</h3>
+          <hr style="margin-top: 0px" />
+          <p><strong>Training</strong>:
+            GVHMR is trained on a mixed dataset consisting of AMASS, BEDLAM, H36M, and 3DPW.
+            The model is trained from scratch and converges after 420 epochs with a batch size of 256.
+            Training takes 13 hours on 2 RTX 4090 GPUs.
+          </p>
+          <p><strong>World-grounded Metrics</strong>
+          <div style="display: flex; justify-content: center;">
+            <img src="assets/table1.png" width="80%" />
+          </div>
+          </p>
+          <p><strong>Camera-space Metrics</strong>
+          <div style="display: flex; justify-content: center;">
+            <img src="assets/table2.png" width="70%" />
+          </div>
+          </p>
+
+
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+
+  <!-- Visualization Results -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+
+          <h3>Comparisons with SoTA Models</h3>
+          <hr style="margin-top: 0px" />
+
+          <center>Visualization on RealEstate10K</center>
+
+          <div style="overflow-x: auto;">
+            <table style="margin: auto; border-collapse: collapse; width: 100%;">
+              <thead>
+                <tr>
+                  <th style="text-align: center; font-size: 12px; width: 16.66%;">GNN</th>
+                  <th style="text-align: center; font-size: 12px; width: 16.66%;">MVSplat</th>
+                  <th style="text-align: center; font-size: 12px; width: 16.66%;">TransSplat</th>
+                  <th style="text-align: center; font-size: 12px; width: 16.66%;">DepthSplat</th>
+                  <th style="text-align: center; font-size: 12px; width: 16.66%;">VolSplat (Ours)</th>
+                  <th style="text-align: center; font-size: 12px; width: 16.66%;">Ground Truth</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="video-row">
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_GNN/08c9e7365f0707a4_frame_0_69_117_156_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_mvsplat/08c9e7365f0707a4_frame_0_69_117_156_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_tran_splat/08c9e7365f0707a4_frame_0_69_117_156_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_depthsplat/08c9e7365f0707a4_frame_0_69_117_156_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_volsplat/08c9e7365f0707a4_frame_0_69_117_156_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_gt_videos/08c9e7365f0707a4_frame_0_69_117_156_177_199_gt.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                </tr>
+                <tr class="video-row">
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_GNN/15d4a976e4e7d3dd_frame_0_22_50_103_152_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_mvsplat/15d4a976e4e7d3dd_frame_0_22_50_103_152_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_tran_splat/15d4a976e4e7d3dd_frame_0_22_50_103_152_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_depthsplat/15d4a976e4e7d3dd_frame_0_22_50_103_152_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_volsplat/15d4a976e4e7d3dd_frame_0_22_50_103_152_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_gt_videos/15d4a976e4e7d3dd_frame_0_22_50_103_152_199_gt.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                </tr>
+                <tr class="video-row">
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_GNN/20d86cff490c0c42_frame_0_35_72_121_153_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_mvsplat/20d86cff490c0c42_frame_0_35_72_121_153_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_tran_splat/20d86cff490c0c42_frame_0_35_72_121_153_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_depthsplat/20d86cff490c0c42_frame_0_35_72_121_153_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_videos_volsplat/20d86cff490c0c42_frame_0_35_72_121_153_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/re10k/selected_gt_videos/20d86cff490c0c42_frame_0_35_72_121_153_199_gt.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <br>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+
+          <h3>Comparisons of Geometry Quality</h3>
+          <hr style="margin-top: 0px" />
+
+          <center>Gaussians of DepthSplat and VolSplat</center>
+
+          <div style="overflow-x: auto;">
+            <table style="margin: auto; border-collapse: collapse; width: 100%;">
+              <thead>
+                <tr>
+                  <th style="text-align: center; font-size: 14px; width: 50%;">DepthSplat</th>
+                  <th style="text-align: center; font-size: 14px; width: 50%;">VolSplat (Ours)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="video-row">
+                  <td style="width: 50%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/point/depthsplat.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 50%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/point/volsplat.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <br>
+      </div>
+    </div>
+  </section>
+
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-10" style="margin: auto;">
+
+          <h3>Comparisons of Cross-dataset Generalization</h3>
+          <hr style="margin-top: 0px" />
+
+          <center>Visualization on RealEstate10K <span>&#8594;</span> ACID</center>
+
+          <div style="overflow-x: auto;">
+            <table style="margin: auto; border-collapse: collapse; width: 100%;">
+              <thead>
+                <tr>
+                  <th style="text-align: center; font-size: 12px; width: 16.66%;">GNN</th>
+                  <th style="text-align: center; font-size: 12px; width: 16.66%;">MVSplat</th>
+                  <th style="text-align: center; font-size: 12px; width: 16.66%;">TransSplat</th>
+                  <th style="text-align: center; font-size: 12px; width: 16.66%;">DepthSplat</th>
+                  <th style="text-align: center; font-size: 12px; width: 16.66%;">VolSplat (Ours)</th>
+                  <th style="text-align: center; font-size: 12px; width: 16.66%;">Ground Truth</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="video-row">
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_GNN/382a8b4c9259933c_frame_0_53_105_154_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_mvsplat/382a8b4c9259933c_frame_0_53_105_154_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_transplat/382a8b4c9259933c_frame_0_53_105_154_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_depthsplat/382a8b4c9259933c_frame_0_53_105_154_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_volsplat/382a8b4c9259933c_frame_0_53_105_154_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/gt/382a8b4c9259933c_frame_0_53_105_154_177_199_gt.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                </tr>
+                <tr class="video-row">
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_GNN/3c0deb7f9cdd3303_frame_0_59_108_154_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_mvsplat/3c0deb7f9cdd3303_frame_0_59_108_154_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_transplat/3c0deb7f9cdd3303_frame_0_59_108_154_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_depthsplat/3c0deb7f9cdd3303_frame_0_59_108_154_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_volsplat/3c0deb7f9cdd3303_frame_0_59_108_154_177_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/gt/3c0deb7f9cdd3303_frame_0_59_108_154_177_199_gt.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                </tr>
+                <tr class="video-row">
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_GNN/6cf00dd9816998df_frame_0_49_98_123_148_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_mvsplat/6cf00dd9816998df_frame_0_49_98_123_148_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_transplat/6cf00dd9816998df_frame_0_49_98_123_148_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_depthsplat/6cf00dd9816998df_frame_0_49_98_123_148_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/acid_selected_videos_volsplat/6cf00dd9816998df_frame_0_49_98_123_148_199.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                  <td style="width: 16.66%;">
+                    <video width="100%" autoplay muted loop>
+                      <source src="assets/videos/acid/gt/6cf00dd9816998df_frame_0_49_98_123_148_199_gt.mp4" type="video/mp4">
+                    </video>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <br>
+      </div>
+    </div>
+  </section>
+
+  <!-- Citing -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10" style="margin: auto;">
+
+        <h3>Citation</h3>
+        <hr style="margin-top: 0px" />
+        <pre class="selectable" style="background-color: #e9eeef; padding: 1.5em 1.5em; border-radius: 15px"><code>@article{wang2025volsplat,
+  title={VolSplat: Rethinking Feed-Forward 3D Gaussian Splatting with Voxel-Aligned Prediction},
+  author={Wang, Weijie and Chen, YeQing and Zhang, Zeyu and Liu, Hengyu and Wang, Haoxiao and Feng, Zhiyuan and Qin, Wenkang and Zhu, Zheng and Chen, Donny Y. and Zhuang, Bohan},
+  journal={},
+  year={2025}
+}</code></pre>
+        <hr />
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center" style="margin-bottom: 10px">
+    Thanks to
+    <a href="https://lioryariv.github.io/">Lior Yariv</a>
+    for the website template. 
+    Thanks to the
+    <a href="https://isshikihugh.github.io/HSMR/">HSMR</a>'s
+    and
+    <a href="https://zju3dv.github.io/4k4d/">4K4D</a>'s
+    project pages for the useful add-ons.
+  </footer>
+
+</body>
+
+</html>
