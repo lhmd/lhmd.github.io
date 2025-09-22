@@ -65,6 +65,34 @@
   <script src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/contrib/auto-render.min.js"></script>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function syncVideosInSection(section) {
+        const videos = section.querySelectorAll('video');
+
+        videos.forEach(video => {
+          video.addEventListener('loadeddata', function() {
+            videos.forEach(otherVideo => {
+              if (otherVideo !== video) {
+                otherVideo.currentTime = 0;
+              }
+            });
+          });
+
+          video.addEventListener('timeupdate', function() {
+            videos.forEach(otherVideo => {
+              if (otherVideo !== video && Math.abs(otherVideo.currentTime - video.currentTime) > 0.5) {
+                otherVideo.currentTime = video.currentTime;
+              }
+            });
+          });
+        });
+      }
+
+      const sections = document.querySelectorAll('section');
+      sections.forEach(syncVideosInSection);
+    });
+  </script>
 
   </link>
 </head>
@@ -105,7 +133,7 @@
             <!-- <img src="assets/favicon.svg" alt="VolSplat Logo" style="width: 50px; height: 50px; margin-right: 20px;"> -->
             <h1 style="font-weight: bold">
               <b>
-                <span style="color: #97baa3">Vol</span>Splat: Rethinking Feed-Forward 3D Gaussian Splatting with Voxel-Aligned Prediction
+                <span style="color: #5ba675">Vol</span>Splat: Rethinking Feed-Forward 3D Gaussian Splatting with Voxel-Aligned Prediction
               </b>
             </h1>
             <!-- <h4 style="color:#5a6268;">NeurIPS 2025</h4> -->
@@ -189,7 +217,7 @@
           <br><br>
 
           <p class="text-left">
-            Pixel-aligned feed-forward 3DGS methods suffer from two primary limitations: <span style="color: #D4B1AF"><strong>1) 2D feature matching struggles to effectively resolve the multi-view alignment problem</strong></span>, and <span style="color: #97ADBA"><strong>2) the Gaussian density is constrained and cannot be adaptively controlled according to scene complexity</strong></span>. We propose <strong>VolSplat</strong>, a method that directly regresses Gaussians from 3D features based on a voxel-aligned prediction strategy. This approach achieves adaptive control over scene complexity and resolves the multi-view alignment challenge.
+            Pixel-aligned feed-forward 3DGS methods suffer from two primary limitations: <span style="color: #D4B1AF"><strong>1) 2D feature matching struggles to effectively resolve the multi-view alignment problem</strong></span>, and <span style="color: #97ADBA"><strong>2) the Gaussian density is constrained and cannot be adaptively controlled according to scene complexity</strong></span>. We propose <strong>VolSplat</strong>, a framework that directly regresses Gaussians from 3D features based on a voxel-aligned prediction strategy. This approach achieves adaptive control over scene complexity and resolves the multi-view alignment challenge.
           </p>
 
         </div>
