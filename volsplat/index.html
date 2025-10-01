@@ -46,10 +46,14 @@
       background-color: rgba(0, 0, 0, 0.06);
     }
 
-    /* 移动端隐藏导航组件 */
+    /* 移动端完全隐藏导航组件 */
     @media (max-width: 768px) {
-      .navbar {
+      nav.navbar {
         display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
     }
   </style>
