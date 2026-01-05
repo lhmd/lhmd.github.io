@@ -412,11 +412,116 @@
   </table>
 
 
-  <!-- <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+  <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
     <tbody>
       <heading>Preprints</heading>
       <br>
+      <!-- DriveGen3D -->
       <tr>
+        <td style="padding:20px;width:30%;vertical-align:middle">
+          <div class="one">
+            <div class="two" id='drivegen3d_image'>
+              <br>
+              <img src='images/drivegen3d.jpg' width="190">
+            </div>
+            <br>
+            <img src='images/drivegen3d.jpg' width="190">
+          </div>
+          <script type="text/javascript">
+            function drivegen3d_start() {
+              document.getElementById('drivegen3d_image').style.opacity = "1";
+            }
+            function drivegen3d_stop() {
+              document.getElementById('drivegen3d_image').style.opacity = "0";
+            }
+            drivegen3d_stop()
+          </script>
+        </td>
+        <td style="padding:20px;width:70%;vertical-align:middle">
+          <a href="">
+            <papertitle>DriveGen3D: Boosting Feed-Forward Driving Scene Generation with Efficient Video Diffusion</papertitle>
+          </a>
+          <br>
+          <a class="a2" href="https://lhmd.top/" target="_blank"><strong>Weijie Wang</strong></a><span>&#42;</span>,
+          <a class="a2" href="https://scholar.google.com/citations?user=4sjA1X0AAAAJ" target="_blank">Jiagang Zhu</a><span>&#42;</span>,
+          <a class="a2" href="https://steve-zeyu-zhang.github.io/" target="_blank">Zeyu Zhang</a>,
+          <a class="a2" href="https://jeffwang987.github.io/" target="_blank">Xiaofeng Wang</a>,
+          <a class="a2" href="http://www.zhengzhu.net/" target="_blank">Zheng Zhu</a><span>&#8224;</span>,
+          <a class="a2" href="https://scholar.google.com/citations?user=C3BbrU4AAAAJ" target="_blank">Guosheng Zhao</a>,
+          <a class="a2" href="" target="_blank">Chaojun Ni</a>,
+          <a class="a2" href="https://wang-haoxiao.github.io/" target="_blank">Haoxiao Wang</a>,
+          <a class="a2" href="" target="_blank">Guan Huang</a>,
+          <a class="a2" href="" target="_blank">Xinze Chen</a>,
+          <a class="a2" href="" target="_blank">Yukun Zhou</a>,
+          <a class="a2" href="https://scholar.google.com/citations?user=TE9stNgAAAAJ" target="_blank">Wenkang Qin</a>,
+          <a class="a2" href="https://scholar.google.com/citations?user=BG-NXgoAAAAJ" target="_blank">Duochao Shi</a>,
+          <a class="a2" href="" target="_blank">Haoyun Li</a>,
+          <a class="a2" href="" target="_blank">Yicheng Xiao</a>,
+          <a class="a2" href="https://donydchen.github.io/" target="_blank">Donny Y. Chen</a>,
+          <a class="a2" href="https://ivg.au.tsinghua.edu.cn/Jiwen_Lu/" target="_blank">Jiwen Lu</a>
+          <br>
+          <a href="https://arxiv.org/abs/2510.15264" target="_blank">Paper</a>
+          /
+          <a href="https://lhmd.top/drivegen3d/" target="_blank">Project</a>
+          <p></p>
+          <p>
+            We present DriveGen3D, a novel framework for generating high-quality and highly controllable dynamic 3D driving scenes that addresses critical limitations in existing methodologies.
+          </p>
+        </td>
+      </tr>
+
+      <!-- VolSplat -->
+      <tr>
+        <td style="padding:20px;width:30%;vertical-align:middle">
+          <div class="one">
+            <div class="two" id='volsplat_image'>
+              <br>
+              <img src='images/volsplat.jpg' width="190">
+            </div>
+            <br>
+            <img src='images/volsplat.jpg' width="190">
+          </div>
+          <script type="text/javascript">
+            function volsplat_start() {
+              document.getElementById('volsplat_image').style.opacity = "1";
+            }
+            function volsplat_stop() {
+              document.getElementById('volsplat_image').style.opacity = "0";
+            }
+            volsplat_stop()
+          </script>
+        </td>
+        <td style="padding:20px;width:70%;vertical-align:middle">
+          <a href="">
+            <papertitle>VolSplat: Rethinking Feed-Forward 3D Gaussian Splatting with Voxel-Aligned Prediction</papertitle>
+          </a>
+          <br>
+          <a class="a2" href="https://lhmd.top/" target="_blank"><strong>Weijie Wang</strong></a><span>&#42;</span>,
+          <a class="a2" href="https://scholar.google.com/citations?user=zFCwdOoAAAAJ" target="_blank">Yeqing Chen</a><span>&#42;</span>,
+          <a class="a2" href="https://steve-zeyu-zhang.github.io/" target="_blank">Zeyu Zhang</a>,
+          <a class="a2" href="https://liuhengyu321.github.io/" target="_blank">Hengyu Liu</a>,
+          <a class="a2" href="https://wang-haoxiao.github.io/" target="_blank">Haoxiao Wang</a>,
+          <a class="a2" href="https://scholar.google.com/citations?user=4HaLG0oAAAAJ" target="_blank">Zhiyuan Feng</a>,
+          <a class="a2" href="https://scholar.google.com/citations?user=TE9stNgAAAAJ" target="_blank">Wenkang Qin</a>,
+          <a class="a2" href="http://www.zhengzhu.net/" target="_blank">Zheng Zhu</a><span>&#8224;</span>,
+          <a class="a2" href="https://donydchen.github.io/" target="_blank">Donny Y. Chen</a>,
+          <a class="a2" href="https://bohanzhuang.github.io/" target="_blank">Bohan Zhuang</a><span>&#8224;</span>
+          <br>
+          <a href="https://arxiv.org/abs/2509.19297" target="_blank">Paper</a>
+          /
+          <a href="https://lhmd.top/volsplat/" target="_blank">Project</a>
+          /
+          <a href="https://github.com/ziplab/VolSplat" target="_blank">Code</a>
+          /
+          <a href="https://huggingface.co/lhmd/VolSplat" target="_blank">Models</a>
+          <p></p>
+          <p>
+            VolSplat improves multi-view consistency and geometric accuracy for feed-forward 3DGS with voxel-aligned prediction.
+          </p>
+        </td>
+      </tr>
+
+      <!-- <tr>
         <td style="padding:20px;width:30%;vertical-align:middle">
           <div class="one">
             <div class="two" id='revisual_r1_image'>
@@ -512,9 +617,9 @@
             five progressive levels of scientific knowledge.
           </p>
         </td>
-      </tr>
+      </tr> -->
     </tbody>
-  </table> -->
+  </table>
 
 
   <table width="100%" align="center" border="0" cellpadding="10">
