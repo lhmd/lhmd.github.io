@@ -1,67 +1,15 @@
 <!DOCTYPE HTML>
 <html lang="en">
 
-
 <head>
-  <script>
-    (function () {
-      var a_idx = 0;
-      window.onclick = function (event) {
-        var a = new Array("✨", "🤖", "🥳", "👋", "🦾", "🐽");
-
-        var heart = document.createElement("b");
-        heart.onselectstart = new Function('event.returnValue=false');
-
-        document.body.appendChild(heart).innerHTML = a[a_idx];
-        a_idx = (a_idx + 1) % a.length;
-        heart.style.cssText = "position: fixed;left:-100%;";
-
-        var f = 16,
-          x = event.clientX - f / 2,
-          y = event.clientY - f,
-          c = randomColor(),
-          a = 1,
-          s = 1.2;
-
-        var timer = setInterval(function () {
-          if (a <= 0) {
-            document.body.removeChild(heart);
-            clearInterval(timer);
-          } else {
-            heart.style.cssText = "font-size:16px;cursor: default;position: fixed;color:" +
-              c + ";left:" + x + "px;top:" + y + "px;opacity:" + a + ";transform:scale(" +
-              s + ");";
-
-            y--;
-            a -= 0.016;
-            s += 0.002;
-          }
-        }, 15)
-
-      }
-      function randomColor() {
-
-        return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math
-          .random() * 255)) + ")";
-
-      }
-    }());
-  </script>
+  
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Weijie Wang | 王伟杰</title>
   <meta name="author" content="Weijie Wang">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="stylesheet.css">
-  <!-- <link rel="icon" type="image/png" href="./images/icon.png"> -->
-  <script>
-    var _hmt = _hmt || [];
-    (function () {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?a4292ca8f2fe5fd7dc6dfd78cc894aab";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
+  
+  
 </head>
 
 <body>
@@ -142,20 +90,21 @@
             </tbody>
           </table>
 
-          <!-- News -->
+          
           <table
             style="width:90%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
             <tbody>
 
-              <!-- <br> -->
+              
               <heading>News</heading>
               <br>
               <td style="padding:0px;width:100%;vertical-align:middle">
                 <p>
+                  <li>[2026/01] 🎉 Two papers have been accepted to ICLR 2026!</li>
                   <li>[2025/11] 🎉 Our paper <a href='https://aim-uofa.github.io/PMLoss/'>PM-Loss</a> has been accepted
                     to 3DV 2026!</li>
-                    <li>[2025/09] 🎉 Our paper <a href='https://lhmd.top/zpressor/'>ZPressor</a> has been accepted
-                      to NeurIPS 2025!</li>
+                  <li>[2025/09] 🎉 Our paper <a href='https://lhmd.top/zpressor/'>ZPressor</a> has been accepted
+                    to NeurIPS 2025!</li>
                   <li>[2025/06] 🎉 Our paper <a href='https://wonderturbo.github.io/'>WonderTurbo</a> has been accepted
                     to ICCV 2025!</li>
                 </p>
@@ -173,27 +122,88 @@
         <span>&#42;</span> <em>Equal contribution</em> &nbsp/&nbsp <span>&#8224;</span> <em>Corresponding authors</em>
       </p>
 
-      <!-- PM-Loss -->
       <tr>
         <td style="padding:20px;width:30%;vertical-align:middle">
-          <div class="one">
-            <div class="two" id='pmloss_image'>
-              <br>
-              <img src='images/pmloss.png' width="190">
-            </div>
-            <br>
-            <img src='images/pmloss.png' width="190">
-          </div>
-          <script type="text/javascript">
-            function pmloss_start() {
-              document.getElementById('pmloss_image').style.opacity = "1";
-            }
+          <img src='images/mv_robobench.png' width="190">
+        </td>
+        <td style="padding:20px;width:70%;vertical-align:middle">
+          <a href="">
+            <papertitle>Seeing Across Views: Benchmarking Spatial Reasoning of Vision-Language Models in Robotic Scenes</papertitle>
+          </a>
+          <br>
+          <a class="a2" href="" target="_blank">Zhiyuan Feng</a>,
+          <a class="a2" href="" target="_blank">Zhaolu Kang</a>,
+          <a class="a2" href="" target="_blank">Qijie Wang</a>,
+          <a class="a2" href="" target="_blank">Zhiying Du</a>,
+          <a class="a2" href="" target="_blank">Jiongrui Yan</a>,
+          <a class="a2" href="" target="_blank">Shubin Shi</a>,
+          <a class="a2" href="" target="_blank">Chengbo Yuan</a>,
+          <a class="a2" href="" target="_blank">Huizhi Liang</a>,
+          <a class="a2" href="" target="_blank">Yu Deng</a>,
+          <a class="a2" href="" target="_blank">Qixiu Li</a>,
+          <a class="a2" href="" target="_blank">Rushuai Yang</a>,
+          <a class="a2" href="" target="_blank">Arctanx An</a>,
+          <a class="a2" href="" target="_blank">Leqi Zheng</a>,
+          <a class="a2" href="" target="_blank"><strong>Weijie Wang</strong></a>,
+          <a class="a2" href="" target="_blank">Shawn Chen</a>,
+          <a class="a2" href="" target="_blank">Sicheng Xu</a>,
+          <a class="a2" href="" target="_blank">Yaobo Liang</a>,
+          <a class="a2" href="" target="_blank">Jiaolong Yang</a>,
+          <a class="a2" href="" target="_blank">Baining Guo</a>
+          <br>
+          <a href="https://arxiv.org/abs/2510.19400" target="_blank">Paper</a>
+          /
+          <a href="https://github.com/microsoft/MV-RoboBench" target="_blank">Code</a>
+          <br>
+          <em><strong>ICLR 2026</strong></em>
+          <p></p>
+          <p>
+            We introduce MV-RoboBench, a benchmark for evaluating multi-view spatial reasoning in robotic manipulation,
+            revealing large gaps between state-of-the-art VLMs and human performance.
+          </p>
+        </td>
+      </tr>
 
-            function pmloss_stop() {
-              document.getElementById('pmloss_image').style.opacity = "0";
-            }
-            pmloss_stop()
-          </script>
+      <tr>
+        <td style="padding:20px;width:30%;vertical-align:middle">
+          <img src='images/revisual_r1.png' width="190">
+          
+        </td>
+        <td style="padding:20px;width:70%;vertical-align:middle">
+          <a href="">
+            <papertitle>Advancing Multimodal Reasoning: From Optimized Cold Start to Staged Reinforcement Learning
+            </papertitle>
+          </a>
+          <br>
+          <a class="a2" href="" target="_blank">Shuang Chen</a><span>&#42;</span>,
+          <a class="a2" href="" target="_blank">Yue Guo</a><span>&#42;</span>,
+          <a class="a2" href="" target="_blank">Zhaochen Su</a>,
+          <a class="a2" href="" target="_blank">Yafu Li</a>,
+          <a class="a2" href="" target="_blank">Yulun Wu</a>,
+          <a class="a2" href="" target="_blank">Jiacheng Chen</a>,
+          <a class="a2" href="" target="_blank">Jiayu Chen</a>,
+          <a class="a2" href="" target="_blank"><strong>Weijie Wang</strong></a>,
+          <a class="a2" href="" target="_blank">Xiaoye Qu</a><span>&#8224;</span>,
+          <a class="a2" href="" target="_blank">Yu Cheng</a><span>&#8224;</span>
+          <br>
+          <a href="https://arxiv.org/abs/2506.04207" target="_blank">Paper</a>
+          /
+          <a href="https://github.com/CSfufu/Revisual-R1" target="_blank">Code</a>
+          <br>
+          <em><strong>ICLR 2026</strong></em>
+          <p></p>
+          <p>
+            We introduce ReVisual-R1, achieving a new state-of-the-art among open-source 7B MLLMs on challenging
+            benchmarks.
+          </p>
+        </td>
+      </tr>
+
+      
+      <tr>
+        <td style="padding:20px;width:30%;vertical-align:middle">
+          <img src='images/pmloss.png' width="190">
+          
         </td>
         <td style="padding:20px;width:70%;vertical-align:middle">
           <a href="https://aim-uofa.github.io/PMLoss/">
@@ -207,7 +217,7 @@
           <a class="a2" href="https://steve-zeyu-zhang.github.io/" target="_blank">Zeyu Zhang</a>,
           <a class="a2" href="https://jwbian.net/" target="_blank">Jia-Wang Bian</a>,
           <a class="a2" href="https://bohanzhuang.github.io/" target="_blank">Bohan Zhuang</a><span>&#8224;</span>
-          <!-- <a class="a2" href="https://cshen.github.io/" target="_blank">Chunhua Shen</a><span>&#8224;</span> -->
+          
           <br>
           <a href="https://arxiv.org/abs/2506.05327" target="_blank">Paper</a>
           /
@@ -226,27 +236,11 @@
         </td>
       </tr>
 
-      <!-- ZPressor  -->
+      
       <tr bgcolor="#ffffdc">
         <td style="padding:20px;width:30%;vertical-align:middle">
-          <div class="one">
-            <div class="two" id='malle_image'>
-              <br>
-              <img src='images/zpressor.jpg' width="190">
-            </div>
-            <br>
-            <img src='images/zpressor.jpg' width="190">
-          </div>
-          <script type="text/javascript">
-            function malle_start() {
-              document.getElementById('malle_image').style.opacity = "1";
-            }
-
-            function malle_stop() {
-              document.getElementById('malle_image').style.opacity = "0";
-            }
-            malle_stop()
-          </script>
+          <img src='images/zpressor.jpg' width="190">
+          
         </td>
         <td style="padding:20px;width:70%;vertical-align:middle">
           <a href="https://lhmd.top/zpressor/">
@@ -276,27 +270,11 @@
         </td>
       </tr>
 
-      <!-- WonderTurbo  -->
+      
       <tr>
         <td style="padding:20px;width:30%;vertical-align:middle">
-          <div class="one">
-            <div class="two" id='wonderturbo_image'>
-              <br>
-              <img src='images/wonderturbo.png' width="190">
-            </div>
-            <br>
-            <img src='images/wonderturbo.png' width="190">
-          </div>
-          <script type="text/javascript">
-            function wonderturbo_start() {
-              document.getElementById('wonderturbo_image').style.opacity = "1";
-            }
-
-            function wonderturbo_stop() {
-              document.getElementById('wonderturbo_image').style.opacity = "0";
-            }
-            wonderturbo_stop()
-          </script>
+          <img src='images/wonderturbo.png' width="190">
+          
         </td>
         <td style="padding:20px;width:70%;vertical-align:middle">
           <a href="https://wonderturbo.github.io/">
@@ -329,27 +307,11 @@
         </td>
       </tr>
 
-      <!-- TransDiff  -->
+      
       <tr>
         <td style="padding:20px;width:30%;vertical-align:middle">
-          <div class="one">
-            <div class="two" id='transdiff_image'>
-              <br>
-              <img src='images/transdiff.jpg' width="190">
-            </div>
-            <br>
-            <img src='images/transdiff.jpg' width="190">
-          </div>
-          <script type="text/javascript">
-            function transdiff_start() {
-              document.getElementById('transdiff_image').style.opacity = "1";
-            }
-
-            function transdiff_stop() {
-              document.getElementById('transdiff_image').style.opacity = "0";
-            }
-            transdiff_stop()
-          </script>
+          <img src='images/transdiff.jpg' width="190">
+          
         </td>
         <td style="padding:20px;width:70%;vertical-align:middle">
           <a href="https://wang-haoxiao.github.io/TransDiff/">
@@ -382,27 +344,11 @@
         </td>
       </tr>
 
-      <!-- Street Gaussians  -->
+      
       <tr>
         <td style="padding:20px;width:30%;vertical-align:middle">
-          <div class="one">
-            <div class="two" id='street_gaussians_image'>
-              <br>
-              <img src='images/street_gaussians.jpg' width="190">
-            </div>
-            <br>
-            <img src='images/street_gaussians.jpg' width="190">
-          </div>
-          <script type="text/javascript">
-            function street_gaussians_start() {
-              document.getElementById('street_gaussians_image').style.opacity = "1";
-            }
-
-            function street_gaussians_stop() {
-              document.getElementById('street_gaussians_image').style.opacity = "0";
-            }
-            street_gaussians_stop()
-          </script>
+          <img src='images/street_gaussians.jpg' width="190">
+          
         </td>
         <td style="padding:20px;width:70%;vertical-align:middle">
           <a href="https://zju3dv.github.io/street_gaussians/">
@@ -436,35 +382,18 @@
         </td>
       </tr>
 
-
     </tbody>
   </table>
-
 
   <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
     <tbody>
       <heading>Preprints</heading>
       <br>
-      <!-- DriveGen3D -->
+      
       <tr>
         <td style="padding:20px;width:30%;vertical-align:middle">
-          <div class="one">
-            <div class="two" id='drivegen3d_image'>
-              <br>
-              <img src='images/drivegen3d.jpg' width="190">
-            </div>
-            <br>
-            <img src='images/drivegen3d.jpg' width="190">
-          </div>
-          <script type="text/javascript">
-            function drivegen3d_start() {
-              document.getElementById('drivegen3d_image').style.opacity = "1";
-            }
-            function drivegen3d_stop() {
-              document.getElementById('drivegen3d_image').style.opacity = "0";
-            }
-            drivegen3d_stop()
-          </script>
+          <img src='images/drivegen3d.jpg' width="190">
+          
         </td>
         <td style="padding:20px;width:70%;vertical-align:middle">
           <a href="https://lhmd.top/drivegen3d/">
@@ -499,26 +428,11 @@
         </td>
       </tr>
 
-      <!-- VolSplat -->
+      
       <tr>
         <td style="padding:20px;width:30%;vertical-align:middle">
-          <div class="one">
-            <div class="two" id='volsplat_image'>
-              <br>
-              <img src='images/volsplat.jpg' width="190">
-            </div>
-            <br>
-            <img src='images/volsplat.jpg' width="190">
-          </div>
-          <script type="text/javascript">
-            function volsplat_start() {
-              document.getElementById('volsplat_image').style.opacity = "1";
-            }
-            function volsplat_stop() {
-              document.getElementById('volsplat_image').style.opacity = "0";
-            }
-            volsplat_stop()
-          </script>
+          <img src='images/volsplat.jpg' width="190">
+          
         </td>
         <td style="padding:20px;width:70%;vertical-align:middle">
           <a href="https://lhmd.top/volsplat/">
@@ -550,106 +464,9 @@
         </td>
       </tr>
 
-      <!-- <tr>
-        <td style="padding:20px;width:30%;vertical-align:middle">
-          <div class="one">
-            <div class="two" id='revisual_r1_image'>
-              <br>
-              <img src='images/revisual_r1.png' width="190">
-            </div>
-            <br>
-            <img src='images/revisual_r1.png' width="190">
-          </div>
-          <script type="text/javascript">
-            function revisual_r1_start() {
-              document.getElementById('revisual_r1_image').style.opacity = "1";
-            }
-            function revisual_r1_stop() {
-              document.getElementById('revisual_r1_image').style.opacity = "0";
-            }
-            revisual_r1_stop()
-          </script>
-        </td>
-        <td style="padding:20px;width:70%;vertical-align:middle">
-          <a href="">
-            <papertitle>Advancing Multimodal Reasoning: From Optimized Cold Start to Staged Reinforcement Learning
-            </papertitle>
-          </a>
-          <br>
-          <a class="a2" href="" target="_blank">Shuang Chen</a><span>&#42;</span>,
-          <a class="a2" href="" target="_blank">Yue Guo</a><span>&#42;</span>,
-          <a class="a2" href="" target="_blank">Zhaochen Su</a>,
-          <a class="a2" href="" target="_blank">Yafu Li</a>,
-          <a class="a2" href="" target="_blank">Yulun Wu</a>,
-          <a class="a2" href="" target="_blank">Jiacheng Chen</a>,
-          <a class="a2" href="" target="_blank">Jiayu Chen</a>,
-          <a class="a2" href="" target="_blank"><strong>Weijie Wang</strong></a>,
-          <a class="a2" href="" target="_blank">Xiaoye Qu</a><span>&#8224;</span>,
-          <a class="a2" href="" target="_blank">Yu Cheng</a><span>&#8224;</span>
-          <br>
-          <a href="https://arxiv.org/abs/2506.04207" target="_blank">Paper</a>
-          /
-          <a href="https://github.com/CSfufu/Revisual-R1" target="_blank">Code</a>
-          <br>
-          <em><strong>ArXiv preprint</strong></em>
-          <p></p>
-          <p>
-            We introduce ReVisual-R1, achieving a new state-of-the-art among open-source 7B MLLMs on challenging
-            benchmarks.
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td style="padding:20px;width:30%;vertical-align:middle">
-          <div class="one">
-            <div class="two" id='sciknoweval_image'>
-              <br>
-              <img src='images/sciknoweval.png' width="190">
-            </div>
-            <br>
-            <img src='images/sciknoweval.png' width="190">
-          </div>
-          <script type="text/javascript">
-            function sciknoweval_start() {
-              document.getElementById('sciknoweval_image').style.opacity = "1";
-            }
-            function sciknoweval_stop() {
-              document.getElementById('sciknoweval_image').style.opacity = "0";
-            }
-            sciknoweval_stop()
-          </script>
-        </td>
-        <td style="padding:20px;width:70%;vertical-align:middle">
-          <a href="">
-            <papertitle>SciKnowEval: Evaluating Multi-level Scientific Knowledge of Large Language Models</papertitle>
-          </a>
-          <br>
-          <a class="a2" href="" target="_blank">Kehua Feng</a><span>&#42;</span>,
-          <a class="a2" href="" target="_blank">Keyan Ding</a><span>&#42;</span>,
-          <a class="a2" href="https://lhmd.top/" target="_blank"><strong>Weijie Wang</strong></a><span>&#42;</span>,
-          <a class="a2" href="" target="_blank">Xiang Zhuang</a>,
-          <a class="a2" href="" target="_blank">Zeyuan Wang</a>,
-          <a class="a2" href="" target="_blank">Ming Qin</a>,
-          <a class="a2" href="" target="_blank">Yu Zhao</a>,
-          <a class="a2" href="" target="_blank">Jianhua Yao</a>,
-          <a class="a2" href="" target="_blank">Qiang Zhang</a>,
-          <a class="a2" href="" target="_blank">Huajun Chen</a><span>&#8224;</span>
-          <br>
-          <a href="https://arxiv.org/abs/2406.09098" target="_blank">Paper</a>
-          /
-          <a href="http://scimind.ai/sciknoweval/" target="_blank">Project</a>
-          <br>
-          <em><strong>ArXiv preprint</strong></em>
-          <p></p>
-          <p>
-            This paper introduce the SciKnowEval benchmark, a novel framework that systematically evaluates LLMs across
-            five progressive levels of scientific knowledge.
-          </p>
-        </td>
-      </tr> -->
+      
     </tbody>
   </table>
-
 
   <table width="100%" align="center" border="0" cellpadding="10">
     <tbody>
@@ -721,7 +538,6 @@
     </tbody>
   </table>
 
-
   <table style="width:90%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
     <tbody>
       <tr>
@@ -738,74 +554,15 @@
           <p>
             <li><em>2025.06</em> Outstanding Thesis of Zhejiang University</li>
           </p>
-          <!-- <p>
-            <li><em>2024.11</em> Third Class Scholarship in Zhejiang University</li>
-          </p>
-          <p>
-            <li><em>2024.10</em> Outstanding Students of Zhejiang University</li>
-          </p>
-          <p>
-            <li><em>2024.10</em> Innovation and Entrepreneurship Pioneer of Zhejiang University</li>
-          </p>
-          <p>
-            <li><em>2024.10</em> Academic Excellence Pioneer of Zhejiang University</li>
-          </p>
-          <p>
-            <li><em>2024.06</em> Third Prize of Zhejiang University "Dandelion" University Student Entrepreneurship
-              Competition</li>
-          </p> -->
+          
           <p>
             <li><em>2023.11</em> Zhejiang Government Scholarship</li>
           </p>
-          <!-- <p>
-            <li><em>2023.11</em> Zhejiang University Jiecang Linear Motion Technology Scholarship</li>
-          </p>
-          <p>
-            <li><em>2023.11</em> Second Class Scholarship in Zhejiang University</li>
-          </p>
-          <p>
-            <li><em>2023.10</em> Academic Excellence Pioneer of Zhejiang University</li>
-          </p>
-          <p>
-            <li><em>2023.10</em> Academic Progressive Role Model in Zhejiang University</li>
-          </p>
-          <p>
-            <li><em>2023.08</em> Third Prize of Asia and Pacific Mathematical Contest in Modeling</li>
-          </p>
-          <p>
-            <li><em>2023.06</em> Third Prize in the Final of the 16th Mock Mayor's Forum of Zhejiang University</li>
-          </p> -->
+          
           <p>
             <li><em>2023.01</em> Meritorious Winner of The Interdisciplinary Contest in Modeling</li>
           </p>
-          <!-- <p>
-            <li><em>2023.01</em> Second Prize of National College Students Mathematics Competition in Zhejiang Province
-            </li>
-          </p>
-          <p>
-            <li><em>2023.01</em> Third Prize of National College Students' Physics Competition in Zhejiang Province</li>
-          </p>
-          <p>
-            <li><em>2022.11</em> Third Class Scholarship in Zhejiang University</li>
-          </p>
-          <p>
-            <li><em>2022.10</em> Academic Excellence Pioneer of Zhejiang University</li>
-          </p>
-          <p>
-            <li><em>2021.01</em> Second Prize of China National Mathematics Olympiad in Shaanxi Province</li>
-          </p>
-          <p>
-            <li><em>2021.01</em> Third Prize of Chinese Physics Olympiad in Shaanxi Province</li>
-          </p>
-          <p>
-            <li><em>2020.07</em> Merit Student of Shaanxi Province</li>
-          </p>
-          <p>
-            <li><em>2020.01</em> Third Prize of Chinese Chemistry Olympiad in Shaanxi Province</li>
-          </p>
-          <p>
-            <li><em>2019.12</em> Outstanding Middle School Student, Xi'an City, Shaanxi Province</li>
-          </p> -->
+          
         </td>
       </tr>
     </tbody>
