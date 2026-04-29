@@ -168,3 +168,15 @@ abs {
 span.highlight {
   background-color: #ffffd0;
 }
+
+.paper-award {
+  color: #c15f00;
+  font-weight: 700;
+  text-shadow: none;
+}
+
+.paper-award:hover,
+.paper-award:focus {
+  color: #f09228;
+  text-decoration: underline;
+}
