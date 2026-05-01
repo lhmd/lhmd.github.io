@@ -99,21 +99,34 @@
               <heading>News</heading>
               <br>
               <td style="padding:0px;width:100%;vertical-align:middle">
-                <p>
+                <ul id="news-list" class="news-list" data-visible-count="5">
+                  <li>[2026/05] 🎉 Two papers (<a href='https://aka.ms/world-r1'>World-R1</a>, Flash-GRPO)
+                    have been accepted to ICML 2026!</li>
+                  <li>[2026/04] 🔥 <a href='https://aka.ms/world-r1'>World-R1</a> was selected as Hugging Face
+                    <a href='https://huggingface.co/papers/2604.24764' target="_blank">#1 Paper of the Day</a>!</li>
                   <li>[2026/04] 🎉 Our paper <a href='https://ziplab.co/CoV/'>CoV</a> has been accepted
                     to ACL 2026 Findings!</li>
-                  <li>[2026/04] 🔥 <a href='https://aka.ms/world-r1'>World-R1</a> was selected as
-                    Hugging Face <a href='https://huggingface.co/papers/2604.24764' target="_blank">#1 Paper of the Day</a>!</li>
                   <li>[2026/03] 🎉 Our paper <a href='https://lhmd.top/drivegen3d/'>DriveGen3D</a> has been accepted
                     to ICME 2026!</li>
-                  <li>[2026/01] 🎉 Two papers have been accepted to ICLR 2026!</li>
+                  <li>[2026/01] 🎉 Two papers (<a href='https://arxiv.org/abs/2510.19400' target="_blank">MV-RoboBench</a>,
+                    <a href='https://arxiv.org/abs/2506.04207' target="_blank">ReVisual-R1</a>)
+                    have been accepted to ICLR 2026!</li>
                   <li>[2025/11] 🎉 Our paper <a href='https://aim-uofa.github.io/PMLoss/'>PM-Loss</a> has been accepted
                     to 3DV 2026!</li>
+                  <li>[2025/10] 🏅 I received the NeurIPS Scholar Award.</li>
                   <li>[2025/09] 🎉 Our paper <a href='https://lhmd.top/zpressor/'>ZPressor</a> has been accepted
                     to NeurIPS 2025!</li>
                   <li>[2025/06] 🎉 Our paper <a href='https://wonderturbo.github.io/'>WonderTurbo</a> has been accepted
                     to ICCV 2025!</li>
-                </p>
+                  <li>[2025/06] 🏅 I received the Outstanding Graduates of Zhejiang University and Outstanding Thesis of Zhejiang University awards.</li>
+                  <li>[2025/01] 🎉 Our paper <a href='https://wang-haoxiao.github.io/TransDiff/'>TransDiff</a> has been accepted
+                    to ICRA 2025!</li>
+                  <li>[2024/07] 🎉 Our paper <a href='https://zju3dv.github.io/street_gaussians/'>Street Gaussians</a> has been accepted
+                    to ECCV 2024!</li>
+                  <li>[2023/11] 🏅 I received the Zhejiang Government Scholarship.</li>
+                  <li>[2023/01] 🏅 I was named a Meritorious Winner of The Interdisciplinary Contest in Modeling.</li>
+                </ul>
+                <button id="news-toggle" class="news-toggle" type="button" hidden>Show more</button>
               </td>
       </tr>
     </tbody>
@@ -126,43 +139,6 @@
       <p>
         <span>&#42;</span> <em>Equal contribution</em> &nbsp/&nbsp <span>&#8224;</span> <em>Corresponding authors</em>
       </p>
-
-      <tr bgcolor="#ffffdc">
-        <td style="padding:20px;width:30%;vertical-align:middle">
-          <img src='images/world-r1.jpg' width="190">
-        </td>
-        <td style="padding:20px;width:70%;vertical-align:middle">
-          <a href="https://aka.ms/world-r1">
-            <papertitle>World-R1: Reinforcing 3D Constraints for Text-to-Video Generation</papertitle>
-          </a>
-          <br>
-          <a class="a2" href="https://lhmd.top/" target="_blank"><strong>Weijie Wang</strong></a><span>&#42;</span>,
-          <a class="a2" href="https://github.com/Shredded-Pork" target="_blank">Xiaoxuan He</a><span>&#42;</span>,
-          <a class="a2" href="https://github.com/Tacossp" target="_blank">Youping Gu</a><span>&#42;</span>,
-          <a class="a2" href="https://www.microsoft.com/en-us/research/people/yifanyang/" target="_blank">Yifan Yang</a><span>&#8224;</span>,
-          <a class="a2" href="https://steve-zeyu-zhang.github.io/" target="_blank">Zeyu Zhang</a>,
-          <a class="a2" href="https://openreview.net/profile?id=~Yefei_He1" target="_blank">Yefei He</a>,
-          <a class="a2" href="https://github.com/DINGYANB" target="_blank">Yanbo Ding</a>,
-          <a class="a2" href="https://openreview.net/profile?id=~Xirui_Hu1" target="_blank">Xirui Hu</a>,
-          <a class="a2" href="https://donydchen.github.io/" target="_blank">Donny Y. Chen</a>,
-          <a class="a2" href="https://www.microsoft.com/en-us/research/people/zhiyuhe/" target="_blank">Zhiyuan He</a>,
-          <a class="a2" href="https://www.microsoft.com/en-us/research/people/yuqyang/" target="_blank">Yuqing Yang</a><span>&#8224;</span>,
-          <a class="a2" href="https://bohanzhuang.github.io/" target="_blank">Bohan Zhuang</a><span>&#8224;</span>
-          <br>
-          <a href="https://arxiv.org/abs/2604.24764" target="_blank">Paper</a>
-          /
-          <a href="https://aka.ms/world-r1" target="_blank">Project</a>
-          /
-          <a href="https://github.com/microsoft/World-R1" target="_blank">Code</a>
-          /
-          <a class="paper-award" href="https://huggingface.co/papers/2604.24764" target="_blank">Hugging Face #1 Paper of the Day</a>
-          <p></p>
-          <p>
-            World-R1 aligns text-to-video generation with 3D constraints through reinforcement learning, improving
-            geometric consistency while preserving visual quality and motion diversity.
-          </p>
-        </td>
-      </tr>
 
       <tr bgcolor="#ffffdc">
         <td style="padding:20px;width:30%;vertical-align:middle">
@@ -244,6 +220,45 @@
       <heading>Selected Publications</heading>
       <br>
 
+
+      <tr bgcolor="#ffffdc">
+        <td style="padding:20px;width:30%;vertical-align:middle">
+          <img src='images/world-r1.jpg' width="190">
+        </td>
+        <td style="padding:20px;width:70%;vertical-align:middle">
+          <a href="https://aka.ms/world-r1">
+            <papertitle>World-R1: Reinforcing 3D Constraints for Text-to-Video Generation</papertitle>
+          </a>
+          <br>
+          <a class="a2" href="https://lhmd.top/" target="_blank"><strong>Weijie Wang</strong></a><span>&#42;</span>,
+          <a class="a2" href="https://github.com/Shredded-Pork" target="_blank">Xiaoxuan He</a><span>&#42;</span>,
+          <a class="a2" href="https://github.com/Tacossp" target="_blank">Youping Gu</a><span>&#42;</span>,
+          <a class="a2" href="https://www.microsoft.com/en-us/research/people/yifanyang/" target="_blank">Yifan Yang</a><span>&#8224;</span>,
+          <a class="a2" href="https://steve-zeyu-zhang.github.io/" target="_blank">Zeyu Zhang</a>,
+          <a class="a2" href="https://openreview.net/profile?id=~Yefei_He1" target="_blank">Yefei He</a>,
+          <a class="a2" href="https://github.com/DINGYANB" target="_blank">Yanbo Ding</a>,
+          <a class="a2" href="https://openreview.net/profile?id=~Xirui_Hu1" target="_blank">Xirui Hu</a>,
+          <a class="a2" href="https://donydchen.github.io/" target="_blank">Donny Y. Chen</a>,
+          <a class="a2" href="https://www.microsoft.com/en-us/research/people/zhiyuhe/" target="_blank">Zhiyuan He</a>,
+          <a class="a2" href="https://www.microsoft.com/en-us/research/people/yuqyang/" target="_blank">Yuqing Yang</a><span>&#8224;</span>,
+          <a class="a2" href="https://bohanzhuang.github.io/" target="_blank">Bohan Zhuang</a><span>&#8224;</span>
+          <br>
+          <a href="https://arxiv.org/abs/2604.24764" target="_blank">Paper</a>
+          /
+          <a href="https://aka.ms/world-r1" target="_blank">Project</a>
+          /
+          <a href="https://github.com/microsoft/World-R1" target="_blank">Code</a>
+          /
+          <a class="paper-award" href="https://huggingface.co/papers/2604.24764" target="_blank">Hugging Face #1 Paper of the Day</a>
+          <br>
+          <em><strong>ICML 2026</strong></em>
+          <p></p>
+          <p>
+            World-R1 aligns text-to-video generation with 3D constraints through reinforcement learning, improving
+            geometric consistency while preserving visual quality and motion diversity.
+          </p>
+        </td>
+      </tr>
 
       <tr>
         <td style="padding:20px;width:30%;vertical-align:middle">
@@ -762,6 +777,33 @@
   </td>
   </tr>
   </table>
+  <script>
+    (function () {
+      var newsList = document.getElementById('news-list');
+      var newsToggle = document.getElementById('news-toggle');
+      if (!newsList || !newsToggle) return;
+
+      var visibleCount = parseInt(newsList.getAttribute('data-visible-count'), 10) || 5;
+      var newsItems = Array.prototype.slice.call(newsList.querySelectorAll('li'));
+      if (newsItems.length <= visibleCount) return;
+
+      var expanded = false;
+      function renderNews() {
+        newsItems.forEach(function (item, index) {
+          item.hidden = !expanded && index >= visibleCount;
+        });
+        newsToggle.textContent = expanded ? 'Show less' : 'Show more';
+        newsToggle.setAttribute('aria-expanded', String(expanded));
+      }
+
+      newsToggle.hidden = false;
+      newsToggle.addEventListener('click', function () {
+        expanded = !expanded;
+        renderNews();
+      });
+      renderNews();
+    })();
+  </script>
 </body>
 
 </html>
