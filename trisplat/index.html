@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="TriSplat: Simulation-Ready Feed-Forward 3D Scene Reconstruction project page."
+    />
+    <meta name="theme-color" content="#0a0b0a" />
+    <title>TriSplat | Simulation-Ready Feed-Forward 3D Scene Reconstruction</title>
+    <link rel="preload" href="./assets/posters/trisplat-demo.png" as="image" />
+    <link rel="stylesheet" href="./styles.css?v=27" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./assets/vendor/three/build/three.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="mesh-gradient" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="TriSplat home">
+        <span class="brand-mark"></span>
+        <span>TriSplat</span>
+      </a>
+      <nav class="nav-links" aria-label="Project sections">
+        <a href="#overview">Overview</a>
+        <a href="#interactive">Interactive</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#bibtex">BibTeX</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section-shell">
+        <div class="hero-copy reveal">
+          <h1>TriSplat</h1>
+          <p class="subtitle">
+            <span>Simulation-Ready</span>
+            <span>Feed-Forward 3D</span>
+            <span>Scene Reconstruction</span>
+          </p>
+          <div class="author-list" aria-label="Authors">
+            <a href="https://lhmd.top/" target="_blank" rel="noopener">Weijie Wang<sup>1,*</sup></a>
+            <span class="author-entry">Zimu Li<sup>1,*</sup></span>
+            <a href="https://chuan-10.github.io/" target="_blank" rel="noopener">Jinchuan Shi<sup>1</sup></a>
+            <a href="https://steve-zeyu-zhang.github.io/" target="_blank" rel="noopener">Zeyu Zhang<sup>1</sup></a>
+            <a href="https://botaoye.github.io/" target="_blank" rel="noopener">Botao Ye<sup>2,3</sup></a>
+            <span class="author-break" aria-hidden="true"></span>
+            <a href="https://people.inf.ethz.ch/~pomarc/" target="_blank" rel="noopener">Marc Pollefeys<sup>2,4</sup></a>
+            <a href="https://donydchen.github.io/" target="_blank" rel="noopener">Donny Y. Chen<sup>5</sup></a>
+            <a href="https://bohanzhuang.github.io/" target="_blank" rel="noopener">Bohan Zhuang<sup>1</sup></a>
+          </div>
+          <p class="affiliations" aria-label="Affiliations">
+            <span><sup>1</sup> Zhejiang University</span>
+            <span><sup>2</sup> ETH Zurich</span>
+            <span><sup>3</sup> ETH AI Center</span>
+            <span><sup>4</sup> Microsoft</span>
+            <span><sup>5</sup> Monash University</span>
+          </p>
+          <p class="author-note"><sup>*</sup> Equal contribution.</p>
+          <div class="button-row">
+            <a class="button primary" href="https://arxiv.org/abs/2605.00000" target="_blank" rel="noopener">Paper</a>
+            <a class="button" href="#interactive">Interactive Demo</a>
+            <button class="button" type="button" disabled title="Code release pending">Code</button>
+            <button class="button" type="button" disabled title="Model release pending">Models</button>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="hero-video-section section-shell">
+        <div class="hero-media reveal">
+          <iframe
+            class="hero-video"
+            src="https://www.youtube-nocookie.com/embed/YKXAjHFM8CA?rel=0&modestbranding=1&playsinline=1"
+            title="TriSplat demo video"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </section>
+
+      <section id="overview" class="section-shell two-column">
+        <div class="section-kicker reveal">
+          <h2>Why triangle primitives?</h2>
+        </div>
+        <div class="copy-block reveal">
+          <p>
+            Sparse-view 3D reconstruction is increasingly handled by feed-forward splatting
+            networks, but Gaussian primitives expose surfaces only indirectly. Turning them into
+            meshes still requires expensive TSDF fusion or Poisson reconstruction, which breaks
+            the feed-forward promise and makes downstream simulation cumbersome.
+          </p>
+          <p>
+            TriSplat represents scenes with oriented triangle primitives. It predicts local 3D
+            point maps, triangle attributes, camera poses, and optional intrinsics from sparse
+            inputs, then anchors triangle orientation to geometry normals refined with
+            image-conditioned cues and a mono-normal bootstrap schedule. Because the rendering
+            primitives are already triangles, the output can be loaded directly into physics
+            engines, collision detectors, and standard renderers.
+          </p>
+        </div>
+      </section>
+
+      <section id="interactive" class="interactive-section">
+        <section id="playground" class="teaser-playground reveal" aria-label="Interactive TriSplat teaser playground">
+          <div class="playground-heading section-shell">
+            <h2>Runtime Scene</h2>
+            <p>
+              Drive multiple agents on exported mesh surfaces and watch the active agent through a
+              live first-person camera.
+            </p>
+          </div>
+          <div class="teaser-sim-stage">
+            <canvas
+              id="teaserCanvas"
+              tabindex="0"
+              aria-label="Interactive robot playground with live first-person viewport"
+            ></canvas>
+            <div class="sim-status" id="teaserStatus">Loading scene...</div>
+            <div class="fpv-label" aria-hidden="true">Live FPV</div>
+            <div class="fpv-window" id="fpvWindow" aria-hidden="true">
+              <canvas id="fpvCanvas"></canvas>
+            </div>
+            <div class="sim-hud" aria-hidden="true">
+              <span id="teaserAgentName">Humanoid Robot</span>
+              <span id="teaserSpeed">0.0 m/s</span>
+            </div>
+            <div class="sim-controls" aria-label="Playground controls">
+              <div class="agent-switch" role="group" aria-label="Spawn agent">
+                <button class="agent-button" type="button" data-agent="humanoid">Add Robot</button>
+                <button class="agent-button" type="button" data-agent="quadruped">Add Robot Dog</button>
+                <button class="agent-button" type="button" data-agent="rover">Add Rover</button>
+              </div>
+              <label class="scene-select">
+                <span>Scene</span>
+                <select id="runtimeSceneSelect" aria-label="Runtime scene">
+                  <option value="dl3dv-outdoor-1">DL3DV-Outdoor-1</option>
+                  <option value="dl3dv-outdoor-2">DL3DV-Outdoor-2</option>
+                  <option value="dl3dv-outdoor-4">DL3DV-Outdoor-4</option>
+                  <option value="dl3dv-indoor-1">DL3DV-Indoor-1</option>
+                  <option value="dl3dv-indoor-2">DL3DV-Indoor-2</option>
+                  <option value="re10k-indoor-1">RE10K-Indoor-1</option>
+                  <option value="re10k-indoor-2">RE10K-Indoor-2</option>
+                  <option value="re10k-indoor-3">RE10K-Indoor-3</option>
+                </select>
+              </label>
+              <div class="agent-roster" id="agentRoster" role="group" aria-label="Active agents"></div>
+              <button class="button compact" id="dropBeacon" type="button">Mark Position</button>
+              <div class="drive-pad" aria-label="Drive pad">
+                <button type="button" data-drive="rotate-left" aria-label="Rotate left">↶</button>
+                <button type="button" data-drive="forward" aria-label="Forward">▲</button>
+                <button type="button" data-drive="rotate-right" aria-label="Rotate right">↷</button>
+                <button type="button" data-drive="left" aria-label="Left">◀</button>
+                <button type="button" data-drive="backward" aria-label="Backward">▼</button>
+                <button type="button" data-drive="right" aria-label="Right">▶</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="section-shell viewer-heading">
+          <div class="section-heading reveal">
+            <h2>Inspect every exported triangle mesh</h2>
+          </div>
+        </div>
+        <div class="mesh-grid" id="meshGrid" aria-label="Interactive exported mesh viewers"></div>
+      </section>
+
+      <section id="method" class="section-shell">
+        <div class="section-heading reveal">
+          <h2>Triangle-native reconstruction pipeline</h2>
+          <p>
+            TriSplat couples point-map geometry, normal-anchored local frames, and progressive
+            surface sharpening so hard-edged triangle primitives can train stably and export cleanly.
+          </p>
+        </div>
+        <figure class="wide-figure reveal">
+          <img
+            src="./assets/figures/web/pipeline2.png"
+            alt="TriSplat model pipeline."
+            width="1400"
+            height="411"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>
+            From sparse unposed images, the network predicts geometry, camera pose, and oriented
+            triangle attributes for direct mesh rendering and export.
+          </figcaption>
+        </figure>
+        <div class="method-grid">
+          <article class="method-card reveal">
+            <span class="card-index">01</span>
+            <h3>Point maps and poses</h3>
+            <p>
+              A DINOv2-backed transformer decoder predicts dense local 3D point maps, relative
+              camera poses, optional intrinsics, and per-pixel triangle attributes.
+            </p>
+          </article>
+          <article class="method-card reveal">
+            <span class="card-index">02</span>
+            <h3>Normal-anchored triangles</h3>
+            <p>
+              Finite-difference geometry normals are refined by an image-conditioned normal head
+              and converted into tangent frames that orient each triangle primitive.
+            </p>
+          </article>
+          <article class="method-card reveal">
+            <span class="card-index">03</span>
+            <h3>Progressive sharpening</h3>
+            <p>
+              Opacity and edge blur schedules start with forgiving soft footprints and gradually
+              converge to crisp, mesh-ready surface elements.
+            </p>
+          </article>
+          <article class="method-card reveal">
+            <span class="card-index">04</span>
+            <h3>Direct mesh export</h3>
+            <p>
+              Low-opacity triangles are discarded, face winding is corrected, nearby vertices are
+              merged, and the native triangle primitives become a standard mesh.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="results" class="section-shell">
+        <div class="section-heading reveal">
+          <h2>Fast feed-forward reconstruction without mesh post-processing</h2>
+          <p>
+            The page already exposes the exported mesh quality through interactive viewers, so this
+            section keeps the paper result focused on inference efficiency.
+          </p>
+        </div>
+        <div class="result-gallery">
+          <figure class="result-card reveal">
+            <img
+              src="./assets/figures/web/efficiency.png"
+              alt="Efficiency comparison for feed-forward mesh reconstruction."
+              width="1400"
+              height="609"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              Feed-forward efficiency across input-view counts: TriSplat exports simulation-ready
+              triangle meshes in under 1.3 seconds, while Gaussian-to-mesh baselines require tens to
+              hundreds of seconds.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="bibtex" class="section-shell bib-section">
+        <div class="section-heading reveal">
+          <h2>BibTeX</h2>
+        </div>
+        <div class="bib-card reveal">
+          <button class="copy-button" id="copyBibtex" type="button">Copy</button>
+          <pre><code id="bibtexCode">@techreport{wang2026trisplat,
+  title        = {TriSplat: Simulation-Ready Feed-Forward 3D Scene Reconstruction},
+  author       = {Wang, Weijie and Li, Zimu and Shi, Jinchuan and Zhang, Zeyu and Ye, Botao and Pollefeys, Marc and Chen, Donny Y. and Zhuang, Bohan},
+  institution  = {Zhejiang University},
+  year         = {2026},
+  month        = {May},
+  url          = {https://lhmd.top/trisplat}
+}</code></pre>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>TriSplat</strong>
+        <span>Simulation-ready feed-forward 3D reconstruction.</span>
+      </div>
+      <a href="#top">Back to top</a>
+    </footer>
+
+    <script type="module" src="./main.js?v=23"></script>
+    <script type="module" src="./teaser-sim.js?v=27"></script>
+  </body>
+</html>
