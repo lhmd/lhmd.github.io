@@ -43,6 +43,8 @@ let activeMeshLoads = 0;
 const meshLoadQueue = [];
 const maxConcurrentMeshLoads = 1;
 const meshLoadAttempts = 2;
+const meshAutoSweepMaxAngle = Math.PI / 7;
+const meshAutoSweepSpeed = 0.42;
 
 const meshSections = [
   {
@@ -420,6 +422,10 @@ class MeshViewer {
     this.releaseTimer = 0;
     this.savedCameraPosition = null;
     this.savedControlsTarget = null;
+    this.autoSweepActive = false;
+    this.autoSweepPhase = 0;
+    this.autoSweepLastTime = 0;
+    this.autoSweepBaseOffset = null;
 
     this.modeButtons.forEach((button) => {
       button.addEventListener("click", () => this.setMode(button.dataset.mode));
@@ -515,8 +521,7 @@ class MeshViewer {
     this.controls = new OrbitControls(this.camera, this.canvas);
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.08;
-    this.controls.autoRotate = !prefersReducedMotion;
-    this.controls.autoRotateSpeed = 0.46;
+    this.controls.autoRotate = false;
     this.controls.screenSpacePanning = true;
     this.controls.enablePan = true;
     this.controls.target.set(0, 0, 0);
@@ -529,6 +534,7 @@ class MeshViewer {
       ONE: THREE.TOUCH.ROTATE,
       TWO: THREE.TOUCH.DOLLY_PAN,
     };
+    this.controls.addEventListener("start", () => this.pauseAutoSweep());
     this.canvas.style.touchAction = "none";
 
     if (this.savedControlsTarget) this.controls.target.copy(this.savedControlsTarget);
@@ -577,7 +583,38 @@ class MeshViewer {
     this.controls.maxDistance = this.fitDistance * 5.2;
     this.controls.panSpeed = 0.86;
     this.controls.update();
+    this.resumeAutoSweep();
     this.requestFrame();
+  }
+
+  resumeAutoSweep() {
+    if (prefersReducedMotion || !this.initialCameraOffset) {
+      this.autoSweepActive = false;
+      return;
+    }
+    this.autoSweepActive = true;
+    this.autoSweepPhase = 0;
+    this.autoSweepLastTime = 0;
+    this.autoSweepBaseOffset = this.initialCameraOffset.clone();
+  }
+
+  pauseAutoSweep() {
+    this.autoSweepActive = false;
+  }
+
+  updateAutoSweep(now) {
+    if (!this.autoSweepActive || !this.focusTarget || !this.autoSweepBaseOffset || !this.camera || !this.controls) return;
+    const delta = this.autoSweepLastTime ? Math.min((now - this.autoSweepLastTime) / 1000, 0.12) : 0;
+    this.autoSweepLastTime = now;
+    this.autoSweepPhase += delta * meshAutoSweepSpeed;
+
+    const angle = Math.sin(this.autoSweepPhase) * meshAutoSweepMaxAngle;
+    const offset = this.autoSweepBaseOffset
+      .clone()
+      .applyAxisAngle(new THREE.Vector3(0, 1, 0), angle);
+    this.controls.target.copy(this.focusTarget);
+    this.camera.position.copy(this.focusTarget).add(offset);
+    this.camera.lookAt(this.focusTarget);
   }
 
   setMode(mode) {
@@ -698,6 +735,7 @@ class MeshViewer {
     }
     this.lastRenderTime = now;
     this.updateRendererSize();
+    this.updateAutoSweep(now);
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
     this.requestFrame();
