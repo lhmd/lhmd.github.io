@@ -149,6 +149,11 @@ function delay(ms) {
   });
 }
 
+function progressPercent(loaded, total) {
+  if (!Number.isFinite(loaded) || !Number.isFinite(total) || total <= 0) return null;
+  return Math.min(100, Math.max(0, Math.round((loaded / total) * 100)));
+}
+
 function waitForBrowserIdle(timeout = 520) {
   return new Promise((resolve) => {
     if ("requestIdleCallback" in window) {
@@ -658,8 +663,9 @@ class MeshViewer {
 
     try {
       const geometry = await loadPlyGeometry(this.loader, this.url, (loaded, total) => {
-        if (!total) return;
-        this.showStatus(`Loading ${Math.round((loaded / total) * 100)}%`);
+        const percent = progressPercent(loaded, total);
+        if (percent === null) return;
+        this.showStatus(`Loading ${percent}%`);
       });
 
       const diagonal = normalizeGeometry(geometry);

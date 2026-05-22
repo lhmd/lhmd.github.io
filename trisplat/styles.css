@@ -431,10 +431,9 @@ h3 {
 }
 
 .sim-status {
-  top: 18px;
-  left: 50%;
+  top: 64px;
+  left: 18px;
   max-width: calc(100% - 72px);
-  transform: translateX(-50%);
   padding: 9px 12px;
   color: #06100f;
   font-size: 0.86rem;
@@ -1163,7 +1162,6 @@ figcaption {
     top: 64px;
     left: 14px;
     max-width: calc(100% - 28px);
-    transform: none;
   }
 
   .sim-controls {
@@ -1237,7 +1235,7 @@ figcaption {
   }
 
   .sim-status {
-    top: calc(var(--fpv-top) + var(--fpv-header) + (var(--fpv-width) * 0.5625) + 12px);
+    top: calc(clamp(220px, 68vw, 270px) + 46px);
   }
 
   .sim-controls {
@@ -2063,7 +2061,6 @@ h1 {
     top: 64px;
     left: 14px;
     max-width: calc(100% - 28px);
-    transform: none;
   }
 
   .sim-controls {
@@ -2138,7 +2135,7 @@ h1 {
   }
 
   .sim-status {
-    top: calc(var(--fpv-top) + var(--fpv-header) + (var(--fpv-width) * 0.5625) + 12px);
+    top: calc(clamp(220px, 68vw, 282px) + 46px);
   }
 
   .sim-controls {

@@ -20,7 +20,7 @@ The page is self-contained and does not require a build step. A local web server
 
 ## Assets
 
-- The hero demo is embedded from YouTube: `https://youtu.be/YKXAjHFM8CA`.
+- The hero demo is embedded from YouTube: `https://youtu.be/2j8wUN6b9eA`.
 - `assets/videos/` is kept local-only and ignored for GitHub Pages deployment.
 - `teaser-sim.js` is the lightweight loader for the teaser playground; `teaser-playground.js`
   contains the Three.js scene with agent spawning, drive controls, mesh-ground contact, and an

@@ -14,6 +14,11 @@ const dropBeaconButton = document.querySelector("#dropBeacon");
 const runtimeSceneSelect = document.querySelector("#runtimeSceneSelect");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+function progressPercent(loaded, total) {
+  if (!Number.isFinite(loaded) || !Number.isFinite(total) || total <= 0) return null;
+  return Math.min(100, Math.max(0, Math.round((loaded / total) * 100)));
+}
+
 if (!canvas) {
   throw new Error("Missing teaser canvas");
 }
@@ -799,8 +804,9 @@ async function loadScene() {
 async function loadRuntimeSceneData(runtimeScene) {
   if (sceneDataCache.has(runtimeScene.id)) return sceneDataCache.get(runtimeScene.id);
   const loadPromise = loader.loadAsync(runtimeScene.src, (event) => {
-    if (!event.total) return;
-    showStatus(`Loading ${runtimeScene.label} ${Math.round((event.loaded / event.total) * 100)}%`);
+    const percent = progressPercent(event.loaded, event.total);
+    if (percent === null) return;
+    showStatus(`Loading ${runtimeScene.label} ${percent}%`);
   }).then((geometry) => {
     normalizeGeometry(geometry);
     return {
