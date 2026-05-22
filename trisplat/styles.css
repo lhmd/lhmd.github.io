@@ -348,6 +348,42 @@ h3 {
   line-height: 1.62;
 }
 
+.runtime-controls-guide {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 1120px;
+  margin-top: 16px;
+  color: rgba(237, 247, 243, 0.82);
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+.runtime-controls-guide span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid rgba(237, 247, 243, 0.13);
+  border-radius: 6px;
+  background: rgba(5, 9, 10, 0.42);
+}
+
+.runtime-controls-guide kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border: 1px solid rgba(91, 223, 199, 0.36);
+  border-radius: 4px;
+  background: rgba(91, 223, 199, 0.12);
+  color: var(--text);
+  font: 800 0.72rem/1 var(--mono);
+}
+
 .teaser-sim-stage {
   position: relative;
   --fpv-top: 18px;
@@ -3005,6 +3041,19 @@ h2 {
   .playground-heading {
     width: 100%;
     padding: 0 !important;
+  }
+
+  .runtime-controls-guide {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 7px;
+    margin-top: 14px;
+    font-size: 0.78rem;
+  }
+
+  .runtime-controls-guide span {
+    align-items: flex-start;
+    min-height: 0;
   }
 
   .viewer-heading,
