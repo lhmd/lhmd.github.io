@@ -349,15 +349,14 @@ h3 {
 }
 
 .runtime-controls-guide {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, max-content));
+  gap: 8px;
   max-width: min(100%, 1360px);
   margin-top: 16px;
   color: rgba(237, 247, 243, 0.82);
   font-size: clamp(0.72rem, 0.82vw, 0.84rem);
   line-height: 1.4;
-  overflow-x: auto;
-  overscroll-behavior-inline: contain;
-  scrollbar-width: thin;
 }
 
 .runtime-controls-guide span {
@@ -384,6 +383,12 @@ h3 {
   background: rgba(91, 223, 199, 0.12);
   color: var(--text);
   font: 800 0.72rem/1 var(--mono);
+}
+
+@media (max-width: 1320px) {
+  .runtime-controls-guide {
+    grid-template-columns: repeat(2, minmax(0, max-content));
+  }
 }
 
 .teaser-sim-stage {
@@ -1290,13 +1295,7 @@ body::before {
 }
 
 body::after {
-  position: fixed;
-  inset: 76px 0 auto;
-  z-index: -2;
-  height: 1px;
-  pointer-events: none;
-  content: "";
-  background: linear-gradient(90deg, transparent, rgba(226, 177, 93, 0.44), rgba(98, 223, 202, 0.38), transparent);
+  display: none;
 }
 
 .mesh-gradient {
@@ -3046,9 +3045,13 @@ h2 {
   }
 
   .runtime-controls-guide {
+    grid-template-columns: 1fr;
     margin-top: 14px;
-    padding-bottom: 4px;
     font-size: 0.76rem;
+  }
+
+  .runtime-controls-guide span {
+    white-space: normal;
   }
 
   .viewer-heading,
