@@ -114,7 +114,8 @@
             <h2>Runtime Scene</h2>
             <p>
               Drive multiple agents on exported mesh surfaces and watch the active agent through a
-              live first-person camera.
+              live first-person camera. For responsive web playback, this demo uses downsampled
+              preview meshes; full TriSplat exports are denser.
             </p>
             <div class="runtime-controls-guide" aria-label="Runtime scene controls">
               <span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / arrow keys to drive</span>
@@ -174,6 +175,10 @@
         <div class="section-shell viewer-heading">
           <div class="section-heading reveal">
             <h2>Inspect every exported triangle mesh</h2>
+            <p>
+              These viewers load browser-friendly previews for GitHub Pages. Full TriSplat exports
+              contain denser geometry than the interactive web meshes shown here.
+            </p>
           </div>
         </div>
         <div class="mesh-grid" id="meshGrid" aria-label="Interactive exported mesh viewers"></div>
