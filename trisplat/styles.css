@@ -350,13 +350,14 @@ h3 {
 
 .runtime-controls-guide {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  max-width: 1120px;
+  max-width: min(100%, 1360px);
   margin-top: 16px;
   color: rgba(237, 247, 243, 0.82);
-  font-size: 0.84rem;
+  font-size: clamp(0.72rem, 0.82vw, 0.84rem);
   line-height: 1.4;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
 }
 
 .runtime-controls-guide span {
@@ -364,6 +365,7 @@ h3 {
   align-items: center;
   gap: 6px;
   min-height: 34px;
+  white-space: nowrap;
   padding: 7px 10px;
   border: 1px solid rgba(237, 247, 243, 0.13);
   border-radius: 6px;
@@ -3044,16 +3046,9 @@ h2 {
   }
 
   .runtime-controls-guide {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 7px;
     margin-top: 14px;
-    font-size: 0.78rem;
-  }
-
-  .runtime-controls-guide span {
-    align-items: flex-start;
-    min-height: 0;
+    padding-bottom: 4px;
+    font-size: 0.76rem;
   }
 
   .viewer-heading,
