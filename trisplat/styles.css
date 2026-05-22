@@ -348,6 +348,11 @@ h3 {
   line-height: 1.62;
 }
 
+.preview-note {
+  display: block;
+  margin-top: 4px;
+}
+
 .runtime-controls-guide {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, max-content));
@@ -427,7 +432,9 @@ h3 {
 
 .sim-status {
   top: 18px;
-  left: 18px;
+  left: 50%;
+  max-width: calc(100% - 72px);
+  transform: translateX(-50%);
   padding: 9px 12px;
   color: #06100f;
   font-size: 0.86rem;
@@ -435,6 +442,7 @@ h3 {
   border-radius: 999px;
   background: rgba(88, 224, 194, 0.94);
   pointer-events: none;
+  white-space: nowrap;
 }
 
 .sim-status.is-hidden {
@@ -1151,6 +1159,13 @@ figcaption {
     right: calc(var(--fpv-right) + var(--fpv-width) + 14px);
   }
 
+  .sim-status {
+    top: 64px;
+    left: 14px;
+    max-width: calc(100% - 28px);
+    transform: none;
+  }
+
   .sim-controls {
     left: 14px;
     right: 14px;
@@ -1219,6 +1234,10 @@ figcaption {
   .sim-hud {
     top: clamp(220px, 68vw, 270px);
     right: 14px;
+  }
+
+  .sim-status {
+    top: calc(var(--fpv-top) + var(--fpv-header) + (var(--fpv-width) * 0.5625) + 12px);
   }
 
   .sim-controls {
@@ -2040,6 +2059,13 @@ h1 {
     max-width: none;
   }
 
+  .sim-status {
+    top: 64px;
+    left: 14px;
+    max-width: calc(100% - 28px);
+    transform: none;
+  }
+
   .sim-controls {
     right: 14px;
     bottom: 14px;
@@ -2109,6 +2135,10 @@ h1 {
   .sim-hud {
     top: clamp(220px, 68vw, 282px);
     right: 14px;
+  }
+
+  .sim-status {
+    top: calc(var(--fpv-top) + var(--fpv-header) + (var(--fpv-width) * 0.5625) + 12px);
   }
 
   .sim-controls {
