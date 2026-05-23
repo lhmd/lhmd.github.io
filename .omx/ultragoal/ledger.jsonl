@@ -1,0 +1,3 @@
+{"ts":"2026-05-23T16:49:53.543Z","event":"plan_created","message":"1 goal(s) created"}
+{"ts":"2026-05-23T16:50:11.735Z","event":"goal_started","goalId":"G001-integrate-meshes-from-users-bytedanc","status":"in_progress","message":"Attempt 1"}
+{"ts":"2026-05-23T16:55:01.140Z","event":"goal_resumed","goalId":"G001-integrate-meshes-from-users-bytedanc","status":"in_progress","message":"Resuming active ultragoal"}

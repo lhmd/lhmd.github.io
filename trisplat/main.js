@@ -48,26 +48,32 @@ const meshAutoSweepSpeed = 0.42;
 
 const meshSections = [
   {
-    id: "outdoor",
-    title: "Outdoor scenes",
+    id: "dl3dv",
+    title: "DL3DV scenes",
     assets: [
       {
         group: "DL3DV",
-        title: "Scene BA55",
+        title: "DL3DV-1",
         src: "./assets/mesh/gallery-web/dl3dv/ba55c875d20c34ee85ffc72264c4d77710852e5fb7d9ce4b9c26a8442850e98f_ctx12_triangle_direct_q995.ply",
         view: [0, 1],
       },
-      { group: "DL3DV", title: "Scene F70", src: "./assets/mesh/gallery-web/dl3dv/new_f70_DIRECT_triangle_mesh.ply", view: [0, 1], frameScale: 0.72 },
-      { group: "DL3DV", title: "Scene FAE", src: "./assets/mesh/gallery-web/dl3dv/new_fae_DIRECT_triangle_mesh.ply", view: [0, 1] },
-      { group: "DL3DV", title: "Teaser Scene", src: "./assets/mesh/gallery-web/dl3dv/teaser.ply", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-2", src: "./assets/mesh/gallery-web/dl3dv/new_f70_DIRECT_triangle_mesh.ply", view: [0, 1], frameScale: 0.72 },
+      { group: "DL3DV", title: "DL3DV-3", src: "./assets/mesh/gallery-web/dl3dv/new_fae_DIRECT_triangle_mesh.ply", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-4", src: "./assets/mesh/gallery-web/dl3dv/teaser.ply", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-5", src: "./assets/mesh/gallery-web/dl3dv/new_374_DIRECT_triangle_mesh.ply", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-6", src: "./assets/mesh/gallery-web/dl3dv/new_9c5_DIRECT_triangle_mesh.ply", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-7", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-07.ply", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-8", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-08.ply", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-9", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-09.ply", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-10", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-10.ply", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-11", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-11.ply", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-12", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-12.ply", view: [0, 1] },
     ],
   },
   {
-    id: "indoor-dl3dv",
-    title: "Indoor scenes",
+    id: "re10k",
+    title: "RE10K scenes",
     assets: [
-      { group: "DL3DV", title: "Scene 374", src: "./assets/mesh/gallery-web/dl3dv/new_374_DIRECT_triangle_mesh.ply", view: [0, 1] },
-      { group: "DL3DV", title: "Scene 9C5", src: "./assets/mesh/gallery-web/dl3dv/new_9c5_DIRECT_triangle_mesh.ply", view: [0, 1] },
       { group: "RE10K", title: "Scene 05", src: "./assets/mesh/gallery-web/re10k/05_5907e099d74681e5_triangle_direct_q995.ply", viewFlip: true },
       { group: "RE10K", title: "Scene 10", src: "./assets/mesh/gallery-web/re10k/10_7a874ba9dd12cff8_triangle_direct_q995.ply", view: [0, 1] },
       { group: "RE10K", title: "Scene 12", src: "./assets/mesh/gallery-web/re10k/12_a46f4561a9bb6d14_triangle_direct_q995.ply", viewFlip: true },

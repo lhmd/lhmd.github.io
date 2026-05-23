@@ -250,13 +250,20 @@ try {
         if (alignment.delta > 3) failures.push(fail(`${label}: section heading is not aligned with content`, alignment));
       }
       if (label === "desktop/interactive") {
-        const teaserCard = value.meshCardsData.find((card) => card.title === "Teaser Scene");
-        if (teaserCard?.groupId !== "outdoor") failures.push(fail(`${label}: Teaser Scene should be grouped with outdoor scenes`, { teaserCard }));
-        const f70Card = value.meshCardsData.find((card) => card.title === "Scene F70");
-        if (f70Card?.viewX !== "0" || f70Card?.viewZ !== "1") failures.push(fail(`${label}: Scene F70 should open from the corrected +Z view`, { f70Card }));
-        if (f70Card?.frameScale !== "0.72") failures.push(fail(`${label}: Scene F70 should use a closer initial frame`, { f70Card }));
+        const teaserCard = value.meshCardsData.find((card) => card.title === "DL3DV-4");
+        if (teaserCard?.groupId !== "dl3dv") failures.push(fail(`${label}: DL3DV-4 should be grouped with DL3DV scenes`, { teaserCard }));
+        const f70Card = value.meshCardsData.find((card) => card.title === "DL3DV-2");
+        if (f70Card?.viewX !== "0" || f70Card?.viewZ !== "1") failures.push(fail(`${label}: DL3DV-2 should open from the corrected +Z view`, { f70Card }));
+        if (f70Card?.frameScale !== "0.72") failures.push(fail(`${label}: DL3DV-2 should use a closer initial frame`, { f70Card }));
         const dl3dvCards = value.meshCardsData.filter((card) => card.datasetGroup === "DL3DV");
         if (dl3dvCards.some((card) => !card.src.includes('/gallery-web/dl3dv/'))) failures.push(fail(`${label}: DL3DV viewers should use cropped browser-friendly meshes`, { dl3dvCards }));
+        for (let index = 7; index <= 12; index += 1) {
+          const title = `DL3DV-${index}`;
+          const card = dl3dvCards.find((candidate) => candidate.title === title);
+          if (!card?.src.includes(`/additional/dl3dv-scene-${String(index).padStart(2, '0')}.ply`)) {
+            failures.push(fail(`${label}: gallery is missing processed ${title}`, { card }));
+          }
+        }
         const re10kCards = value.meshCardsData.filter((card) => card.datasetGroup === "RE10K");
         const scene10Card = re10kCards.find((card) => card.title === "Scene 10");
         const re10kFlipCards = re10kCards.filter((card) => card.title !== "Scene 10");
@@ -266,14 +273,18 @@ try {
         if (!re10kFlipCards.length || re10kFlipCards.some((card) => card.viewFlip !== "true")) failures.push(fail(`${label}: remaining RE10K viewers should flip their initial view by 180 degrees`, { re10kFlipCards }));
 
         const runtimeLabels = value.runtimeOptions.map((option) => option.label);
-        if (value.runtimeOptions.length !== 8) failures.push(fail(`${label}: runtime should expose only the curated operable scene set`, { runtimeOptions: value.runtimeOptions }));
-        if (runtimeLabels[0] !== "DL3DV-Outdoor-1") failures.push(fail(`${label}: runtime should default to Scene BA55 as DL3DV-Outdoor-1`, { runtimeLabels }));
-        if (runtimeLabels.some((labelText) => /^Scene\\s|Living Room|Loft|Studio|Pruned/.test(labelText))) failures.push(fail(`${label}: runtime labels should use dataset-location numbering`, { runtimeLabels }));
-        for (const expected of ["DL3DV-Outdoor-1", "DL3DV-Outdoor-2", "DL3DV-Indoor-1", "RE10K-Indoor-1", "RE10K-Indoor-3"]) {
+        if (value.runtimeOptions.length !== 15) failures.push(fail(`${label}: runtime should expose the full operable scene set`, { runtimeOptions: value.runtimeOptions }));
+        if (runtimeLabels[0] !== "DL3DV-1") failures.push(fail(`${label}: runtime should default to DL3DV-1`, { runtimeLabels }));
+        if (runtimeLabels.some((labelText) => /^Scene\\s|Living Room|Loft|Studio|Pruned|Outdoor|Indoor/.test(labelText))) failures.push(fail(`${label}: runtime labels should use compact sequential numbering`, { runtimeLabels }));
+        for (let index = 1; index <= 12; index += 1) {
+          const expected = `DL3DV-${index}`;
           if (!runtimeLabels.includes(expected)) failures.push(fail(`${label}: runtime is missing ${expected}`, { runtimeLabels }));
         }
-        if (runtimeLabels.some((labelText) => /DL3DV-Outdoor-3|RE10K-Indoor-4|RE10K-Indoor-[5-8]/.test(labelText))) failures.push(fail(`${label}: runtime should omit removed or unsuitable scenes`, { runtimeLabels }));
-        if (!value.runtimeSource.includes("v=27")) failures.push(fail(`${label}: runtime loader cache should be bumped`, { runtimeSource: value.runtimeSource }));
+        for (let index = 1; index <= 3; index += 1) {
+          const expected = `RE10K-${index}`;
+          if (!runtimeLabels.includes(expected)) failures.push(fail(`${label}: runtime is missing ${expected}`, { runtimeLabels }));
+        }
+        if (!value.runtimeSource.includes("v=28")) failures.push(fail(`${label}: runtime loader cache should be bumped`, { runtimeSource: value.runtimeSource }));
 
         for (const rail of value.meshGroupRails) {
           if (rail.rowCount !== 1) failures.push(fail(`${label}: each mesh group should stay in one horizontal row`, { rail }));

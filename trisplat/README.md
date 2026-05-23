@@ -29,6 +29,9 @@ The page is self-contained and does not require a build step. A local web server
   meshes from `/Users/bytedance/Downloads/dl3dv_prune.zip`.
 - `assets/mesh/gallery-web/**/*.ply` contains browser-friendly versions of the same scene set;
   very large meshes are face-sampled for interactive viewing while preserving the supplied scenes.
+- `assets/mesh/gallery-web/dl3dv/additional/*.ply` contains the individually processed previews
+  from `/Users/bytedance/Downloads/scale0.75` and `/Users/bytedance/Downloads/scale0.5`; each
+  file is cropped, centered, scaled, and kept below GitHub's single-file upload limit.
 - `assets/figures/web/*.png` are size-optimized web renderings of the paper figures.
 - The paper button points to a placeholder arXiv URL until the public preprint is available.
 
@@ -40,6 +43,14 @@ replacing any PLY:
 
 ```bash
 node scripts/build-web-meshes.mjs
+```
+
+Downloaded high-density meshes are processed one file at a time by the dedicated script:
+
+```bash
+node --max-old-space-size=4096 scripts/process-downloaded-meshes.mjs \
+  /Users/bytedance/Downloads/scale0.75 \
+  /Users/bytedance/Downloads/scale0.5
 ```
 
 ## QA

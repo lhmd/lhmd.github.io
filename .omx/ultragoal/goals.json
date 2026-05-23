@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "createdAt": "2026-05-23T16:49:53.543Z",
+  "updatedAt": "2026-05-23T16:50:11.735Z",
+  "briefPath": ".omx/ultragoal/brief.md",
+  "goalsPath": ".omx/ultragoal/goals.json",
+  "ledgerPath": ".omx/ultragoal/ledger.jsonl",
+  "codexGoalMode": "aggregate",
+  "goals": [
+    {
+      "id": "G001-integrate-meshes-from-users-bytedanc",
+      "title": "Integrate meshes from /Users/bytedance/Downloads/scale0.75 and /Users...",
+      "objective": "Integrate meshes from /Users/bytedance/Downloads/scale0.75 and /Users/bytedance/Downloads/scale0.5 into the TriSplat project page. Before using them, crop noisy edges, align coordinate systems, and scale them to appropriate browser-viewer dimensions. For duplicate scene ids across scale0.75 and scale0.5 choose the denser/better-looking version. Add the selected processed meshes to the webpage runtime scene/gallery as appropriate, and unify the web-facing scene IDs so they are sequential and do not skip (for example avoid DL3DV-Outdoor-1, 2, 4). Verify local loading and layout.",
+      "status": "in_progress",
+      "attempt": 1,
+      "createdAt": "2026-05-23T16:49:53.543Z",
+      "updatedAt": "2026-05-23T16:50:11.735Z",
+      "startedAt": "2026-05-23T16:50:11.735Z"
+    }
+  ],
+  "codexObjective": "Complete the durable ultragoal plan in .omx/ultragoal/goals.json, including later accepted/appended stories, under the original brief constraints; use .omx/ultragoal/ledger.jsonl as the audit trail.",
+  "activeGoalId": "G001-integrate-meshes-from-users-bytedanc"
+}
