@@ -54,34 +54,34 @@ const meshSections = [
       {
         group: "DL3DV",
         title: "DL3DV-1",
-        src: "./assets/mesh/gallery-web/dl3dv/ba55c875d20c34ee85ffc72264c4d77710852e5fb7d9ce4b9c26a8442850e98f_ctx12_triangle_direct_q995.ply",
+        src: "./assets/mesh/gallery-web/dl3dv/ba55c875d20c34ee85ffc72264c4d77710852e5fb7d9ce4b9c26a8442850e98f_ctx12_triangle_direct_q995.ply.gz",
         view: [0, 1],
       },
-      { group: "DL3DV", title: "DL3DV-2", src: "./assets/mesh/gallery-web/dl3dv/new_f70_DIRECT_triangle_mesh.ply", view: [0, 1], frameScale: 0.72 },
-      { group: "DL3DV", title: "DL3DV-3", src: "./assets/mesh/gallery-web/dl3dv/new_fae_DIRECT_triangle_mesh.ply", view: [0, 1] },
-      { group: "DL3DV", title: "DL3DV-4", src: "./assets/mesh/gallery-web/dl3dv/teaser.ply", view: [0, 1] },
-      { group: "DL3DV", title: "DL3DV-5", src: "./assets/mesh/gallery-web/dl3dv/new_374_DIRECT_triangle_mesh.ply", view: [0, 1] },
-      { group: "DL3DV", title: "DL3DV-6", src: "./assets/mesh/gallery-web/dl3dv/new_9c5_DIRECT_triangle_mesh.ply", view: [0, 1] },
-      { group: "DL3DV", title: "DL3DV-7", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-07.ply", view: [0, 1] },
-      { group: "DL3DV", title: "DL3DV-8", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-08.ply", view: [0, 1] },
-      { group: "DL3DV", title: "DL3DV-9", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-09.ply", view: [0, 1] },
-      { group: "DL3DV", title: "DL3DV-10", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-10.ply", view: [0, 1] },
-      { group: "DL3DV", title: "DL3DV-11", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-11.ply", view: [0, 1] },
-      { group: "DL3DV", title: "DL3DV-12", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-12.ply", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-2", src: "./assets/mesh/gallery-web/dl3dv/new_f70_DIRECT_triangle_mesh.ply.gz", view: [0, 1], frameScale: 0.72 },
+      { group: "DL3DV", title: "DL3DV-3", src: "./assets/mesh/gallery-web/dl3dv/new_fae_DIRECT_triangle_mesh.ply.gz", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-4", src: "./assets/mesh/gallery-web/dl3dv/teaser.ply.gz", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-5", src: "./assets/mesh/gallery-web/dl3dv/new_374_DIRECT_triangle_mesh.ply.gz", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-6", src: "./assets/mesh/gallery-web/dl3dv/new_9c5_DIRECT_triangle_mesh.ply.gz", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-7", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-07.ply.gz", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-8", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-08.ply.gz", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-9", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-09.ply.gz", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-10", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-10.ply.gz", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-11", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-11.ply.gz", view: [0, 1] },
+      { group: "DL3DV", title: "DL3DV-12", src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-12.ply.gz", view: [0, 1] },
     ],
   },
   {
     id: "re10k",
     title: "RE10K scenes",
     assets: [
-      { group: "RE10K", title: "Scene 05", src: "./assets/mesh/gallery-web/re10k/05_5907e099d74681e5_triangle_direct_q995.ply", viewFlip: true },
-      { group: "RE10K", title: "Scene 10", src: "./assets/mesh/gallery-web/re10k/10_7a874ba9dd12cff8_triangle_direct_q995.ply", view: [0, 1] },
-      { group: "RE10K", title: "Scene 12", src: "./assets/mesh/gallery-web/re10k/12_a46f4561a9bb6d14_triangle_direct_q995.ply", viewFlip: true },
-      { group: "RE10K", title: "Scene 20", src: "./assets/mesh/gallery-web/re10k/20_6054a3584527a616_triangle_direct_q995.ply", viewFlip: true },
-      { group: "RE10K", title: "Scene 63B", src: "./assets/mesh/gallery-web/re10k/new_DIRECT_triangle_mesh_63b.ply", viewFlip: true },
-      { group: "RE10K", title: "Scene B56", src: "./assets/mesh/gallery-web/re10k/new_DIRECT_triangle_mesh_b56.ply", viewFlip: true },
-      { group: "RE10K", title: "Scene DAB", src: "./assets/mesh/gallery-web/re10k/new_DIRECT_triangle_mesh_dab.ply", viewFlip: true },
-      { group: "RE10K", title: "Scene 5AC", src: "./assets/mesh/gallery-web/re10k/new_DIRECT_triangle_mesh_new_5ac.ply", viewFlip: true },
+      { group: "RE10K", title: "Scene 05", src: "./assets/mesh/gallery-web/re10k/05_5907e099d74681e5_triangle_direct_q995.ply.gz", viewFlip: true },
+      { group: "RE10K", title: "Scene 10", src: "./assets/mesh/gallery-web/re10k/10_7a874ba9dd12cff8_triangle_direct_q995.ply.gz", view: [0, 1] },
+      { group: "RE10K", title: "Scene 12", src: "./assets/mesh/gallery-web/re10k/12_a46f4561a9bb6d14_triangle_direct_q995.ply.gz", viewFlip: true },
+      { group: "RE10K", title: "Scene 20", src: "./assets/mesh/gallery-web/re10k/20_6054a3584527a616_triangle_direct_q995.ply.gz", viewFlip: true },
+      { group: "RE10K", title: "Scene 63B", src: "./assets/mesh/gallery-web/re10k/new_DIRECT_triangle_mesh_63b.ply.gz", viewFlip: true },
+      { group: "RE10K", title: "Scene B56", src: "./assets/mesh/gallery-web/re10k/new_DIRECT_triangle_mesh_b56.ply.gz", viewFlip: true },
+      { group: "RE10K", title: "Scene DAB", src: "./assets/mesh/gallery-web/re10k/new_DIRECT_triangle_mesh_dab.ply.gz", viewFlip: true },
+      { group: "RE10K", title: "Scene 5AC", src: "./assets/mesh/gallery-web/re10k/new_DIRECT_triangle_mesh_new_5ac.ply.gz", viewFlip: true },
     ],
   },
 ];
@@ -93,7 +93,9 @@ function maxPixelRatio() {
 function createMeshCard(asset) {
   const card = document.createElement("article");
   card.className = "mesh-card reveal";
-  card.dataset.src = asset.src;
+  const sources = Array.isArray(asset.src) ? asset.src : [asset.src];
+  card.dataset.src = sources[0];
+  card.dataset.srcs = JSON.stringify(sources);
   if (asset.view) {
     card.dataset.viewX = String(asset.view[0]);
     card.dataset.viewZ = String(asset.view[1]);
@@ -205,14 +207,34 @@ async function fetchArrayBufferWithProgress(url, onProgress) {
   return merged.buffer;
 }
 
+async function decompressGzipBuffer(buffer) {
+  if (!("DecompressionStream" in window)) {
+    throw new Error("This browser cannot decompress gzip mesh assets");
+  }
+  const stream = new Blob([buffer]).stream().pipeThrough(new DecompressionStream("gzip"));
+  return new Response(stream).arrayBuffer();
+}
+
+function isGzipBuffer(buffer) {
+  if (!buffer || buffer.byteLength < 2) return false;
+  const bytes = new Uint8Array(buffer, 0, 2);
+  return bytes[0] === 0x1f && bytes[1] === 0x8b;
+}
+
+async function maybeDecompressMeshBuffer(buffer, url) {
+  if (!url.endsWith(".gz") || !isGzipBuffer(buffer)) return buffer;
+  return decompressGzipBuffer(buffer);
+}
+
 async function loadPlyGeometry(loader, url, onProgress) {
   let lastError = null;
 
   for (let attempt = 1; attempt <= meshLoadAttempts; attempt += 1) {
     try {
       const buffer = await fetchArrayBufferWithProgress(url, onProgress);
+      const plyBuffer = await maybeDecompressMeshBuffer(buffer, url);
       await waitForBrowserIdle();
-      return loader.parse(buffer);
+      return loader.parse(plyBuffer);
     } catch (error) {
       lastError = error;
       if (attempt < meshLoadAttempts) await delay(650);
@@ -220,6 +242,30 @@ async function loadPlyGeometry(loader, url, onProgress) {
   }
 
   throw lastError;
+}
+
+function geometrySources(value) {
+  if (!value) return [];
+  if (Array.isArray(value)) return value;
+  try {
+    const parsed = JSON.parse(value);
+    if (Array.isArray(parsed)) return parsed;
+  } catch {
+    return [value];
+  }
+  return [value];
+}
+
+async function loadPlyGeometryParts(loader, urls, onProgress) {
+  const sources = geometrySources(urls);
+  const geometries = [];
+  for (const [index, url] of sources.entries()) {
+    const geometry = await loadPlyGeometry(loader, url, (loaded, total) => {
+      onProgress?.(index, sources.length, loaded, total);
+    });
+    geometries.push(geometry);
+  }
+  return geometries;
 }
 
 async function loadThreeModules() {
@@ -266,40 +312,104 @@ function orientGeometryYUp(geometry) {
   geometry.deleteAttribute("normal");
 }
 
-function normalizeGeometry(geometry) {
-  orientGeometryYUp(geometry);
+function finalizeGeometry(geometry) {
+  geometry.computeVertexNormals();
+  if (geometry.attributes.color) {
+    geometry.attributes.color.normalized = true;
+  }
   geometry.computeBoundingBox();
-  const box = geometry.boundingBox;
+  geometry.computeBoundingSphere();
+}
+
+function boundingBoxForGeometries(geometries) {
+  const box = new THREE.Box3();
+  for (const geometry of geometries) {
+    geometry.computeBoundingBox();
+    box.union(geometry.boundingBox);
+  }
+  return box;
+}
+
+function boundingSphereRadiusForBox(box) {
+  const size = new THREE.Vector3();
+  box.getSize(size);
+  return size.length() * 0.5;
+}
+
+function estimateDominantUpNormal(geometries) {
+  const accumulated = new THREE.Vector3();
+  const a = new THREE.Vector3();
+  const b = new THREE.Vector3();
+  const c = new THREE.Vector3();
+  const ab = new THREE.Vector3();
+  const ac = new THREE.Vector3();
+  const normal = new THREE.Vector3();
+
+  for (const geometry of geometries) {
+    const position = geometry.attributes.position;
+    const index = geometry.index;
+    const faceCount = index ? index.count / 3 : Math.floor(position.count / 3);
+    const step = Math.max(1, Math.floor(faceCount / 50000));
+
+    for (let face = 0; face < faceCount; face += step) {
+      const ia = index ? index.getX(face * 3) : face * 3;
+      const ib = index ? index.getX(face * 3 + 1) : face * 3 + 1;
+      const ic = index ? index.getX(face * 3 + 2) : face * 3 + 2;
+      a.fromBufferAttribute(position, ia);
+      b.fromBufferAttribute(position, ib);
+      c.fromBufferAttribute(position, ic);
+      normal.copy(ab.subVectors(b, a)).cross(ac.subVectors(c, a));
+      if (normal.lengthSq() < 1e-10) continue;
+      normal.normalize();
+      if (normal.y < 0) normal.multiplyScalar(-1);
+      if (normal.y < 0.18) continue;
+      accumulated.addScaledVector(normal, Math.max(normal.y, 0.25));
+    }
+  }
+
+  if (accumulated.lengthSq() < 1e-8) return new THREE.Vector3(0, 1, 0);
+  return accumulated.normalize();
+}
+
+function levelGeometriesToGroundPlane(geometries) {
+  const dominantUp = estimateDominantUpNormal(geometries);
+  const worldUp = new THREE.Vector3(0, 1, 0);
+  if (dominantUp.dot(worldUp) > 0.997) return;
+  const rotation = new THREE.Quaternion().setFromUnitVectors(dominantUp, worldUp);
+  for (const geometry of geometries) {
+    geometry.applyQuaternion(rotation);
+    geometry.deleteAttribute("normal");
+  }
+}
+
+function normalizeGeometries(geometries) {
+  for (const geometry of geometries) orientGeometryYUp(geometry);
+  levelGeometriesToGroundPlane(geometries);
+
+  const box = boundingBoxForGeometries(geometries);
   const center = new THREE.Vector3();
   const size = new THREE.Vector3();
   box.getCenter(center);
   box.getSize(size);
-
-  geometry.translate(-center.x, -center.y, -center.z);
-
   const maxAxis = Math.max(size.x, size.y, size.z) || 1;
   const scale = 2.35 / maxAxis;
-  geometry.scale(scale, scale, scale);
 
-  geometry.computeBoundingBox();
-  geometry.computeBoundingSphere();
-
-  const normalizedBox = geometry.boundingBox;
-  const normalizedCenter = new THREE.Vector3();
-  const normalizedSize = new THREE.Vector3();
-  normalizedBox.getCenter(normalizedCenter);
-  normalizedBox.getSize(normalizedSize);
-  geometry.translate(-normalizedCenter.x, -normalizedBox.min.y, -normalizedCenter.z);
-  geometry.computeBoundingBox();
-  geometry.computeBoundingSphere();
-
-  geometry.computeVertexNormals();
-
-  if (geometry.attributes.color) {
-    geometry.attributes.color.normalized = true;
+  for (const geometry of geometries) {
+    geometry.translate(-center.x, -center.y, -center.z);
+    geometry.scale(scale, scale, scale);
   }
 
-  return normalizedSize.length();
+  const scaledBox = boundingBoxForGeometries(geometries);
+  const scaledCenter = new THREE.Vector3();
+  const scaledSize = new THREE.Vector3();
+  scaledBox.getCenter(scaledCenter);
+  scaledBox.getSize(scaledSize);
+  for (const geometry of geometries) {
+    geometry.translate(-scaledCenter.x, -scaledBox.min.y, -scaledCenter.z);
+    finalizeGeometry(geometry);
+  }
+
+  return scaledSize.length();
 }
 
 function estimateOpenView(geometry) {
@@ -405,7 +515,7 @@ class MeshViewer {
     this.statsEl = card.querySelector(".mesh-stats");
     this.modeButtons = [...card.querySelectorAll(".mode-button")];
     this.resetButton = card.querySelector(".reset-view");
-    this.url = card.dataset.src;
+    this.urls = geometrySources(card.dataset.srcs ?? card.dataset.src);
     this.preferredViewDirection = null;
     const preferredViewX = Number(card.dataset.viewX);
     const preferredViewZ = Number(card.dataset.viewZ);
@@ -635,9 +745,12 @@ class MeshViewer {
       button.classList.toggle("is-active", button.dataset.mode === mode);
     });
     if (!this.mesh) return;
-    const oldMaterial = this.mesh.material;
-    this.mesh.material = createMaterial(this.mode);
-    oldMaterial.dispose();
+    this.mesh.traverse((object) => {
+      if (!object.isMesh) return;
+      const oldMaterial = object.material;
+      object.material = createMaterial(this.mode);
+      oldMaterial.dispose();
+    });
     this.requestFrame();
   }
 
@@ -661,26 +774,28 @@ class MeshViewer {
       this.started = false;
       return;
     }
-    if (!(await this.init()) || !this.url) {
+    if (!(await this.init()) || !this.urls.length) {
       this.started = false;
       return;
     }
     this.showStatus("Loading mesh...");
 
     try {
-      const geometry = await loadPlyGeometry(this.loader, this.url, (loaded, total) => {
+      const geometries = await loadPlyGeometryParts(this.loader, this.urls, (partIndex, partCount, loaded, total) => {
         const percent = progressPercent(loaded, total);
         if (percent === null) return;
-        this.showStatus(`Loading ${percent}%`);
+        const prefix = partCount > 1 ? `Part ${partIndex + 1}/${partCount} · ` : "";
+        this.showStatus(`${prefix}Loading ${percent}%`);
       });
 
-      const diagonal = normalizeGeometry(geometry);
-      this.mesh = new THREE.Mesh(geometry, createMaterial(this.mode));
+      const diagonal = normalizeGeometries(geometries);
+      this.mesh = new THREE.Group();
+      for (const geometry of geometries) {
+        this.mesh.add(new THREE.Mesh(geometry, createMaterial(this.mode)));
+      }
       this.scene.add(this.mesh);
 
-      geometry.computeBoundingBox();
-      geometry.computeBoundingSphere();
-      const sceneBox = geometry.boundingBox;
+      const sceneBox = boundingBoxForGeometries(geometries);
       const sceneCenter = new THREE.Vector3();
       const sceneSize = new THREE.Vector3();
       sceneBox.getCenter(sceneCenter);
@@ -690,11 +805,11 @@ class MeshViewer {
         sceneBox.min.y + sceneSize.y * 0.4,
         sceneCenter.z,
       );
-      const radius = geometry.boundingSphere?.radius ?? diagonal * 0.5;
+      const radius = boundingSphereRadiusForBox(sceneBox);
       this.fitDistance = fitDistanceForBox(sceneSize, radius) * this.frameScale;
       const chosenViewDirection = this.preferredViewDirection
         ? new THREE.Vector3(this.preferredViewDirection.x, 0, this.preferredViewDirection.z).normalize()
-        : estimateOpenView(geometry);
+        : estimateOpenView(geometries[0]);
       if (this.flipInitialView) chosenViewDirection.multiplyScalar(-1);
       this.openViewDirection = chosenViewDirection.normalize();
       const lateralOffset = new THREE.Vector3(-this.openViewDirection.z, 0, this.openViewDirection.x)
@@ -706,8 +821,8 @@ class MeshViewer {
         .add(new THREE.Vector3(0, Math.max(sceneSize.y * 0.42, this.fitDistance * 0.18), 0));
       this.resetCamera();
 
-      const vertices = geometry.attributes.position.count;
-      const faces = geometry.index ? geometry.index.count / 3 : vertices / 3;
+      const vertices = geometries.reduce((sum, geometry) => sum + geometry.attributes.position.count, 0);
+      const faces = geometries.reduce((sum, geometry) => sum + (geometry.index ? geometry.index.count / 3 : geometry.attributes.position.count / 3), 0);
       if (this.statsEl) {
         this.statsEl.textContent = `${vertices.toLocaleString()} vertices · ${Math.round(faces).toLocaleString()} faces`;
       }

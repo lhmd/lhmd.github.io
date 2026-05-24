@@ -1,5 +1,6 @@
-import { mkdir, open, readFile, writeFile } from "node:fs/promises";
+import { mkdir, open, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { gzipSync } from "node:zlib";
 
 const defaultCandidateRoots = [
   "/Users/bytedance/Downloads/scale0.75",
@@ -7,12 +8,15 @@ const defaultCandidateRoots = [
 ];
 const candidateRoots = process.argv.slice(2).length ? process.argv.slice(2) : defaultCandidateRoots;
 const outputRoot = "assets/mesh/gallery-web/dl3dv/additional";
-const maxFaces = 240000;
 const githubFileLimitBytes = 95 * 1024 * 1024;
+const outputTargetExtent = 4.0;
+const coordinateLimit = 10000;
+const gzipOptions = { level: 9 };
+const perimeterCropQuantile = Number(process.env.TRISPLAT_WEB_CROP_QUANTILE ?? "0.015");
+const maxWebFaces = Number(process.env.TRISPLAT_WEB_MAX_FACES ?? "1300000");
+const randomSeed = Number(process.env.TRISPLAT_WEB_RANDOM_SEED ?? "20260524") >>> 0;
+const maxQuantileSamples = 250000;
 const firstAdditionalSceneNumber = 7;
-const cropLowerQuantile = 0.005;
-const cropUpperQuantile = 0.995;
-const targetMaxExtent = 4.0;
 const headerTerminator = Buffer.from("end_header\n");
 
 const sceneFiles = [
@@ -67,19 +71,16 @@ function parseHeaderCounts(headerText, filePath) {
 
 async function chooseSource(file) {
   const candidates = [];
-
   for (const root of candidateRoots) {
     const filePath = path.join(root, file);
     const counts = parseHeaderCounts(await readHeaderText(filePath), filePath);
     candidates.push({ root, filePath, ...counts });
   }
-
   candidates.sort((a, b) => {
     if (b.faceCount !== a.faceCount) return b.faceCount - a.faceCount;
     if (b.vertexCount !== a.vertexCount) return b.vertexCount - a.vertexCount;
     return candidateRoots.indexOf(a.root) - candidateRoots.indexOf(b.root);
   });
-
   return candidates[0];
 }
 
@@ -126,7 +127,6 @@ function parseHeader(buffer, filePath) {
 
   return {
     bodyOffset: headerEnd + headerTerminator.length,
-    elements,
     vertex: elements.find((element) => element.name === "vertex"),
     face: elements.find((element) => element.name === "face"),
   };
@@ -141,13 +141,11 @@ function scalarReader(type) {
 function elementLayout(element) {
   let stride = 0;
   const offsets = new Map();
-
   for (const property of element.properties) {
     if (property.kind !== "scalar") return null;
     offsets.set(property.name, stride);
     stride += scalarReader(property.type).size;
   }
-
   return { stride, offsets };
 }
 
@@ -167,229 +165,199 @@ function readColor(buffer, baseOffset, element, layout, propertyName, fallback) 
 function readFace(buffer, offset, faceElement) {
   let cursor = offset;
   let indices = null;
-
   for (const property of faceElement.properties) {
     if (property.kind === "scalar") {
       cursor += scalarReader(property.type).size;
       continue;
     }
-
     const countReader = scalarReader(property.countType);
     const itemReader = scalarReader(property.itemType);
     const count = countReader.read(buffer, cursor);
     cursor += countReader.size;
     const values = [];
-
     for (let index = 0; index < count; index += 1) {
       values.push(itemReader.read(buffer, cursor));
       cursor += itemReader.size;
     }
-
     if (property.name === "vertex_indices" || property.name === "vertex_index") indices = values;
   }
-
   return { nextOffset: cursor, indices };
 }
 
-function quantile(values, q, label) {
-  if (!values.length) throw new Error(`No finite ${label} coordinate samples found`);
-  const sorted = [...values].sort((a, b) => a - b);
-  const index = Math.min(sorted.length - 1, Math.max(0, Math.floor((sorted.length - 1) * q)));
-  return sorted[index];
+function quantile(values, ratio) {
+  if (!values.length) return 0;
+  values.sort((a, b) => a - b);
+  const index = Math.max(0, Math.min(values.length - 1, Math.round((values.length - 1) * ratio)));
+  return values[index];
 }
 
-function sampleBounds(input, header, vertexLayout) {
-  const stride = vertexLayout.stride;
+function computeVertexTransform(input, header, vertexLayout) {
   const vertexStart = header.bodyOffset;
-  const sampleStep = Math.max(1, Math.floor(header.vertex.count / 160000));
-  const samples = [[], [], []];
+  const finite = new Uint8Array(header.vertex.count);
+  const allMin = [Infinity, Infinity, Infinity];
+  const allMax = [-Infinity, -Infinity, -Infinity];
+  const croppedMin = [Infinity, Infinity, Infinity];
+  const croppedMax = [-Infinity, -Infinity, -Infinity];
+  const sampleStride = Math.max(1, Math.floor(header.vertex.count / maxQuantileSamples));
+  const xSamples = [];
+  const zSamples = [];
+  let finiteCount = 0;
 
-  for (let index = 0; index < header.vertex.count; index += sampleStep) {
-    const offset = vertexStart + index * stride;
-    const x = readScalar(input, offset, header.vertex, vertexLayout, "x");
-    const y = readScalar(input, offset, header.vertex, vertexLayout, "y");
-    const z = readScalar(input, offset, header.vertex, vertexLayout, "z");
+  for (let index = 0; index < header.vertex.count; index += 1) {
+    const offset = vertexStart + index * vertexLayout.stride;
+    const values = [
+      readScalar(input, offset, header.vertex, vertexLayout, "x"),
+      readScalar(input, offset, header.vertex, vertexLayout, "y"),
+      readScalar(input, offset, header.vertex, vertexLayout, "z"),
+    ];
+    const ok =
+      values.every(Number.isFinite) &&
+      Math.abs(values[0]) < coordinateLimit &&
+      Math.abs(values[1]) < coordinateLimit &&
+      Math.abs(values[2]) < coordinateLimit;
+    if (!ok) continue;
 
-    if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) continue;
-    samples[0].push(x);
-    samples[1].push(y);
-    samples[2].push(z);
+    finite[index] = 1;
+    finiteCount += 1;
+    for (let axis = 0; axis < 3; axis += 1) {
+      allMin[axis] = Math.min(allMin[axis], values[axis]);
+      allMax[axis] = Math.max(allMax[axis], values[axis]);
+    }
+    if (index % sampleStride === 0) {
+      xSamples.push(values[0]);
+      zSamples.push(values[2]);
+    }
   }
 
-  const axes = ["x", "y", "z"];
-  const min = samples.map((axis, index) => quantile(axis, cropLowerQuantile, axes[index]));
-  const max = samples.map((axis, index) => quantile(axis, cropUpperQuantile, axes[index]));
+  if (!finiteCount) throw new Error("No finite vertices found");
+  const cropRatio = Math.max(0, Math.min(perimeterCropQuantile, 0.18));
+  const cropBounds = cropRatio > 0 && xSamples.length >= 1000
+    ? {
+        minX: quantile(xSamples, cropRatio),
+        maxX: quantile(xSamples, 1 - cropRatio),
+        minZ: quantile(zSamples, cropRatio),
+        maxZ: quantile(zSamples, 1 - cropRatio),
+      }
+    : {
+        minX: allMin[0],
+        maxX: allMax[0],
+        minZ: allMin[2],
+        maxZ: allMax[2],
+      };
+
+  let croppedVertexCount = 0;
+  for (let index = 0; index < header.vertex.count; index += 1) {
+    if (!finite[index]) continue;
+    const offset = vertexStart + index * vertexLayout.stride;
+    const values = [
+      readScalar(input, offset, header.vertex, vertexLayout, "x"),
+      readScalar(input, offset, header.vertex, vertexLayout, "y"),
+      readScalar(input, offset, header.vertex, vertexLayout, "z"),
+    ];
+    if (values[0] < cropBounds.minX || values[0] > cropBounds.maxX || values[2] < cropBounds.minZ || values[2] > cropBounds.maxZ) continue;
+    croppedVertexCount += 1;
+    for (let axis = 0; axis < 3; axis += 1) {
+      croppedMin[axis] = Math.min(croppedMin[axis], values[axis]);
+      croppedMax[axis] = Math.max(croppedMax[axis], values[axis]);
+    }
+  }
+
+  const min = croppedVertexCount ? croppedMin : allMin;
+  const max = croppedVertexCount ? croppedMax : allMax;
   const center = min.map((value, index) => (value + max[index]) * 0.5);
   const size = max.map((value, index) => Math.max(value - min[index], Number.EPSILON));
-  const scale = targetMaxExtent / Math.max(...size, Number.EPSILON);
-
-  return { min, max, center, scale, sampleCount: samples[0].length };
+  const scale = outputTargetExtent / Math.max(...size, Number.EPSILON);
+  return { finite, finiteCount, croppedVertexCount, cropBounds, center, scale };
 }
 
-function isInsideCrop(x, y, z, bounds) {
-  return (
-    x >= bounds.min[0] &&
-    x <= bounds.max[0] &&
-    y >= bounds.min[1] &&
-    y <= bounds.max[1] &&
-    z >= bounds.min[2] &&
-    z <= bounds.max[2]
-  );
-}
-
-function transformedVertex(input, header, vertexLayout, vertexStart, index, bounds) {
+function readTransformedVertex(input, header, vertexLayout, vertexStart, index, transform) {
   const offset = vertexStart + index * vertexLayout.stride;
   const x = readScalar(input, offset, header.vertex, vertexLayout, "x");
   const y = readScalar(input, offset, header.vertex, vertexLayout, "y");
   const z = readScalar(input, offset, header.vertex, vertexLayout, "z");
-
   return {
-    x: (x - bounds.center[0]) * bounds.scale,
-    y: (y - bounds.center[1]) * bounds.scale,
-    z: (z - bounds.center[2]) * bounds.scale,
+    x: (x - transform.center[0]) * transform.scale,
+    y: (y - transform.center[1]) * transform.scale,
+    z: (z - transform.center[2]) * transform.scale,
     red: readColor(input, offset, header.vertex, vertexLayout, "red", 210),
     green: readColor(input, offset, header.vertex, vertexLayout, "green", 214),
     blue: readColor(input, offset, header.vertex, vertexLayout, "blue", 210),
   };
 }
 
-function triangleAreaSquared(a, b, c) {
-  const abx = b.x - a.x;
-  const aby = b.y - a.y;
-  const abz = b.z - a.z;
-  const acx = c.x - a.x;
-  const acy = c.y - a.y;
-  const acz = c.z - a.z;
-  const cx = aby * acz - abz * acy;
-  const cy = abz * acx - abx * acz;
-  const cz = abx * acy - aby * acx;
-  return cx * cx + cy * cy + cz * cz;
+function createChunk() {
+  return { faces: [], used: new Set() };
 }
 
-async function convertMesh(inputPath, outputPath) {
-  const input = await readFile(inputPath);
-  const header = parseHeader(input, inputPath);
-  if (!header.vertex || !header.face) throw new Error(`Missing vertex or face element in ${inputPath}`);
+function appendFaceToChunk(chunk, a, b, c) {
+  chunk.faces.push(a, b, c);
+  chunk.used.add(a);
+  chunk.used.add(b);
+  chunk.used.add(c);
+}
 
-  const vertexLayout = elementLayout(header.vertex);
-  if (!vertexLayout) throw new Error(`Unsupported vertex list property in ${inputPath}`);
+function estimatedChunkBytes(chunk) {
+  return 360 + chunk.used.size * 15 + (chunk.faces.length / 3) * 13;
+}
 
+function hashToUnit(seed, value) {
+  let x = (value ^ seed) >>> 0;
+  x = Math.imul(x ^ (x >>> 16), 0x7feb352d);
+  x = Math.imul(x ^ (x >>> 15), 0x846ca68b);
+  x = (x ^ (x >>> 16)) >>> 0;
+  return x / 0x100000000;
+}
+
+function keepSampledFace(sequence, probability) {
+  return probability >= 1 || hashToUnit(randomSeed, sequence) < probability;
+}
+
+function faceInsideCrop(input, header, vertexLayout, vertexStart, transform, a, b, c) {
+  const centroid = [a, b, c].reduce((sum, sourceIndex) => {
+    const offset = vertexStart + sourceIndex * vertexLayout.stride;
+    return sum + readScalar(input, offset, header.vertex, vertexLayout, "x");
+  }, 0) / 3;
+  if (centroid < transform.cropBounds.minX || centroid > transform.cropBounds.maxX) return false;
+
+  const centroidZ = [a, b, c].reduce((sum, sourceIndex) => {
+    const offset = vertexStart + sourceIndex * vertexLayout.stride;
+    return sum + readScalar(input, offset, header.vertex, vertexLayout, "z");
+  }, 0) / 3;
+  return centroidZ >= transform.cropBounds.minZ && centroidZ <= transform.cropBounds.maxZ;
+}
+
+async function writeChunk(input, header, vertexLayout, transform, outputPath, chunk) {
+  const orderedVertices = [...chunk.used].sort((a, b) => a - b);
+  const remap = new Map(orderedVertices.map((sourceIndex, outputIndex) => [sourceIndex, outputIndex]));
   const vertexStart = header.bodyOffset;
-  const faceStart = vertexStart + header.vertex.count * vertexLayout.stride;
-  const bounds = sampleBounds(input, header, vertexLayout);
-  const valid = new Uint8Array(header.vertex.count);
-  let validVertexCount = 0;
-
-  for (let index = 0; index < header.vertex.count; index += 1) {
-    const offset = vertexStart + index * vertexLayout.stride;
-    const x = readScalar(input, offset, header.vertex, vertexLayout, "x");
-    const y = readScalar(input, offset, header.vertex, vertexLayout, "y");
-    const z = readScalar(input, offset, header.vertex, vertexLayout, "z");
-    const ok = Number.isFinite(x) && Number.isFinite(y) && Number.isFinite(z) && isInsideCrop(x, y, z, bounds);
-    valid[index] = ok ? 1 : 0;
-    if (ok) validVertexCount += 1;
-  }
-
-  const used = new Uint8Array(header.vertex.count);
-  const sampledFaces = [];
-  const sampleStep = header.face.count <= maxFaces ? 1 : header.face.count / maxFaces;
-  let cursor = faceStart;
-  let sampleAccumulator = 0;
-  let skippedFaces = 0;
-
-  for (let faceIndex = 0; faceIndex < header.face.count; faceIndex += 1) {
-    const face = readFace(input, cursor, header.face);
-    cursor = face.nextOffset;
-
-    sampleAccumulator += 1;
-    if (sampleStep > 1 && sampleAccumulator < sampleStep) continue;
-    sampleAccumulator -= sampleStep;
-
-    if (!face.indices || face.indices.length !== 3) {
-      skippedFaces += 1;
-      continue;
-    }
-
-    const [a, b, c] = face.indices;
-    const validFace =
-      a >= 0 &&
-      b >= 0 &&
-      c >= 0 &&
-      a < header.vertex.count &&
-      b < header.vertex.count &&
-      c < header.vertex.count &&
-      a !== b &&
-      b !== c &&
-      a !== c &&
-      valid[a] &&
-      valid[b] &&
-      valid[c];
-
-    if (!validFace) {
-      skippedFaces += 1;
-      continue;
-    }
-
-    const va = transformedVertex(input, header, vertexLayout, vertexStart, a, bounds);
-    const vb = transformedVertex(input, header, vertexLayout, vertexStart, b, bounds);
-    const vc = transformedVertex(input, header, vertexLayout, vertexStart, c, bounds);
-    if (triangleAreaSquared(va, vb, vc) < 1e-12) {
-      skippedFaces += 1;
-      continue;
-    }
-
-    sampledFaces.push(a, b, c);
-    used[a] = 1;
-    used[b] = 1;
-    used[c] = 1;
-  }
-
-  const remap = new Int32Array(header.vertex.count);
-  remap.fill(-1);
-  let outputVertexCount = 0;
-  for (let index = 0; index < header.vertex.count; index += 1) {
-    if (!used[index]) continue;
-    remap[index] = outputVertexCount;
-    outputVertexCount += 1;
-  }
-
-  const outputFaceCount = sampledFaces.length / 3;
+  const faceCount = chunk.faces.length / 3;
   const outputHeader = Buffer.from(
     [
       "ply",
       "format binary_little_endian 1.0",
-      "comment TriSplat web preview mesh",
-      "comment q005-q995 crop, centered and scaled; web runtime applies Y-up axis alignment",
+      "comment TriSplat web mesh chunk",
+      "comment perimeter-cropped and deterministically random-sampled for web delivery",
+      "comment web runtime applies Y-up axis alignment",
       "comment generated by scripts/process-downloaded-meshes.mjs",
-      `element vertex ${outputVertexCount}`,
+      `element vertex ${orderedVertices.length}`,
       "property float x",
       "property float y",
       "property float z",
       "property uchar red",
       "property uchar green",
       "property uchar blue",
-      `element face ${outputFaceCount}`,
+      `element face ${faceCount}`,
       "property list uchar uint vertex_indices",
       "end_header",
       "",
     ].join("\n"),
   );
-  const vertexBytes = outputVertexCount * 15;
-  const faceBytes = outputFaceCount * 13;
-  const output = Buffer.alloc(outputHeader.length + vertexBytes + faceBytes);
-  if (output.byteLength > githubFileLimitBytes) {
-    const sizeMb = (output.byteLength / 1024 / 1024).toFixed(1);
-    const limitMb = (githubFileLimitBytes / 1024 / 1024).toFixed(0);
-    throw new Error(
-      `${path.basename(outputPath)} would be ${sizeMb}MB, above the ${limitMb}MB GitHub upload guard. Lower maxFaces or split the scene.`,
-    );
-  }
+  const output = Buffer.alloc(outputHeader.length + orderedVertices.length * 15 + faceCount * 13);
   outputHeader.copy(output, 0);
 
   let writeOffset = outputHeader.length;
-  for (let index = 0; index < header.vertex.count; index += 1) {
-    if (remap[index] < 0) continue;
-    const vertex = transformedVertex(input, header, vertexLayout, vertexStart, index, bounds);
+  for (const sourceIndex of orderedVertices) {
+    const vertex = readTransformedVertex(input, header, vertexLayout, vertexStart, sourceIndex, transform);
     output.writeFloatLE(vertex.x, writeOffset);
     output.writeFloatLE(vertex.y, writeOffset + 4);
     output.writeFloatLE(vertex.z, writeOffset + 8);
@@ -399,36 +367,144 @@ async function convertMesh(inputPath, outputPath) {
     writeOffset += 15;
   }
 
-  for (let index = 0; index < sampledFaces.length; index += 3) {
+  for (let index = 0; index < chunk.faces.length; index += 3) {
     output.writeUInt8(3, writeOffset);
-    output.writeUInt32LE(remap[sampledFaces[index]], writeOffset + 1);
-    output.writeUInt32LE(remap[sampledFaces[index + 1]], writeOffset + 5);
-    output.writeUInt32LE(remap[sampledFaces[index + 2]], writeOffset + 9);
+    output.writeUInt32LE(remap.get(chunk.faces[index]), writeOffset + 1);
+    output.writeUInt32LE(remap.get(chunk.faces[index + 1]), writeOffset + 5);
+    output.writeUInt32LE(remap.get(chunk.faces[index + 2]), writeOffset + 9);
     writeOffset += 13;
   }
 
-  await writeFile(outputPath, output);
+  const compressed = gzipSync(output, gzipOptions);
+  if (compressed.byteLength > githubFileLimitBytes) {
+    throw new Error(`${path.basename(outputPath)} would exceed the GitHub file-size guard after gzip`);
+  }
+
+  await writeFile(outputPath, compressed);
+  return {
+    file: path.relative(process.cwd(), outputPath),
+    vertices: orderedVertices.length,
+    faces: faceCount,
+    rawSizeMb: Number((output.byteLength / 1024 / 1024).toFixed(2)),
+    gzipSizeMb: Number((compressed.byteLength / 1024 / 1024).toFixed(2)),
+  };
+}
+
+function isGeneratedOutputName(name, outputBaseName) {
+  return (
+    name === `${outputBaseName}.ply` ||
+    name === `${outputBaseName}.ply.gz` ||
+    (name.startsWith(`${outputBaseName}.part`) && (name.endsWith(".ply") || name.endsWith(".ply.gz")))
+  );
+}
+
+async function convertMesh(inputPath, outputBasePath) {
+  const input = await readFile(inputPath);
+  const header = parseHeader(input, inputPath);
+  if (!header.vertex || !header.face) throw new Error(`Missing vertex or face element in ${inputPath}`);
+
+  const vertexLayout = elementLayout(header.vertex);
+  if (!vertexLayout) throw new Error(`Unsupported vertex list property in ${inputPath}`);
+
+  const vertexStart = header.bodyOffset;
+  const faceStart = vertexStart + header.vertex.count * vertexLayout.stride;
+  const transform = computeVertexTransform(input, header, vertexLayout);
+  const sampleProbability = Math.min(1, maxWebFaces / Math.max(header.face.count, 1));
+  const chunks = [];
+  let currentChunk = createChunk();
+  let cursor = faceStart;
+  let skippedFaces = 0;
+  let croppedFaces = 0;
+  let sampledFaces = 0;
+  let candidateFaces = 0;
+
+  for (let faceIndex = 0; faceIndex < header.face.count; faceIndex += 1) {
+    const face = readFace(input, cursor, header.face);
+    cursor = face.nextOffset;
+
+    if (!face.indices || face.indices.length < 3) {
+      skippedFaces += 1;
+      continue;
+    }
+
+    for (let index = 1; index < face.indices.length - 1; index += 1) {
+      const a = face.indices[0];
+      const b = face.indices[index];
+      const c = face.indices[index + 1];
+      const validFace =
+        a >= 0 &&
+        b >= 0 &&
+        c >= 0 &&
+        a < header.vertex.count &&
+        b < header.vertex.count &&
+        c < header.vertex.count &&
+        a !== b &&
+        b !== c &&
+        a !== c &&
+        transform.finite[a] &&
+        transform.finite[b] &&
+        transform.finite[c];
+      if (!validFace) {
+        skippedFaces += 1;
+        continue;
+      }
+      if (!faceInsideCrop(input, header, vertexLayout, vertexStart, transform, a, b, c)) {
+        croppedFaces += 1;
+        continue;
+      }
+      candidateFaces += 1;
+      if (!keepSampledFace(candidateFaces, sampleProbability)) {
+        sampledFaces += 1;
+        continue;
+      }
+      appendFaceToChunk(currentChunk, a, b, c);
+      if (estimatedChunkBytes(currentChunk) > githubFileLimitBytes * 0.92) {
+        chunks.push(currentChunk);
+        currentChunk = createChunk();
+      }
+    }
+  }
+
+  if (currentChunk.faces.length) chunks.push(currentChunk);
+  const outputDir = path.dirname(outputBasePath);
+  const outputBaseName = path.basename(outputBasePath, ".ply");
+  await mkdir(outputDir, { recursive: true });
+  for (const entry of await readdir(outputDir, { withFileTypes: true })) {
+    if (isGeneratedOutputName(entry.name, outputBaseName)) {
+      await rm(path.join(outputDir, entry.name), { force: true });
+    }
+  }
+  await rm(outputBasePath, { force: true });
+  const outputFiles = [];
+  for (const [index, chunk] of chunks.entries()) {
+    const chunkPath = chunks.length === 1
+      ? `${outputBasePath}.gz`
+      : path.join(outputDir, `${outputBaseName}.part${String(index + 1).padStart(3, "0")}.ply.gz`);
+    outputFiles.push(await writeChunk(input, header, vertexLayout, transform, chunkPath, chunk));
+  }
+
   return {
     input: path.basename(inputPath),
     sourceRoot: path.dirname(inputPath),
-    output: path.relative(process.cwd(), outputPath),
     sourceVertices: header.vertex.count,
     sourceFaces: header.face.count,
-    validVertices: validVertexCount,
-    outputVertices: outputVertexCount,
-    outputFaces: outputFaceCount,
+    finiteVertices: transform.finiteCount,
+    croppedVerticesForBounds: transform.croppedVertexCount,
+    outputFiles,
+    outputFaces: outputFiles.reduce((sum, file) => sum + file.faces, 0),
     skippedFaces,
-    sizeMb: Number((output.byteLength / 1024 / 1024).toFixed(2)),
-    sampleCount: bounds.sampleCount,
-    cropMin: bounds.min.map((value) => Number(value.toFixed(4))),
-    cropMax: bounds.max.map((value) => Number(value.toFixed(4))),
-    scale: Number(bounds.scale.toFixed(6)),
+    croppedFaces,
+    sampledFaces,
+    candidateFaces,
+    cropQuantile: perimeterCropQuantile,
+    sampleProbability: Number(sampleProbability.toFixed(6)),
+    randomSeed,
+    scale: Number(transform.scale.toFixed(6)),
   };
 }
 
 async function main() {
   await mkdir(outputRoot, { recursive: true });
-
   const reports = [];
   for (const [index, file] of sceneFiles.entries()) {
     const source = await chooseSource(file);
@@ -437,7 +513,6 @@ async function main() {
     console.log(`Processing ${file} from ${source.root} -> ${outputPath}`);
     reports.push(await convertMesh(source.filePath, outputPath));
   }
-
   console.log(JSON.stringify(reports, null, 2));
 }
 

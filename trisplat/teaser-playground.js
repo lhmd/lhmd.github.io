@@ -70,11 +70,12 @@ const beacons = [];
 const agents = [];
 const pointer = new THREE.Vector2();
 const pointerDown = new THREE.Vector2();
-let spawnPoints = [
+const defaultSpawnPoints = [
   new THREE.Vector3(-0.65, 0.08, 0.62),
   new THREE.Vector3(0.1, 0.08, 0.48),
   new THREE.Vector3(0.68, 0.08, 0.7),
 ];
+let spawnPoints = defaultSpawnPoints.map((point) => point.clone());
 
 let activeAgent = null;
 let sceneMesh = null;
@@ -107,97 +108,99 @@ const sceneMeshOffset = new THREE.Vector3(0, 0, -0.16);
 const cameraFrameCenter = new THREE.Vector3(0, 0.7, 0);
 const sceneDataCache = new Map();
 const groundHeightCache = new Map();
+const dl3dvAgentScale = 0.18;
+const re10kAgentScale = 0.32;
 const runtimeScenes = [
   {
     id: "dl3dv-1",
     label: "DL3DV-1",
-    src: "./assets/mesh/gallery-web/dl3dv/ba55c875d20c34ee85ffc72264c4d77710852e5fb7d9ce4b9c26a8442850e98f_ctx12_triangle_direct_q995.ply",
-    agentScale: 0.54,
+    src: "./assets/mesh/gallery-web/dl3dv/ba55c875d20c34ee85ffc72264c4d77710852e5fb7d9ce4b9c26a8442850e98f_ctx12_triangle_direct_q995.ply.gz",
+    agentScale: dl3dvAgentScale,
   },
   {
     id: "dl3dv-2",
     label: "DL3DV-2",
-    src: "./assets/mesh/gallery-web/dl3dv/new_f70_DIRECT_triangle_mesh.ply",
-    agentScale: 0.48,
+    src: "./assets/mesh/gallery-web/dl3dv/new_f70_DIRECT_triangle_mesh.ply.gz",
+    agentScale: dl3dvAgentScale,
     frameScale: 0.72,
   },
   {
     id: "dl3dv-3",
     label: "DL3DV-3",
-    src: "./assets/mesh/gallery-web/dl3dv/new_fae_DIRECT_triangle_mesh.ply",
-    agentScale: 0.48,
+    src: "./assets/mesh/gallery-web/dl3dv/new_fae_DIRECT_triangle_mesh.ply.gz",
+    agentScale: dl3dvAgentScale,
   },
   {
     id: "dl3dv-4",
     label: "DL3DV-4",
-    src: "./assets/mesh/gallery-web/dl3dv/teaser.ply",
-    agentScale: 0.48,
+    src: "./assets/mesh/gallery-web/dl3dv/teaser.ply.gz",
+    agentScale: dl3dvAgentScale,
   },
   {
     id: "dl3dv-5",
     label: "DL3DV-5",
-    src: "./assets/mesh/gallery-web/dl3dv/new_374_DIRECT_triangle_mesh.ply",
-    agentScale: 0.48,
+    src: "./assets/mesh/gallery-web/dl3dv/new_374_DIRECT_triangle_mesh.ply.gz",
+    agentScale: dl3dvAgentScale,
   },
   {
     id: "dl3dv-6",
     label: "DL3DV-6",
-    src: "./assets/mesh/gallery-web/dl3dv/new_9c5_DIRECT_triangle_mesh.ply",
-    agentScale: 0.5,
+    src: "./assets/mesh/gallery-web/dl3dv/new_9c5_DIRECT_triangle_mesh.ply.gz",
+    agentScale: dl3dvAgentScale,
   },
   {
     id: "dl3dv-7",
     label: "DL3DV-7",
-    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-07.ply",
-    agentScale: 0.48,
+    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-07.ply.gz",
+    agentScale: dl3dvAgentScale,
   },
   {
     id: "dl3dv-8",
     label: "DL3DV-8",
-    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-08.ply",
-    agentScale: 0.48,
+    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-08.ply.gz",
+    agentScale: dl3dvAgentScale,
   },
   {
     id: "dl3dv-9",
     label: "DL3DV-9",
-    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-09.ply",
-    agentScale: 0.48,
+    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-09.ply.gz",
+    agentScale: dl3dvAgentScale,
   },
   {
     id: "dl3dv-10",
     label: "DL3DV-10",
-    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-10.ply",
-    agentScale: 0.48,
+    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-10.ply.gz",
+    agentScale: dl3dvAgentScale,
   },
   {
     id: "dl3dv-11",
     label: "DL3DV-11",
-    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-11.ply",
-    agentScale: 0.48,
+    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-11.ply.gz",
+    agentScale: dl3dvAgentScale,
   },
   {
     id: "dl3dv-12",
     label: "DL3DV-12",
-    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-12.ply",
-    agentScale: 0.48,
+    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-12.ply.gz",
+    agentScale: dl3dvAgentScale,
   },
   {
     id: "re10k-1",
     label: "RE10K-1",
-    src: "./assets/mesh/gallery-web/re10k/10_7a874ba9dd12cff8_triangle_direct_q995.ply",
-    agentScale: 0.92,
+    src: "./assets/mesh/gallery-web/re10k/10_7a874ba9dd12cff8_triangle_direct_q995.ply.gz",
+    agentScale: re10kAgentScale,
   },
   {
     id: "re10k-2",
     label: "RE10K-2",
-    src: "./assets/mesh/gallery-web/re10k/new_DIRECT_triangle_mesh_63b.ply",
-    agentScale: 0.9,
+    src: "./assets/mesh/gallery-web/re10k/new_DIRECT_triangle_mesh_63b.ply.gz",
+    agentScale: re10kAgentScale,
   },
   {
     id: "re10k-3",
     label: "RE10K-3",
-    src: "./assets/mesh/gallery-web/re10k/new_DIRECT_triangle_mesh_b56.ply",
-    agentScale: 0.9,
+    src: "./assets/mesh/gallery-web/re10k/new_DIRECT_triangle_mesh_b56.ply.gz",
+    agentScale: re10kAgentScale,
   },
 ];
 let activeSceneId = runtimeScenes[0].id;
@@ -268,6 +271,81 @@ function populateRuntimeScenes() {
   runtimeSceneSelect.value = activeSceneId;
 }
 
+function geometrySources(value) {
+  return Array.isArray(value) ? value : [value].filter(Boolean);
+}
+
+async function fetchArrayBufferWithProgress(url, onProgress) {
+  const response = await fetch(url, { cache: "force-cache" });
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status} for ${url}`);
+  }
+
+  const total = Number(response.headers.get("content-length")) || 0;
+  if (!response.body) {
+    const buffer = await response.arrayBuffer();
+    onProgress?.(buffer.byteLength, total || buffer.byteLength);
+    return buffer;
+  }
+
+  const reader = response.body.getReader();
+  const chunks = [];
+  let received = 0;
+
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+    received += value.byteLength;
+    onProgress?.(received, total);
+  }
+
+  const merged = new Uint8Array(received);
+  let offset = 0;
+  for (const chunk of chunks) {
+    merged.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return merged.buffer;
+}
+
+async function decompressGzipBuffer(buffer) {
+  if (!("DecompressionStream" in window)) {
+    throw new Error("This browser cannot decompress gzip mesh assets");
+  }
+  const stream = new Blob([buffer]).stream().pipeThrough(new DecompressionStream("gzip"));
+  return new Response(stream).arrayBuffer();
+}
+
+function isGzipBuffer(buffer) {
+  if (!buffer || buffer.byteLength < 2) return false;
+  const bytes = new Uint8Array(buffer, 0, 2);
+  return bytes[0] === 0x1f && bytes[1] === 0x8b;
+}
+
+async function loadPlyGeometry(url, onProgress) {
+  const buffer = await fetchArrayBufferWithProgress(url, onProgress);
+  const plyBuffer = url.endsWith(".gz") && isGzipBuffer(buffer) ? await decompressGzipBuffer(buffer) : buffer;
+  return loader.parse(plyBuffer);
+}
+
+async function loadPlyGeometryParts(runtimeScene) {
+  const sources = geometrySources(runtimeScene.src);
+  const geometries = [];
+
+  for (const [index, source] of sources.entries()) {
+    const geometry = await loadPlyGeometry(source, (loaded, total) => {
+      const percent = progressPercent(loaded, total);
+      if (percent === null) return;
+      const partLabel = sources.length > 1 ? ` ${index + 1}/${sources.length}` : "";
+      showStatus(`Loading ${runtimeScene.label}${partLabel} ${percent}%`);
+    });
+    geometries.push(geometry);
+  }
+
+  return geometries;
+}
+
 function orientGeometryYUp(geometry) {
   const position = geometry.attributes.position;
   for (let index = 0; index < position.count; index += 1) {
@@ -280,35 +358,103 @@ function orientGeometryYUp(geometry) {
   geometry.deleteAttribute("normal");
 }
 
-function normalizeGeometry(geometry) {
-  orientGeometryYUp(geometry);
-
+function finalizeGeometry(geometry) {
+  geometry.computeVertexNormals();
+  if (geometry.attributes.color) {
+    geometry.attributes.color.normalized = true;
+  }
   geometry.computeBoundingBox();
-  const box = geometry.boundingBox;
+  geometry.computeBoundingSphere();
+}
+
+function boundingBoxForGeometries(geometries) {
+  const box = new THREE.Box3();
+  for (const geometry of geometries) {
+    geometry.computeBoundingBox();
+    box.union(geometry.boundingBox);
+  }
+  return box;
+}
+
+function boundingSphereRadiusForBox(box) {
+  const size = new THREE.Vector3();
+  box.getSize(size);
+  return size.length() * 0.5;
+}
+
+function estimateDominantUpNormal(geometries) {
+  const accumulated = new THREE.Vector3();
+  const a = new THREE.Vector3();
+  const b = new THREE.Vector3();
+  const c = new THREE.Vector3();
+  const ab = new THREE.Vector3();
+  const ac = new THREE.Vector3();
+  const normal = new THREE.Vector3();
+
+  for (const geometry of geometries) {
+    const position = geometry.attributes.position;
+    const index = geometry.index;
+    const faceCount = index ? index.count / 3 : Math.floor(position.count / 3);
+    const step = Math.max(1, Math.floor(faceCount / 50000));
+
+    for (let face = 0; face < faceCount; face += step) {
+      const ia = index ? index.getX(face * 3) : face * 3;
+      const ib = index ? index.getX(face * 3 + 1) : face * 3 + 1;
+      const ic = index ? index.getX(face * 3 + 2) : face * 3 + 2;
+      a.fromBufferAttribute(position, ia);
+      b.fromBufferAttribute(position, ib);
+      c.fromBufferAttribute(position, ic);
+      normal.copy(ab.subVectors(b, a)).cross(ac.subVectors(c, a));
+      if (normal.lengthSq() < 1e-10) continue;
+      normal.normalize();
+      if (normal.y < 0) normal.multiplyScalar(-1);
+      if (normal.y < 0.18) continue;
+      accumulated.addScaledVector(normal, Math.max(normal.y, 0.25));
+    }
+  }
+
+  if (accumulated.lengthSq() < 1e-8) return new THREE.Vector3(0, 1, 0);
+  return accumulated.normalize();
+}
+
+function levelGeometriesToGroundPlane(geometries) {
+  const dominantUp = estimateDominantUpNormal(geometries);
+  const worldUp = new THREE.Vector3(0, 1, 0);
+  if (dominantUp.dot(worldUp) > 0.997) return;
+  const rotation = new THREE.Quaternion().setFromUnitVectors(dominantUp, worldUp);
+  for (const geometry of geometries) {
+    geometry.applyQuaternion(rotation);
+    geometry.deleteAttribute("normal");
+  }
+}
+
+function normalizeGeometries(geometries) {
+  for (const geometry of geometries) orientGeometryYUp(geometry);
+  levelGeometriesToGroundPlane(geometries);
+
+  const box = boundingBoxForGeometries(geometries);
   const center = new THREE.Vector3();
   const size = new THREE.Vector3();
   box.getCenter(center);
   box.getSize(size);
-  geometry.translate(-center.x, -center.y, -center.z);
-
   const maxAxis = Math.max(size.x, size.y, size.z) || 1;
   const scale = 4.2 / maxAxis;
-  geometry.scale(scale, scale, scale);
-  geometry.computeBoundingBox();
 
-  const adjustedBox = geometry.boundingBox;
-  const adjustedCenter = new THREE.Vector3();
-  adjustedBox.getCenter(adjustedCenter);
-  geometry.translate(-adjustedCenter.x, -adjustedBox.min.y, -adjustedCenter.z);
-
-  geometry.computeVertexNormals();
-
-  if (geometry.attributes.color) {
-    geometry.attributes.color.normalized = true;
+  for (const geometry of geometries) {
+    geometry.translate(-center.x, -center.y, -center.z);
+    geometry.scale(scale, scale, scale);
   }
 
-  geometry.computeBoundingBox();
-  geometry.computeBoundingSphere();
+  const adjustedBox = boundingBoxForGeometries(geometries);
+  const adjustedCenter = new THREE.Vector3();
+  adjustedBox.getCenter(adjustedCenter);
+
+  for (const geometry of geometries) {
+    geometry.translate(-adjustedCenter.x, -adjustedBox.min.y, -adjustedCenter.z);
+    finalizeGeometry(geometry);
+  }
+
+  return boundingBoxForGeometries(geometries);
 }
 
 function createCapsule(name, radius, length, color) {
@@ -498,6 +644,17 @@ function disposeMeshTree(root) {
   });
 }
 
+function disposeSceneMeshMaterials(root) {
+  root.traverse((object) => {
+    if (!object.isMesh) return;
+    if (Array.isArray(object.material)) {
+      object.material.forEach((material) => material.dispose?.());
+    } else {
+      object.material?.dispose?.();
+    }
+  });
+}
+
 function removeAgent(agent) {
   scene.remove(agent);
   disposeMeshTree(agent);
@@ -586,8 +743,7 @@ function resetAgentsForScene() {
 }
 
 function frameRuntimeScene(sceneData) {
-  const geometry = sceneData?.geometry;
-  const radius = THREE.MathUtils.clamp(geometry?.boundingSphere?.radius ?? 2.4, 2.1, 4.8);
+  const radius = THREE.MathUtils.clamp(sceneData?.radius ?? 2.4, 2.1, 4.8);
   const frameScale = sceneData?.runtimeScene?.frameScale ?? 1;
   cameraFrameCenter.copy(sceneCenter);
   cameraFrameCenter.y = Math.max(sceneFloorHeight + 0.72 * activeSceneScale, sceneCenter.y + 0.28 * activeSceneScale);
@@ -626,7 +782,7 @@ function sampleGroundHeight(x = 0, z = 0) {
   groundProbeOrigin.set(x, 8, z);
   groundRaycaster.set(groundProbeOrigin, groundProbeDirection);
   groundRaycaster.far = 12;
-  const hits = groundRaycaster.intersectObject(sceneMesh, false);
+  const hits = groundRaycaster.intersectObject(sceneMesh, true);
   const horizontalHits = hits.filter((hit) => hit.face?.normal && Math.abs(hit.face.normal.y) > 0.18);
   const floorHit = horizontalHits.reduce((best, hit) => {
     if (!best) return hit;
@@ -638,13 +794,9 @@ function sampleGroundHeight(x = 0, z = 0) {
   return height;
 }
 
-function buildSceneSpawnPoints(geometry) {
-  geometry.computeBoundingBox();
-  const box = geometry.boundingBox;
-  const position = geometry.attributes.position;
-  const index = geometry.index;
-  const faceCount = index ? index.count / 3 : position.count / 3;
-  const step = Math.max(1, Math.floor(faceCount / 12000));
+function buildSceneSpawnPoints(geometries) {
+  const geometryList = Array.isArray(geometries) ? geometries : [geometries];
+  const box = boundingBoxForGeometries(geometryList);
   const a = new THREE.Vector3();
   const b = new THREE.Vector3();
   const c = new THREE.Vector3();
@@ -656,22 +808,29 @@ function buildSceneSpawnPoints(geometry) {
   const floorBandLimit = box.min.y + sceneHeight * 0.36;
   const horizontalCandidates = [];
 
-  for (let face = 0; face < faceCount; face += step) {
-    const ia = index ? index.getX(face * 3) : face * 3;
-    const ib = index ? index.getX(face * 3 + 1) : face * 3 + 1;
-    const ic = index ? index.getX(face * 3 + 2) : face * 3 + 2;
-    a.fromBufferAttribute(position, ia);
-    b.fromBufferAttribute(position, ib);
-    c.fromBufferAttribute(position, ic);
-    normal.copy(ab.subVectors(b, a)).cross(ac.subVectors(c, a)).normalize();
-    if (Math.abs(normal.y) < 0.42) continue;
-    centroid.copy(a).add(b).add(c).multiplyScalar(1 / 3);
-    if (Math.abs(centroid.x) > 1.9 || Math.abs(centroid.z) > 1.9) continue;
-    horizontalCandidates.push(centroid.clone());
+  for (const geometry of geometryList) {
+    const position = geometry.attributes.position;
+    const index = geometry.index;
+    const faceCount = index ? index.count / 3 : Math.floor(position.count / 3);
+    const step = Math.max(1, Math.floor(faceCount / 12000));
+
+    for (let face = 0; face < faceCount; face += step) {
+      const ia = index ? index.getX(face * 3) : face * 3;
+      const ib = index ? index.getX(face * 3 + 1) : face * 3 + 1;
+      const ic = index ? index.getX(face * 3 + 2) : face * 3 + 2;
+      a.fromBufferAttribute(position, ia);
+      b.fromBufferAttribute(position, ib);
+      c.fromBufferAttribute(position, ic);
+      normal.copy(ab.subVectors(b, a)).cross(ac.subVectors(c, a)).normalize();
+      if (Math.abs(normal.y) < 0.42) continue;
+      centroid.copy(a).add(b).add(c).multiplyScalar(1 / 3);
+      if (Math.abs(centroid.x) > 1.9 || Math.abs(centroid.z) > 1.9) continue;
+      horizontalCandidates.push(centroid.clone());
+    }
   }
 
   if (!horizontalCandidates.length) {
-    return { points: spawnPoints, floorHeight: sceneFloorHeight };
+    return { points: defaultSpawnPoints.map((point) => point.clone()), floorHeight: sceneFloorHeight };
   }
 
   const sortedHeights = horizontalCandidates
@@ -845,16 +1004,15 @@ async function loadScene() {
 
 async function loadRuntimeSceneData(runtimeScene) {
   if (sceneDataCache.has(runtimeScene.id)) return sceneDataCache.get(runtimeScene.id);
-  const loadPromise = loader.loadAsync(runtimeScene.src, (event) => {
-    const percent = progressPercent(event.loaded, event.total);
-    if (percent === null) return;
-    showStatus(`Loading ${runtimeScene.label} ${percent}%`);
-  }).then((geometry) => {
-    normalizeGeometry(geometry);
+  const loadPromise = loadPlyGeometryParts(runtimeScene).then((geometries) => {
+    const box = normalizeGeometries(geometries);
+    const center = new THREE.Vector3();
+    box.getCenter(center);
     return {
-      geometry,
-      center: (geometry.boundingSphere?.center ?? new THREE.Vector3(0, 0.7, 0)).clone(),
-      spawnData: buildSceneSpawnPoints(geometry),
+      geometries,
+      center,
+      radius: boundingSphereRadiusForBox(box),
+      spawnData: buildSceneSpawnPoints(geometries),
       runtimeScene,
     };
   });
@@ -865,11 +1023,15 @@ async function loadRuntimeSceneData(runtimeScene) {
 function applySceneData(sceneData) {
   if (sceneMesh) {
     scene.remove(sceneMesh);
-    sceneMesh.material.dispose();
+    disposeSceneMeshMaterials(sceneMesh);
   }
-  sceneMesh = new THREE.Mesh(sceneData.geometry, createSceneMaterial());
+  sceneMesh = new THREE.Group();
+  for (const geometry of sceneData.geometries) {
+    const mesh = new THREE.Mesh(geometry, createSceneMaterial());
+    mesh.renderOrder = 1;
+    sceneMesh.add(mesh);
+  }
   sceneMesh.position.copy(sceneMeshOffset);
-  sceneMesh.renderOrder = 1;
   scene.add(sceneMesh);
 
   sceneCenter.copy(sceneData.center).add(sceneMeshOffset);

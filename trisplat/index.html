@@ -117,8 +117,9 @@
               Drive multiple agents on exported mesh surfaces and watch the active agent through a
               live first-person camera.
               <span class="preview-note">
-                For responsive web playback, this demo uses downsampled preview meshes; full
-                TriSplat exports are denser.
+                For GitHub Pages delivery, this demo uses edge-cropped and randomly sampled web
+                mesh chunks, so web-only holes may appear; original TriSplat exports keep the full
+                surface density.
               </span>
             </p>
             <div class="runtime-controls-guide" aria-label="Runtime scene controls">
@@ -187,8 +188,8 @@
           <div class="section-heading reveal">
             <h2>Inspect every exported triangle mesh</h2>
             <p>
-              These viewers load browser-friendly previews for GitHub Pages. Full TriSplat exports
-              contain denser geometry than the interactive web meshes shown here.
+              These viewers load edge-cropped and randomly sampled web chunks for GitHub Pages.
+              Offline exports keep the complete triangle surfaces without the web-only holes.
             </p>
           </div>
         </div>
@@ -306,7 +307,7 @@
       <a href="#top">Back to top</a>
     </footer>
 
-    <script type="module" src="./main.js?v=25"></script>
-    <script type="module" src="./teaser-sim.js?v=28"></script>
+    <script type="module" src="./main.js?v=26"></script>
+    <script type="module" src="./teaser-sim.js?v=29"></script>
   </body>
 </html>

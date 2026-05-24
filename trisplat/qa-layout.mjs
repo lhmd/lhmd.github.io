@@ -211,7 +211,7 @@ try {
             }
           }
           const videoSources = heroVideo ? heroVideo.querySelectorAll('source').length : -1;
-          const heavyScriptsLoaded = [...performance.getEntriesByType('resource')].filter((entry) => /three\\.module|teaser-playground|\\.ply|trisplat-demo-lite|trisplat-demo-web|trisplat-demo-720/.test(entry.name)).map((entry) => entry.name);
+          const heavyScriptsLoaded = [...performance.getEntriesByType('resource')].filter((entry) => /three\\.module|teaser-playground|\\.ply(?:\\.gz)?|trisplat-demo-lite|trisplat-demo-web|trisplat-demo-720/.test(entry.name)).map((entry) => entry.name);
 
           return {
             viewport,
@@ -260,7 +260,7 @@ try {
         for (let index = 7; index <= 12; index += 1) {
           const title = `DL3DV-${index}`;
           const card = dl3dvCards.find((candidate) => candidate.title === title);
-          if (!card?.src.includes(`/additional/dl3dv-scene-${String(index).padStart(2, '0')}.ply`)) {
+          if (!card?.src.includes(`/additional/dl3dv-scene-${String(index).padStart(2, '0')}.`)) {
             failures.push(fail(`${label}: gallery is missing processed ${title}`, { card }));
           }
         }
@@ -284,7 +284,7 @@ try {
           const expected = `RE10K-${index}`;
           if (!runtimeLabels.includes(expected)) failures.push(fail(`${label}: runtime is missing ${expected}`, { runtimeLabels }));
         }
-        if (!value.runtimeSource.includes("v=28")) failures.push(fail(`${label}: runtime loader cache should be bumped`, { runtimeSource: value.runtimeSource }));
+        if (!value.runtimeSource.includes("v=29")) failures.push(fail(`${label}: runtime loader cache should be bumped`, { runtimeSource: value.runtimeSource }));
 
         for (const rail of value.meshGroupRails) {
           if (rail.rowCount !== 1) failures.push(fail(`${label}: each mesh group should stay in one horizontal row`, { rail }));
@@ -294,7 +294,7 @@ try {
         }
       }
       const beforeInteractive = target === "top";
-      const allowedAfterInteractive = /three\.module|teaser-playground|\.ply|OrbitControls|PLYLoader/;
+      const allowedAfterInteractive = /three\.module|teaser-playground|\.ply(?:\.gz)?|OrbitControls|PLYLoader/;
       const unexpectedHeavy = value.heavyScriptsLoaded.filter((resource) =>
         beforeInteractive ? true : !allowedAfterInteractive.test(resource),
       );

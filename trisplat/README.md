@@ -27,19 +27,19 @@ The page is self-contained and does not require a build step. A local web server
   inset first-person camera.
 - `assets/mesh/gallery/**/*.ply` contains the original RE10K PLY meshes and the cropped DL3DV
   meshes from `/Users/bytedance/Downloads/dl3dv_prune.zip`.
-- `assets/mesh/gallery-web/**/*.ply` contains browser-friendly versions of the same scene set;
-  very large meshes are face-sampled for interactive viewing while preserving the supplied scenes.
-- `assets/mesh/gallery-web/dl3dv/additional/*.ply` contains the individually processed previews
+- `assets/mesh/gallery-web/**/*.ply.gz` contains compressed web chunks of the same scene set;
+  large meshes are edge-cropped and deterministically random-sampled to fit GitHub Pages.
+- `assets/mesh/gallery-web/dl3dv/additional/*.ply.gz` contains the individually processed web meshes
   from `/Users/bytedance/Downloads/scale0.75` and `/Users/bytedance/Downloads/scale0.5`; each
-  file is cropped, centered, scaled, and kept below GitHub's single-file upload limit.
+  file is centered, scaled, gzip-compressed, and kept below GitHub's single-file upload limit.
 - `assets/figures/web/*.png` are size-optimized web renderings of the paper figures.
 - The paper button points to a placeholder arXiv URL until the public preprint is available.
 
 ## Rebuilding Mesh Display Assets
 
-The page keeps full-resolution originals in `assets/mesh/gallery/` and uses smaller display copies
-from `assets/mesh/gallery-web/` to avoid browser stalls. Regenerate the display copies after
-replacing any PLY:
+The page keeps full-resolution originals in `assets/mesh/gallery/` and uses edge-cropped,
+deterministically random-sampled web chunks from `assets/mesh/gallery-web/` for GitHub Pages
+delivery. Regenerate the chunks after replacing any PLY:
 
 ```bash
 node scripts/build-web-meshes.mjs
