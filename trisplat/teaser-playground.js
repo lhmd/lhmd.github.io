@@ -108,8 +108,8 @@ const sceneMeshOffset = new THREE.Vector3(0, 0, -0.16);
 const cameraFrameCenter = new THREE.Vector3(0, 0.7, 0);
 const sceneDataCache = new Map();
 const groundHeightCache = new Map();
-const dl3dvAgentScale = 0.34;
-const re10kAgentScale = 0.32;
+const dl3dvAgentScale = 0.46;
+const re10kAgentScale = 0.74;
 const runtimeScenes = [
   {
     id: "dl3dv-1",
@@ -197,18 +197,27 @@ const runtimeScenes = [
     label: "RE10K-ff8",
     src: "./assets/mesh/gallery-web/re10k/10_7a874ba9dd12cff8_triangle_direct_q995.ply.gz",
     agentScale: re10kAgentScale,
+    cameraHeightScale: 0.58,
+    frameFocus: "agent",
+    frameScale: 0.84,
   },
   {
     id: "re10k-2",
     label: "RE10K-63b",
     src: "./assets/mesh/gallery-web/re10k/new_DIRECT_triangle_mesh_63b.ply.gz",
     agentScale: re10kAgentScale,
+    cameraHeightScale: 0.58,
+    frameFocus: "agent",
+    frameScale: 0.84,
   },
   {
     id: "re10k-3",
     label: "RE10K-b56",
     src: "./assets/mesh/gallery-web/re10k/new_DIRECT_triangle_mesh_b56.ply.gz",
     agentScale: re10kAgentScale,
+    cameraHeightScale: 0.58,
+    frameFocus: "agent",
+    frameScale: 0.84,
   },
 ];
 let activeSceneId = runtimeScenes[0].id;
@@ -862,9 +871,14 @@ function resetAgentsForScene() {
 
 function frameRuntimeScene(sceneData) {
   const radius = THREE.MathUtils.clamp(sceneData?.radius ?? 2.4, 2.1, 4.8);
-  const frameScale = sceneData?.runtimeScene?.frameScale ?? 1;
-  const cameraHeightScale = sceneData?.runtimeScene?.cameraHeightScale ?? 1;
-  cameraFrameCenter.copy(sceneCenter);
+  const runtimeScene = sceneData?.runtimeScene ?? {};
+  const frameScale = runtimeScene.frameScale ?? 1;
+  const cameraHeightScale = runtimeScene.cameraHeightScale ?? 1;
+  if (runtimeScene.frameFocus === "agent" && spawnPoints[0]) {
+    cameraFrameCenter.copy(spawnPoints[0]);
+  } else {
+    cameraFrameCenter.copy(sceneCenter);
+  }
   const targetHeight = Math.max(sceneFloorHeight + 0.72 * activeSceneScale, sceneCenter.y + 0.28 * activeSceneScale);
   cameraFrameCenter.y = sceneFloorHeight + (targetHeight - sceneFloorHeight) * cameraHeightScale;
   controls.target.copy(cameraFrameCenter);

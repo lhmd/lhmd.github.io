@@ -190,6 +190,7 @@ try {
             value: option.value,
             label: option.textContent.trim(),
           }));
+          const viewerHeading = document.querySelector('.viewer-heading .section-heading h2')?.textContent.trim() ?? '';
           const teaserCanvas = document.querySelector('#teaserCanvas');
           const mainSource = document.querySelector('script[src*="main.js"]')?.getAttribute('src') || '';
           const runtimeSource = document.querySelector('script[src*="teaser-sim.js"]')?.getAttribute('src') || '';
@@ -233,6 +234,7 @@ try {
             meshGroupRails,
             meshCardsData,
             runtimeOptions,
+            viewerHeading,
             runtimeScene: teaserCanvas?.dataset.runtimeScene ?? null,
             runtimeCameraHeightScale: teaserCanvas?.dataset.runtimeCameraHeightScale ?? null,
             mainSource,
@@ -266,6 +268,7 @@ try {
         if (alignment.delta > 3) failures.push(fail(`${label}: section heading is not aligned with content`, alignment));
       }
       if (label === "desktop/interactive") {
+        if (value.viewerHeading !== "Exported Triangle Mesh Gallery") failures.push(fail(`${label}: mesh gallery heading should use the professional title`, { viewerHeading: value.viewerHeading }));
         const teaserCard = value.meshCardsData.find((card) => card.title === "DL3DV-779");
         if (teaserCard?.groupId !== "dl3dv") failures.push(fail(`${label}: DL3DV-779 should be grouped with DL3DV scenes`, { teaserCard }));
         const f70Card = value.meshCardsData.find((card) => card.title === "DL3DV-f70");
@@ -339,7 +342,7 @@ try {
         if (runtimeLabels.slice(0, 12).join("|") !== expectedRuntimeLabels.slice(0, 12).join("|")) failures.push(fail(`${label}: runtime DL3DV order should mirror inspect order with the first two swapped`, { runtimeLabels, expectedRuntimeLabels }));
         if (value.runtimeScene !== "dl3dv-1" || value.runtimeCameraHeightScale !== "1") failures.push(fail(`${label}: default runtime scene should keep the original DL3DV-1 framing`, { runtimeScene: value.runtimeScene, runtimeCameraHeightScale: value.runtimeCameraHeightScale }));
         if (!value.mainSource.includes("v=30")) failures.push(fail(`${label}: main loader cache should be bumped`, { mainSource: value.mainSource }));
-        if (!value.runtimeSource.includes("v=33")) failures.push(fail(`${label}: runtime loader cache should be bumped`, { runtimeSource: value.runtimeSource }));
+        if (!value.runtimeSource.includes("v=34")) failures.push(fail(`${label}: runtime loader cache should be bumped`, { runtimeSource: value.runtimeSource }));
 
         for (const rail of value.meshGroupRails) {
           if (rail.rowCount !== 1) failures.push(fail(`${label}: each mesh group should stay in one horizontal row`, { rail }));
