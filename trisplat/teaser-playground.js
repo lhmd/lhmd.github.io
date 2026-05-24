@@ -116,6 +116,7 @@ const runtimeScenes = [
     label: "DL3DV-98f",
     src: "./assets/mesh/gallery-web/dl3dv/ba55c875d20c34ee85ffc72264c4d77710852e5fb7d9ce4b9c26a8442850e98f_ctx12_triangle_direct_q995.ply.gz",
     agentScale: dl3dvAgentScale,
+    cameraSideOffset: 0,
   },
   {
     id: "dl3dv-9",
@@ -885,7 +886,7 @@ function frameRuntimeScene(sceneData) {
   worldCamera.position
     .copy(cameraFrameCenter)
     .add(new THREE.Vector3(
-      0.28,
+      runtimeScene.cameraSideOffset ?? 0.28,
       Math.max(1.75, radius * 0.42) * frameScale * cameraHeightScale,
       Math.max(4.15, radius * 1.42) * frameScale,
     ));

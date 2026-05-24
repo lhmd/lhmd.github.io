@@ -342,7 +342,7 @@ try {
         if (runtimeLabels.slice(0, 12).join("|") !== expectedRuntimeLabels.slice(0, 12).join("|")) failures.push(fail(`${label}: runtime DL3DV order should mirror inspect order with the first two swapped`, { runtimeLabels, expectedRuntimeLabels }));
         if (value.runtimeScene !== "dl3dv-1" || value.runtimeCameraHeightScale !== "1") failures.push(fail(`${label}: default runtime scene should keep the original DL3DV-1 framing`, { runtimeScene: value.runtimeScene, runtimeCameraHeightScale: value.runtimeCameraHeightScale }));
         if (!value.mainSource.includes("v=30")) failures.push(fail(`${label}: main loader cache should be bumped`, { mainSource: value.mainSource }));
-        if (!value.runtimeSource.includes("v=34")) failures.push(fail(`${label}: runtime loader cache should be bumped`, { runtimeSource: value.runtimeSource }));
+        if (!value.runtimeSource.includes("v=35")) failures.push(fail(`${label}: runtime loader cache should be bumped`, { runtimeSource: value.runtimeSource }));
 
         for (const rail of value.meshGroupRails) {
           if (rail.rowCount !== 1) failures.push(fail(`${label}: each mesh group should stay in one horizontal row`, { rail }));
