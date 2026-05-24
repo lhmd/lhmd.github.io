@@ -288,6 +288,74 @@ h3 {
   font-weight: 800;
 }
 
+.resource-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.resource-button::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0.6;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.resource-button:hover::before {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+.resource-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font: 850 0.68rem/1 var(--mono);
+  letter-spacing: 0;
+}
+
+.code-button {
+  border-color: rgba(126, 242, 221, 0.36);
+}
+
+.code-button::before {
+  background:
+    linear-gradient(135deg, rgba(126, 242, 221, 0.2), transparent 54%),
+    linear-gradient(180deg, rgba(9, 21, 21, 0.78), rgba(6, 10, 12, 0.52));
+}
+
+.code-button .resource-mark {
+  color: #06100f;
+  background: #7ef2dd;
+}
+
+.models-button {
+  border-color: rgba(226, 177, 93, 0.42);
+}
+
+.models-button::before {
+  background:
+    linear-gradient(135deg, rgba(226, 177, 93, 0.24), transparent 56%),
+    linear-gradient(180deg, rgba(21, 17, 9, 0.82), rgba(8, 12, 11, 0.5));
+}
+
+.models-button .resource-mark {
+  color: #100b05;
+  background: #e2b15d;
+}
+
 .button.compact {
   min-height: 40px;
   padding-inline: 15px;

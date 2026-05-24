@@ -112,46 +112,52 @@ const dl3dvAgentScale = 0.28;
 const re10kAgentScale = 0.32;
 const runtimeScenes = [
   {
+    id: "dl3dv-1",
+    label: "DL3DV-1",
+    src: "./assets/mesh/gallery-web/dl3dv/ba55c875d20c34ee85ffc72264c4d77710852e5fb7d9ce4b9c26a8442850e98f_ctx12_triangle_direct_q995.ply.gz",
+    agentScale: dl3dvAgentScale,
+  },
+  {
     id: "dl3dv-7",
     label: "DL3DV-7",
     src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-07.ply.gz",
     agentScale: dl3dvAgentScale,
+    spawnStrategy: "center",
   },
   {
     id: "dl3dv-8",
     label: "DL3DV-8",
     src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-08.ply.gz",
     agentScale: dl3dvAgentScale,
+    spawnStrategy: "center",
   },
   {
     id: "dl3dv-9",
     label: "DL3DV-9",
     src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-09.ply.gz",
     agentScale: dl3dvAgentScale,
+    spawnStrategy: "center",
   },
   {
     id: "dl3dv-10",
     label: "DL3DV-10",
     src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-10.ply.gz",
     agentScale: dl3dvAgentScale,
+    spawnStrategy: "center",
   },
   {
     id: "dl3dv-11",
     label: "DL3DV-11",
     src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-11.ply.gz",
     agentScale: dl3dvAgentScale,
+    spawnStrategy: "center",
   },
   {
     id: "dl3dv-12",
     label: "DL3DV-12",
     src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-12.ply.gz",
     agentScale: dl3dvAgentScale,
-  },
-  {
-    id: "dl3dv-1",
-    label: "DL3DV-1",
-    src: "./assets/mesh/gallery-web/dl3dv/ba55c875d20c34ee85ffc72264c4d77710852e5fb7d9ce4b9c26a8442850e98f_ctx12_triangle_direct_q995.ply.gz",
-    agentScale: dl3dvAgentScale,
+    spawnStrategy: "center",
   },
   {
     id: "dl3dv-2",
@@ -907,7 +913,7 @@ function sampleGroundHeight(x = 0, z = 0) {
   return height;
 }
 
-function buildSceneSpawnPoints(geometries) {
+function buildSceneSpawnPoints(geometries, runtimeScene = null) {
   const geometryList = Array.isArray(geometries) ? geometries : [geometries];
   const box = boundingBoxForGeometries(geometryList);
   const a = new THREE.Vector3();
@@ -960,10 +966,15 @@ function buildSceneSpawnPoints(geometries) {
     candidates = horizontalCandidates.filter((candidate) => Math.abs(candidate.y - floorHeight) <= floorTolerance * 2.2);
   }
 
-  candidates.sort((a, b) => (
-    Math.abs(a.y - floorHeight) - Math.abs(b.y - floorHeight)
-    || (a.x * a.x + a.z * a.z) - (b.x * b.x + b.z * b.z)
-  ));
+  const preferCenterSpawn = runtimeScene?.spawnStrategy === "center";
+  candidates.sort((a, b) => {
+    const aCenterDistance = a.x * a.x + a.z * a.z;
+    const bCenterDistance = b.x * b.x + b.z * b.z;
+    const aHeightDistance = Math.abs(a.y - floorHeight);
+    const bHeightDistance = Math.abs(b.y - floorHeight);
+    if (preferCenterSpawn) return aCenterDistance - bCenterDistance || aHeightDistance - bHeightDistance;
+    return aHeightDistance - bHeightDistance || aCenterDistance - bCenterDistance;
+  });
   const chosen = [];
   for (const candidate of candidates) {
     if (chosen.every((point) => new THREE.Vector2(point.x, point.z).distanceTo(new THREE.Vector2(candidate.x, candidate.z)) > 0.55)) {
@@ -1125,7 +1136,7 @@ async function loadRuntimeSceneData(runtimeScene) {
       geometries,
       center,
       radius: boundingSphereRadiusForBox(box),
-      spawnData: buildSceneSpawnPoints(geometries),
+      spawnData: buildSceneSpawnPoints(geometries, runtimeScene),
       runtimeScene,
     };
   });

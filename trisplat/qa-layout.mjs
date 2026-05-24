@@ -190,6 +190,7 @@ try {
             value: option.value,
             label: option.textContent.trim(),
           }));
+          const mainSource = document.querySelector('script[src*="main.js"]')?.getAttribute('src') || '';
           const runtimeSource = document.querySelector('script[src*="teaser-sim.js"]')?.getAttribute('src') || '';
           const heroTitleRect = rectOf(document.querySelector('.hero h1'));
           const subtitleRect = rectOf(document.querySelector('.subtitle'));
@@ -231,6 +232,7 @@ try {
             meshGroupRails,
             meshCardsData,
             runtimeOptions,
+            mainSource,
             runtimeSource,
             titleSubtitleGap,
             headingAlignment,
@@ -261,10 +263,10 @@ try {
         if (faeCard?.cameraHeightScale !== "0.62") failures.push(fail(`${label}: DL3DV-3 should use a lower initial camera`, { faeCard }));
         const dl3dvCards = value.meshCardsData.filter((card) => card.datasetGroup === "DL3DV");
         if (dl3dvCards.some((card) => !card.src.includes('/gallery-web/dl3dv/'))) failures.push(fail(`${label}: DL3DV viewers should use cropped browser-friendly meshes`, { dl3dvCards }));
-        const expectedFrontCards = Array.from({ length: 6 }, (_, index) => `DL3DV-${index + 7}`);
-        const actualFrontCards = dl3dvCards.slice(0, 6).map((card) => card.title);
+        const expectedFrontCards = ["DL3DV-9", "DL3DV-1", "DL3DV-2", "DL3DV-11", "DL3DV-5", "DL3DV-7"];
+        const actualFrontCards = dl3dvCards.slice(0, expectedFrontCards.length).map((card) => card.title);
         if (expectedFrontCards.some((title, index) => actualFrontCards[index] !== title)) {
-          failures.push(fail(`${label}: processed DL3DV meshes should appear first in inspect`, { actualFrontCards }));
+          failures.push(fail(`${label}: DL3DV inspect order should start with the requested mixed sequence`, { actualFrontCards }));
         }
         for (let index = 7; index <= 12; index += 1) {
           const title = `DL3DV-${index}`;
@@ -276,18 +278,20 @@ try {
         }
         const re10kCards = value.meshCardsData.filter((card) => card.datasetGroup === "RE10K");
         const scene10Card = re10kCards.find((card) => card.title === "Scene 10");
-        const re10kFlipCards = re10kCards.filter((card) => card.title !== "Scene 10");
+        const re10kUnflippedTitles = new Set(["Scene 05", "Scene 10", "Scene 20", "Scene 63B"]);
+        const re10kFlipCards = re10kCards.filter((card) => !re10kUnflippedTitles.has(card.title));
         if (!scene10Card || scene10Card.viewX !== "0" || scene10Card.viewZ !== "1" || scene10Card.viewFlip === "true") {
           failures.push(fail(`${label}: Scene 10 should use its manual +Z initial view`, { scene10Card }));
+        }
+        for (const title of re10kUnflippedTitles) {
+          const card = re10kCards.find((candidate) => candidate.title === title);
+          if (!card || card.viewFlip === "true") failures.push(fail(`${label}: ${title} should not flip its initial view`, { card }));
         }
         if (!re10kFlipCards.length || re10kFlipCards.some((card) => card.viewFlip !== "true")) failures.push(fail(`${label}: remaining RE10K viewers should flip their initial view by 180 degrees`, { re10kFlipCards }));
 
         const runtimeLabels = value.runtimeOptions.map((option) => option.label);
         if (value.runtimeOptions.length !== 15) failures.push(fail(`${label}: runtime should expose the full operable scene set`, { runtimeOptions: value.runtimeOptions }));
-        const expectedRuntimeFront = Array.from({ length: 6 }, (_, index) => `DL3DV-${index + 7}`);
-        if (expectedRuntimeFront.some((title, index) => runtimeLabels[index] !== title)) {
-          failures.push(fail(`${label}: runtime should prioritize simulation-ready DL3DV scenes`, { runtimeLabels }));
-        }
+        if (runtimeLabels[0] !== "DL3DV-1") failures.push(fail(`${label}: runtime should default to DL3DV-1`, { runtimeLabels }));
         if (runtimeLabels.some((labelText) => /^Scene\\s|Living Room|Loft|Studio|Pruned|Outdoor|Indoor/.test(labelText))) failures.push(fail(`${label}: runtime labels should use compact sequential numbering`, { runtimeLabels }));
         for (let index = 1; index <= 12; index += 1) {
           const expected = `DL3DV-${index}`;
@@ -297,7 +301,8 @@ try {
           const expected = `RE10K-${index}`;
           if (!runtimeLabels.includes(expected)) failures.push(fail(`${label}: runtime is missing ${expected}`, { runtimeLabels }));
         }
-        if (!value.runtimeSource.includes("v=30")) failures.push(fail(`${label}: runtime loader cache should be bumped`, { runtimeSource: value.runtimeSource }));
+        if (!value.mainSource.includes("v=28")) failures.push(fail(`${label}: main loader cache should be bumped`, { mainSource: value.mainSource }));
+        if (!value.runtimeSource.includes("v=31")) failures.push(fail(`${label}: runtime loader cache should be bumped`, { runtimeSource: value.runtimeSource }));
 
         for (const rail of value.meshGroupRails) {
           if (rail.rowCount !== 1) failures.push(fail(`${label}: each mesh group should stay in one horizontal row`, { rail }));
