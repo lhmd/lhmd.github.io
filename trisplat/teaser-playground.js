@@ -108,46 +108,9 @@ const sceneMeshOffset = new THREE.Vector3(0, 0, -0.16);
 const cameraFrameCenter = new THREE.Vector3(0, 0.7, 0);
 const sceneDataCache = new Map();
 const groundHeightCache = new Map();
-const dl3dvAgentScale = 0.18;
+const dl3dvAgentScale = 0.28;
 const re10kAgentScale = 0.32;
 const runtimeScenes = [
-  {
-    id: "dl3dv-1",
-    label: "DL3DV-1",
-    src: "./assets/mesh/gallery-web/dl3dv/ba55c875d20c34ee85ffc72264c4d77710852e5fb7d9ce4b9c26a8442850e98f_ctx12_triangle_direct_q995.ply.gz",
-    agentScale: dl3dvAgentScale,
-  },
-  {
-    id: "dl3dv-2",
-    label: "DL3DV-2",
-    src: "./assets/mesh/gallery-web/dl3dv/new_f70_DIRECT_triangle_mesh.ply.gz",
-    agentScale: dl3dvAgentScale,
-    frameScale: 0.72,
-  },
-  {
-    id: "dl3dv-3",
-    label: "DL3DV-3",
-    src: "./assets/mesh/gallery-web/dl3dv/new_fae_DIRECT_triangle_mesh.ply.gz",
-    agentScale: dl3dvAgentScale,
-  },
-  {
-    id: "dl3dv-4",
-    label: "DL3DV-4",
-    src: "./assets/mesh/gallery-web/dl3dv/teaser.ply.gz",
-    agentScale: dl3dvAgentScale,
-  },
-  {
-    id: "dl3dv-5",
-    label: "DL3DV-5",
-    src: "./assets/mesh/gallery-web/dl3dv/new_374_DIRECT_triangle_mesh.ply.gz",
-    agentScale: dl3dvAgentScale,
-  },
-  {
-    id: "dl3dv-6",
-    label: "DL3DV-6",
-    src: "./assets/mesh/gallery-web/dl3dv/new_9c5_DIRECT_triangle_mesh.ply.gz",
-    agentScale: dl3dvAgentScale,
-  },
   {
     id: "dl3dv-7",
     label: "DL3DV-7",
@@ -182,6 +145,44 @@ const runtimeScenes = [
     id: "dl3dv-12",
     label: "DL3DV-12",
     src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-12.ply.gz",
+    agentScale: dl3dvAgentScale,
+  },
+  {
+    id: "dl3dv-1",
+    label: "DL3DV-1",
+    src: "./assets/mesh/gallery-web/dl3dv/ba55c875d20c34ee85ffc72264c4d77710852e5fb7d9ce4b9c26a8442850e98f_ctx12_triangle_direct_q995.ply.gz",
+    agentScale: dl3dvAgentScale,
+  },
+  {
+    id: "dl3dv-2",
+    label: "DL3DV-2",
+    src: "./assets/mesh/gallery-web/dl3dv/new_f70_DIRECT_triangle_mesh.ply.gz",
+    agentScale: dl3dvAgentScale,
+    frameScale: 0.72,
+  },
+  {
+    id: "dl3dv-3",
+    label: "DL3DV-3",
+    src: "./assets/mesh/gallery-web/dl3dv/new_fae_DIRECT_triangle_mesh.ply.gz",
+    agentScale: dl3dvAgentScale,
+    cameraHeightScale: 0.62,
+  },
+  {
+    id: "dl3dv-4",
+    label: "DL3DV-4",
+    src: "./assets/mesh/gallery-web/dl3dv/teaser.ply.gz",
+    agentScale: dl3dvAgentScale,
+  },
+  {
+    id: "dl3dv-5",
+    label: "DL3DV-5",
+    src: "./assets/mesh/gallery-web/dl3dv/new_374_DIRECT_triangle_mesh.ply.gz",
+    agentScale: dl3dvAgentScale,
+  },
+  {
+    id: "dl3dv-6",
+    label: "DL3DV-6",
+    src: "./assets/mesh/gallery-web/dl3dv/new_9c5_DIRECT_triangle_mesh.ply.gz",
     agentScale: dl3dvAgentScale,
   },
   {
@@ -382,6 +383,112 @@ function boundingSphereRadiusForBox(box) {
   return size.length() * 0.5;
 }
 
+function estimateFloorHeight(geometries) {
+  const box = boundingBoxForGeometries(geometries);
+  const sceneHeight = Math.max(box.max.y - box.min.y, 1);
+  const floorBandLimit = box.min.y + sceneHeight * 0.36;
+  const heights = [];
+  const a = new THREE.Vector3();
+  const b = new THREE.Vector3();
+  const c = new THREE.Vector3();
+  const ab = new THREE.Vector3();
+  const ac = new THREE.Vector3();
+  const normal = new THREE.Vector3();
+
+  for (const geometry of geometries) {
+    const position = geometry.attributes.position;
+    const index = geometry.index;
+    const faceCount = index ? index.count / 3 : Math.floor(position.count / 3);
+    const step = Math.max(1, Math.floor(faceCount / 18000));
+
+    for (let face = 0; face < faceCount; face += step) {
+      const ia = index ? index.getX(face * 3) : face * 3;
+      const ib = index ? index.getX(face * 3 + 1) : face * 3 + 1;
+      const ic = index ? index.getX(face * 3 + 2) : face * 3 + 2;
+      a.fromBufferAttribute(position, ia);
+      b.fromBufferAttribute(position, ib);
+      c.fromBufferAttribute(position, ic);
+      normal.copy(ab.subVectors(b, a)).cross(ac.subVectors(c, a));
+      if (normal.lengthSq() < 1e-10) continue;
+      normal.normalize();
+      if (Math.abs(normal.y) < 0.46) continue;
+      const y = (a.y + b.y + c.y) / 3;
+      if (y <= floorBandLimit) heights.push(y);
+    }
+  }
+
+  if (heights.length < 8) return null;
+  heights.sort((left, right) => left - right);
+  return heights[Math.floor((heights.length - 1) * 0.18)];
+}
+
+function cropGeometryBelowY(geometry, minY) {
+  const position = geometry.attributes.position;
+  const sourceIndex = geometry.index;
+  const faceCount = sourceIndex ? sourceIndex.count / 3 : Math.floor(position.count / 3);
+  const oldToNew = new Map();
+  const oldIndices = [];
+  const remappedIndices = [];
+  let keptFaces = 0;
+
+  const mapIndex = (source) => {
+    let mapped = oldToNew.get(source);
+    if (mapped !== undefined) return mapped;
+    mapped = oldIndices.length;
+    oldToNew.set(source, mapped);
+    oldIndices.push(source);
+    return mapped;
+  };
+
+  for (let face = 0; face < faceCount; face += 1) {
+    const ia = sourceIndex ? sourceIndex.getX(face * 3) : face * 3;
+    const ib = sourceIndex ? sourceIndex.getX(face * 3 + 1) : face * 3 + 1;
+    const ic = sourceIndex ? sourceIndex.getX(face * 3 + 2) : face * 3 + 2;
+    const ay = position.getY(ia);
+    const by = position.getY(ib);
+    const cy = position.getY(ic);
+    if (Math.max(ay, by, cy) < minY || (ay + by + cy) / 3 < minY) continue;
+    remappedIndices.push(mapIndex(ia), mapIndex(ib), mapIndex(ic));
+    keptFaces += 1;
+  }
+
+  if (!keptFaces || keptFaces === faceCount) return null;
+
+  const cropped = new THREE.BufferGeometry();
+  for (const [name, attribute] of Object.entries(geometry.attributes)) {
+    const SourceArray = attribute.array.constructor;
+    const itemSize = attribute.itemSize;
+    const targetArray = new SourceArray(oldIndices.length * itemSize);
+    for (let target = 0; target < oldIndices.length; target += 1) {
+      const source = oldIndices[target];
+      const sourceOffset = source * itemSize;
+      const targetOffset = target * itemSize;
+      for (let item = 0; item < itemSize; item += 1) {
+        targetArray[targetOffset + item] = attribute.array[sourceOffset + item];
+      }
+    }
+    cropped.setAttribute(name, new THREE.BufferAttribute(targetArray, itemSize, attribute.normalized));
+  }
+  cropped.setIndex(new THREE.BufferAttribute(new Uint32Array(remappedIndices), 1));
+  geometry.dispose();
+  return cropped;
+}
+
+function cropGeometriesBelowFloor(geometries) {
+  const floorHeight = estimateFloorHeight(geometries);
+  if (!Number.isFinite(floorHeight)) return;
+  const minY = floorHeight - 0.035;
+
+  for (let index = 0; index < geometries.length; index += 1) {
+    geometries[index] = cropGeometryBelowY(geometries[index], minY) ?? geometries[index];
+  }
+
+  const croppedBox = boundingBoxForGeometries(geometries);
+  for (const geometry of geometries) {
+    geometry.translate(0, -croppedBox.min.y, 0);
+  }
+}
+
 function estimateDominantUpNormal(geometries) {
   const accumulated = new THREE.Vector3();
   const a = new THREE.Vector3();
@@ -451,6 +558,10 @@ function normalizeGeometries(geometries) {
 
   for (const geometry of geometries) {
     geometry.translate(-adjustedCenter.x, -adjustedBox.min.y, -adjustedCenter.z);
+  }
+  cropGeometriesBelowFloor(geometries);
+
+  for (const geometry of geometries) {
     finalizeGeometry(geometry);
   }
 
@@ -745,14 +856,16 @@ function resetAgentsForScene() {
 function frameRuntimeScene(sceneData) {
   const radius = THREE.MathUtils.clamp(sceneData?.radius ?? 2.4, 2.1, 4.8);
   const frameScale = sceneData?.runtimeScene?.frameScale ?? 1;
+  const cameraHeightScale = sceneData?.runtimeScene?.cameraHeightScale ?? 1;
   cameraFrameCenter.copy(sceneCenter);
-  cameraFrameCenter.y = Math.max(sceneFloorHeight + 0.72 * activeSceneScale, sceneCenter.y + 0.28 * activeSceneScale);
+  const targetHeight = Math.max(sceneFloorHeight + 0.72 * activeSceneScale, sceneCenter.y + 0.28 * activeSceneScale);
+  cameraFrameCenter.y = sceneFloorHeight + (targetHeight - sceneFloorHeight) * cameraHeightScale;
   controls.target.copy(cameraFrameCenter);
   worldCamera.position
     .copy(cameraFrameCenter)
     .add(new THREE.Vector3(
       0.28,
-      Math.max(1.75, radius * 0.42) * frameScale,
+      Math.max(1.75, radius * 0.42) * frameScale * cameraHeightScale,
       Math.max(4.15, radius * 1.42) * frameScale,
     ));
   worldCamera.lookAt(cameraFrameCenter);

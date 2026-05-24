@@ -182,7 +182,9 @@ try {
             viewX: card.dataset.viewX ?? null,
             viewZ: card.dataset.viewZ ?? null,
             viewFlip: card.dataset.viewFlip ?? null,
+            viewMode: card.dataset.viewMode ?? null,
             frameScale: card.dataset.frameScale ?? null,
+            cameraHeightScale: card.dataset.cameraHeightScale ?? null,
           }));
           const runtimeOptions = [...document.querySelectorAll('#runtimeSceneSelect option')].map((option) => ({
             value: option.value,
@@ -255,14 +257,22 @@ try {
         const f70Card = value.meshCardsData.find((card) => card.title === "DL3DV-2");
         if (f70Card?.viewX !== "0" || f70Card?.viewZ !== "1") failures.push(fail(`${label}: DL3DV-2 should open from the corrected +Z view`, { f70Card }));
         if (f70Card?.frameScale !== "0.72") failures.push(fail(`${label}: DL3DV-2 should use a closer initial frame`, { f70Card }));
+        const faeCard = value.meshCardsData.find((card) => card.title === "DL3DV-3");
+        if (faeCard?.cameraHeightScale !== "0.62") failures.push(fail(`${label}: DL3DV-3 should use a lower initial camera`, { faeCard }));
         const dl3dvCards = value.meshCardsData.filter((card) => card.datasetGroup === "DL3DV");
         if (dl3dvCards.some((card) => !card.src.includes('/gallery-web/dl3dv/'))) failures.push(fail(`${label}: DL3DV viewers should use cropped browser-friendly meshes`, { dl3dvCards }));
+        const expectedFrontCards = Array.from({ length: 6 }, (_, index) => `DL3DV-${index + 7}`);
+        const actualFrontCards = dl3dvCards.slice(0, 6).map((card) => card.title);
+        if (expectedFrontCards.some((title, index) => actualFrontCards[index] !== title)) {
+          failures.push(fail(`${label}: processed DL3DV meshes should appear first in inspect`, { actualFrontCards }));
+        }
         for (let index = 7; index <= 12; index += 1) {
           const title = `DL3DV-${index}`;
           const card = dl3dvCards.find((candidate) => candidate.title === title);
           if (!card?.src.includes(`/additional/dl3dv-scene-${String(index).padStart(2, '0')}.`)) {
             failures.push(fail(`${label}: gallery is missing processed ${title}`, { card }));
           }
+          if (card?.viewMode !== "top") failures.push(fail(`${label}: ${title} should default to an overhead inspect view`, { card }));
         }
         const re10kCards = value.meshCardsData.filter((card) => card.datasetGroup === "RE10K");
         const scene10Card = re10kCards.find((card) => card.title === "Scene 10");
@@ -274,7 +284,10 @@ try {
 
         const runtimeLabels = value.runtimeOptions.map((option) => option.label);
         if (value.runtimeOptions.length !== 15) failures.push(fail(`${label}: runtime should expose the full operable scene set`, { runtimeOptions: value.runtimeOptions }));
-        if (runtimeLabels[0] !== "DL3DV-1") failures.push(fail(`${label}: runtime should default to DL3DV-1`, { runtimeLabels }));
+        const expectedRuntimeFront = Array.from({ length: 6 }, (_, index) => `DL3DV-${index + 7}`);
+        if (expectedRuntimeFront.some((title, index) => runtimeLabels[index] !== title)) {
+          failures.push(fail(`${label}: runtime should prioritize simulation-ready DL3DV scenes`, { runtimeLabels }));
+        }
         if (runtimeLabels.some((labelText) => /^Scene\\s|Living Room|Loft|Studio|Pruned|Outdoor|Indoor/.test(labelText))) failures.push(fail(`${label}: runtime labels should use compact sequential numbering`, { runtimeLabels }));
         for (let index = 1; index <= 12; index += 1) {
           const expected = `DL3DV-${index}`;
@@ -284,7 +297,7 @@ try {
           const expected = `RE10K-${index}`;
           if (!runtimeLabels.includes(expected)) failures.push(fail(`${label}: runtime is missing ${expected}`, { runtimeLabels }));
         }
-        if (!value.runtimeSource.includes("v=29")) failures.push(fail(`${label}: runtime loader cache should be bumped`, { runtimeSource: value.runtimeSource }));
+        if (!value.runtimeSource.includes("v=30")) failures.push(fail(`${label}: runtime loader cache should be bumped`, { runtimeSource: value.runtimeSource }));
 
         for (const rail of value.meshGroupRails) {
           if (rail.rowCount !== 1) failures.push(fail(`${label}: each mesh group should stay in one horizontal row`, { rail }));
