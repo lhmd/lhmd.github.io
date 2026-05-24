@@ -19,7 +19,7 @@ function hideStatus() {
 
 async function loadPlayground() {
   if (!canvas) return null;
-  playgroundPromise ??= import("./teaser-playground.js?v=22").then((module) => module.createTeaserPlayground());
+  playgroundPromise ??= import("./teaser-playground.js?v=23").then((module) => module.createTeaserPlayground());
   playground = await playgroundPromise;
   return playground;
 }
