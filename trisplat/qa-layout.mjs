@@ -190,6 +190,7 @@ try {
             value: option.value,
             label: option.textContent.trim(),
           }));
+          const teaserCanvas = document.querySelector('#teaserCanvas');
           const mainSource = document.querySelector('script[src*="main.js"]')?.getAttribute('src') || '';
           const runtimeSource = document.querySelector('script[src*="teaser-sim.js"]')?.getAttribute('src') || '';
           const heroTitleRect = rectOf(document.querySelector('.hero h1'));
@@ -232,6 +233,8 @@ try {
             meshGroupRails,
             meshCardsData,
             runtimeOptions,
+            runtimeScene: teaserCanvas?.dataset.runtimeScene ?? null,
+            runtimeCameraHeightScale: teaserCanvas?.dataset.runtimeCameraHeightScale ?? null,
             mainSource,
             runtimeSource,
             titleSubtitleGap,
@@ -263,8 +266,8 @@ try {
         if (alignment.delta > 3) failures.push(fail(`${label}: section heading is not aligned with content`, alignment));
       }
       if (label === "desktop/interactive") {
-        const teaserCard = value.meshCardsData.find((card) => card.title === "DL3DV-teaser");
-        if (teaserCard?.groupId !== "dl3dv") failures.push(fail(`${label}: DL3DV-teaser should be grouped with DL3DV scenes`, { teaserCard }));
+        const teaserCard = value.meshCardsData.find((card) => card.title === "DL3DV-779");
+        if (teaserCard?.groupId !== "dl3dv") failures.push(fail(`${label}: DL3DV-779 should be grouped with DL3DV scenes`, { teaserCard }));
         const f70Card = value.meshCardsData.find((card) => card.title === "DL3DV-f70");
         if (f70Card?.viewX !== "0" || f70Card?.viewZ !== "1") failures.push(fail(`${label}: DL3DV-f70 should open from the corrected +Z view`, { f70Card }));
         if (f70Card?.frameScale !== "0.72") failures.push(fail(`${label}: DL3DV-f70 should use a closer initial frame`, { f70Card }));
@@ -272,18 +275,19 @@ try {
         if (faeCard?.cameraHeightScale !== "0.62") failures.push(fail(`${label}: DL3DV-fae should use a lower initial camera`, { faeCard }));
         const dl3dvCards = value.meshCardsData.filter((card) => card.datasetGroup === "DL3DV");
         if (dl3dvCards.some((card) => !card.src.includes('/gallery-web/dl3dv/'))) failures.push(fail(`${label}: DL3DV viewers should use cropped browser-friendly meshes`, { dl3dvCards }));
-        const expectedFrontCards = ["DL3DV-5389", "DL3DV-e98f", "DL3DV-f70", "DL3DV-7826", "DL3DV-374", "DL3DV-3b7f"];
+        const expectedInspectOrder = ["DL3DV-389", "DL3DV-98f", "DL3DV-f70", "DL3DV-826", "DL3DV-374", "DL3DV-b7f", "DL3DV-fae", "DL3DV-63f", "DL3DV-779", "DL3DV-cb7", "DL3DV-9c5", "DL3DV-f35"];
+        const expectedFrontCards = expectedInspectOrder.slice(0, 6);
         const actualFrontCards = dl3dvCards.slice(0, expectedFrontCards.length).map((card) => card.title);
         if (expectedFrontCards.some((title, index) => actualFrontCards[index] !== title)) {
           failures.push(fail(`${label}: DL3DV inspect order should start with the requested mixed sequence`, { actualFrontCards }));
         }
         const additionalDl3dvCards = [
-          { title: "DL3DV-3b7f", sceneNumber: "07" },
-          { title: "DL3DV-7826", sceneNumber: "08" },
-          { title: "DL3DV-5389", sceneNumber: "09" },
-          { title: "DL3DV-a63f", sceneNumber: "10" },
-          { title: "DL3DV-df35", sceneNumber: "11" },
-          { title: "DL3DV-0cb7", sceneNumber: "12" },
+          { title: "DL3DV-b7f", sceneNumber: "07" },
+          { title: "DL3DV-826", sceneNumber: "08" },
+          { title: "DL3DV-389", sceneNumber: "09" },
+          { title: "DL3DV-63f", sceneNumber: "10" },
+          { title: "DL3DV-f35", sceneNumber: "11" },
+          { title: "DL3DV-cb7", sceneNumber: "12" },
         ];
         for (const { title, sceneNumber } of additionalDl3dvCards) {
           const card = dl3dvCards.find((candidate) => candidate.title === title);
@@ -293,11 +297,11 @@ try {
           if (card?.viewMode !== "top") failures.push(fail(`${label}: ${title} should default to an overhead inspect view`, { card }));
         }
         const re10kCards = value.meshCardsData.filter((card) => card.datasetGroup === "RE10K");
-        const scene10Card = re10kCards.find((card) => card.title === "RE10K-cff8");
-        const re10kUnflippedTitles = new Set(["RE10K-81e5", "RE10K-cff8", "RE10K-a616", "RE10K-63b"]);
+        const scene10Card = re10kCards.find((card) => card.title === "RE10K-ff8");
+        const re10kUnflippedTitles = new Set(["RE10K-1e5", "RE10K-ff8", "RE10K-616", "RE10K-63b"]);
         const re10kFlipCards = re10kCards.filter((card) => !re10kUnflippedTitles.has(card.title));
         if (!scene10Card || scene10Card.viewX !== "0" || scene10Card.viewZ !== "1" || scene10Card.viewFlip === "true") {
-          failures.push(fail(`${label}: RE10K-cff8 should use its manual +Z initial view`, { scene10Card }));
+          failures.push(fail(`${label}: RE10K-ff8 should use its manual +Z initial view`, { scene10Card }));
         }
         for (const title of re10kUnflippedTitles) {
           const card = re10kCards.find((candidate) => candidate.title === title);
@@ -307,31 +311,35 @@ try {
 
         const runtimeLabels = value.runtimeOptions.map((option) => option.label);
         if (value.runtimeOptions.length !== 15) failures.push(fail(`${label}: runtime should expose the full operable scene set`, { runtimeOptions: value.runtimeOptions }));
-        if (runtimeLabels[0] !== "DL3DV-e98f") failures.push(fail(`${label}: runtime should default to DL3DV-e98f`, { runtimeLabels }));
+        if (runtimeLabels[0] !== "DL3DV-98f") failures.push(fail(`${label}: runtime should default to DL3DV-98f`, { runtimeLabels }));
+        const longHashLabels = [...dl3dvCards, ...re10kCards].map((card) => card.title).concat(runtimeLabels).filter((labelText) => /^(?:DL3DV|RE10K)-[0-9a-f]{4,}$/i.test(labelText));
+        if (longHashLabels.length) failures.push(fail(`${label}: scene labels should keep only the last three hash characters`, { longHashLabels }));
         const retiredRuntimeLabels = new Set(["DL3DV-1", "DL3DV-2", "DL3DV-3", "DL3DV-4", "DL3DV-5", "DL3DV-6", "DL3DV-7", "DL3DV-8", "DL3DV-9", "DL3DV-10", "DL3DV-11", "DL3DV-12", "RE10K-1", "RE10K-2", "RE10K-3"]);
         if (runtimeLabels.some((labelText) => retiredRuntimeLabels.has(labelText) || /^Scene\\s|Living Room|Loft|Studio|Pruned|Outdoor|Indoor/.test(labelText))) failures.push(fail(`${label}: runtime labels should use source-name suffixes`, { runtimeLabels }));
         const expectedRuntimeLabels = [
-          "DL3DV-e98f",
-          "DL3DV-3b7f",
-          "DL3DV-df35",
-          "DL3DV-5389",
-          "DL3DV-a63f",
-          "DL3DV-7826",
-          "DL3DV-0cb7",
+          "DL3DV-98f",
+          "DL3DV-389",
           "DL3DV-f70",
-          "DL3DV-fae",
-          "DL3DV-teaser",
+          "DL3DV-826",
           "DL3DV-374",
+          "DL3DV-b7f",
+          "DL3DV-fae",
+          "DL3DV-63f",
+          "DL3DV-779",
+          "DL3DV-cb7",
           "DL3DV-9c5",
-          "RE10K-cff8",
+          "DL3DV-f35",
+          "RE10K-ff8",
           "RE10K-63b",
           "RE10K-b56",
         ];
         for (const expected of expectedRuntimeLabels) {
           if (!runtimeLabels.includes(expected)) failures.push(fail(`${label}: runtime is missing ${expected}`, { runtimeLabels }));
         }
-        if (!value.mainSource.includes("v=29")) failures.push(fail(`${label}: main loader cache should be bumped`, { mainSource: value.mainSource }));
-        if (!value.runtimeSource.includes("v=32")) failures.push(fail(`${label}: runtime loader cache should be bumped`, { runtimeSource: value.runtimeSource }));
+        if (runtimeLabels.slice(0, 12).join("|") !== expectedRuntimeLabels.slice(0, 12).join("|")) failures.push(fail(`${label}: runtime DL3DV order should mirror inspect order with the first two swapped`, { runtimeLabels, expectedRuntimeLabels }));
+        if (value.runtimeScene !== "dl3dv-1" || value.runtimeCameraHeightScale !== "1") failures.push(fail(`${label}: default runtime scene should keep the original DL3DV-1 framing`, { runtimeScene: value.runtimeScene, runtimeCameraHeightScale: value.runtimeCameraHeightScale }));
+        if (!value.mainSource.includes("v=30")) failures.push(fail(`${label}: main loader cache should be bumped`, { mainSource: value.mainSource }));
+        if (!value.runtimeSource.includes("v=33")) failures.push(fail(`${label}: runtime loader cache should be bumped`, { runtimeSource: value.runtimeSource }));
 
         for (const rail of value.meshGroupRails) {
           if (rail.rowCount !== 1) failures.push(fail(`${label}: each mesh group should stay in one horizontal row`, { rail }));

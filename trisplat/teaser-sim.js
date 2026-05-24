@@ -6,6 +6,11 @@ let playgroundPromise = null;
 let isPreparing = false;
 const preloadMargin = 80;
 
+if (canvas) {
+  canvas.dataset.runtimeScene ||= "dl3dv-1";
+  canvas.dataset.runtimeCameraHeightScale ||= "1";
+}
+
 function setStatus(message, isError = false) {
   if (!statusEl) return;
   statusEl.textContent = message;
@@ -19,7 +24,7 @@ function hideStatus() {
 
 async function loadPlayground() {
   if (!canvas) return null;
-  playgroundPromise ??= import("./teaser-playground.js?v=23").then((module) => module.createTeaserPlayground());
+  playgroundPromise ??= import("./teaser-playground.js?v=24").then((module) => module.createTeaserPlayground());
   playground = await playgroundPromise;
   return playground;
 }

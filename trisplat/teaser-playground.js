@@ -113,49 +113,14 @@ const re10kAgentScale = 0.32;
 const runtimeScenes = [
   {
     id: "dl3dv-1",
-    label: "DL3DV-e98f",
+    label: "DL3DV-98f",
     src: "./assets/mesh/gallery-web/dl3dv/ba55c875d20c34ee85ffc72264c4d77710852e5fb7d9ce4b9c26a8442850e98f_ctx12_triangle_direct_q995.ply.gz",
     agentScale: dl3dvAgentScale,
   },
   {
-    id: "dl3dv-7",
-    label: "DL3DV-3b7f",
-    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-07.ply.gz",
-    agentScale: dl3dvAgentScale,
-    spawnStrategy: "center",
-  },
-  {
-    id: "dl3dv-11",
-    label: "DL3DV-df35",
-    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-11.ply.gz",
-    agentScale: dl3dvAgentScale,
-    spawnStrategy: "center",
-  },
-  {
     id: "dl3dv-9",
-    label: "DL3DV-5389",
+    label: "DL3DV-389",
     src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-09.ply.gz",
-    agentScale: dl3dvAgentScale,
-    spawnStrategy: "center",
-  },
-  {
-    id: "dl3dv-10",
-    label: "DL3DV-a63f",
-    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-10.ply.gz",
-    agentScale: dl3dvAgentScale,
-    spawnStrategy: "center",
-  },
-  {
-    id: "dl3dv-8",
-    label: "DL3DV-7826",
-    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-08.ply.gz",
-    agentScale: dl3dvAgentScale,
-    spawnStrategy: "center",
-  },
-  {
-    id: "dl3dv-12",
-    label: "DL3DV-0cb7",
-    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-12.ply.gz",
     agentScale: dl3dvAgentScale,
     spawnStrategy: "center",
   },
@@ -167,17 +132,11 @@ const runtimeScenes = [
     frameScale: 0.72,
   },
   {
-    id: "dl3dv-3",
-    label: "DL3DV-fae",
-    src: "./assets/mesh/gallery-web/dl3dv/new_fae_DIRECT_triangle_mesh.ply.gz",
+    id: "dl3dv-8",
+    label: "DL3DV-826",
+    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-08.ply.gz",
     agentScale: dl3dvAgentScale,
-    cameraHeightScale: 0.62,
-  },
-  {
-    id: "dl3dv-4",
-    label: "DL3DV-teaser",
-    src: "./assets/mesh/gallery-web/dl3dv/teaser.ply.gz",
-    agentScale: dl3dvAgentScale,
+    spawnStrategy: "center",
   },
   {
     id: "dl3dv-5",
@@ -186,14 +145,56 @@ const runtimeScenes = [
     agentScale: dl3dvAgentScale,
   },
   {
+    id: "dl3dv-7",
+    label: "DL3DV-b7f",
+    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-07.ply.gz",
+    agentScale: dl3dvAgentScale,
+    spawnStrategy: "center",
+  },
+  {
+    id: "dl3dv-3",
+    label: "DL3DV-fae",
+    src: "./assets/mesh/gallery-web/dl3dv/new_fae_DIRECT_triangle_mesh.ply.gz",
+    agentScale: dl3dvAgentScale,
+    cameraHeightScale: 0.62,
+  },
+  {
+    id: "dl3dv-10",
+    label: "DL3DV-63f",
+    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-10.ply.gz",
+    agentScale: dl3dvAgentScale,
+    spawnStrategy: "center",
+  },
+  {
+    id: "dl3dv-4",
+    label: "DL3DV-779",
+    src: "./assets/mesh/gallery-web/dl3dv/teaser.ply.gz",
+    agentScale: dl3dvAgentScale,
+    cameraHeightScale: 0.62,
+  },
+  {
+    id: "dl3dv-12",
+    label: "DL3DV-cb7",
+    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-12.ply.gz",
+    agentScale: dl3dvAgentScale,
+    spawnStrategy: "center",
+  },
+  {
     id: "dl3dv-6",
     label: "DL3DV-9c5",
     src: "./assets/mesh/gallery-web/dl3dv/new_9c5_DIRECT_triangle_mesh.ply.gz",
     agentScale: dl3dvAgentScale,
   },
   {
+    id: "dl3dv-11",
+    label: "DL3DV-f35",
+    src: "./assets/mesh/gallery-web/dl3dv/additional/dl3dv-scene-11.ply.gz",
+    agentScale: dl3dvAgentScale,
+    spawnStrategy: "center",
+  },
+  {
     id: "re10k-1",
-    label: "RE10K-cff8",
+    label: "RE10K-ff8",
     src: "./assets/mesh/gallery-web/re10k/10_7a874ba9dd12cff8_triangle_direct_q995.ply.gz",
     agentScale: re10kAgentScale,
   },
@@ -1179,6 +1180,7 @@ async function loadSceneMesh(sceneId = activeSceneId, settleReady = false) {
     if (token !== sceneLoadToken) return;
     applySceneData(sceneData);
     canvas.dataset.runtimeScene = runtimeScene.id;
+    canvas.dataset.runtimeCameraHeightScale = String(runtimeScene.cameraHeightScale ?? 1);
     hideStatus();
     if (settleReady && !didSettleReady) {
       didSettleReady = true;
