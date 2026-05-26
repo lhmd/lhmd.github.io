@@ -117,6 +117,7 @@ const runtimeScenes = [
     src: "./assets/mesh/gallery-web/dl3dv/ba55c875d20c34ee85ffc72264c4d77710852e5fb7d9ce4b9c26a8442850e98f_ctx12_triangle_direct_q995.ply.gz",
     agentScale: dl3dvAgentScale,
     cameraSideOffset: 0,
+    initialHeading: 0,
   },
   {
     id: "dl3dv-9",
@@ -130,7 +131,9 @@ const runtimeScenes = [
     label: "DL3DV-f70",
     src: "./assets/mesh/gallery-web/dl3dv/new_f70_DIRECT_triangle_mesh.ply.gz",
     agentScale: dl3dvAgentScale,
+    cameraSideOffset: 0,
     frameScale: 0.72,
+    initialHeading: 0,
   },
   {
     id: "dl3dv-8",
@@ -822,7 +825,10 @@ function placeAgentOnSpawn(agent, spawn) {
   applyAgentScale(agent);
   agent.position.copy(spawn);
   agent.position.y = sampleGroundHeight(agent.position.x, agent.position.z);
-  const heading = Math.atan2(sceneCenter.x - agent.position.x, sceneCenter.z - agent.position.z);
+  const runtimeScene = runtimeScenes.find((candidate) => candidate.id === activeSceneId);
+  const heading = Number.isFinite(runtimeScene?.initialHeading)
+    ? runtimeScene.initialHeading
+    : Math.atan2(sceneCenter.x - agent.position.x, sceneCenter.z - agent.position.z);
   agent.rotation.y = heading;
   targetYaw = heading;
 }
