@@ -132,8 +132,11 @@ const runtimeScenes = [
     src: "./assets/mesh/gallery-web/dl3dv/new_f70_DIRECT_triangle_mesh.ply.gz",
     agentScale: dl3dvAgentScale,
     cameraSideOffset: 0,
-    frameScale: 0.72,
+    frameScale: 0.9,
+    cameraHeightScale: 0.72,
     initialHeading: 0,
+    skipLeveling: true,
+    initialSpawn: [0.15, 0.1],
   },
   {
     id: "dl3dv-8",
@@ -555,9 +558,9 @@ function levelGeometriesToGroundPlane(geometries) {
   }
 }
 
-function normalizeGeometries(geometries) {
+function normalizeGeometries(geometries, runtimeScene = null) {
   for (const geometry of geometries) orientGeometryYUp(geometry);
-  levelGeometriesToGroundPlane(geometries);
+  if (!runtimeScene?.skipLeveling) levelGeometriesToGroundPlane(geometries);
 
   const box = boundingBoxForGeometries(geometries);
   const center = new THREE.Vector3();
@@ -889,13 +892,17 @@ function frameRuntimeScene(sceneData) {
   const targetHeight = Math.max(sceneFloorHeight + 0.72 * activeSceneScale, sceneCenter.y + 0.28 * activeSceneScale);
   cameraFrameCenter.y = sceneFloorHeight + (targetHeight - sceneFloorHeight) * cameraHeightScale;
   controls.target.copy(cameraFrameCenter);
+  const cameraOffset = new THREE.Vector3(
+    runtimeScene.cameraSideOffset ?? 0.28,
+    Math.max(1.75, radius * 0.42) * frameScale * cameraHeightScale,
+    Math.max(4.15, radius * 1.42) * frameScale,
+  );
+  if (Number.isFinite(runtimeScene.viewYaw)) {
+    cameraOffset.applyAxisAngle(new THREE.Vector3(0, 1, 0), runtimeScene.viewYaw);
+  }
   worldCamera.position
     .copy(cameraFrameCenter)
-    .add(new THREE.Vector3(
-      runtimeScene.cameraSideOffset ?? 0.28,
-      Math.max(1.75, radius * 0.42) * frameScale * cameraHeightScale,
-      Math.max(4.15, radius * 1.42) * frameScale,
-    ));
+    .add(cameraOffset);
   worldCamera.lookAt(cameraFrameCenter);
   worldCamera.updateProjectionMatrix();
   controls.update();
@@ -1151,7 +1158,7 @@ async function loadScene() {
 async function loadRuntimeSceneData(runtimeScene) {
   if (sceneDataCache.has(runtimeScene.id)) return sceneDataCache.get(runtimeScene.id);
   const loadPromise = loadPlyGeometryParts(runtimeScene).then((geometries) => {
-    const box = normalizeGeometries(geometries);
+    const box = normalizeGeometries(geometries, runtimeScene);
     const center = new THREE.Vector3();
     box.getCenter(center);
     return {
@@ -1183,6 +1190,10 @@ function applySceneData(sceneData) {
   sceneCenter.copy(sceneData.center).add(sceneMeshOffset);
   sceneFloorHeight = sceneData.spawnData.floorHeight + sceneMeshOffset.y;
   spawnPoints = sceneData.spawnData.points.map((point) => point.clone().add(sceneMeshOffset));
+  const initialSpawn = sceneData.runtimeScene.initialSpawn;
+  if (Array.isArray(initialSpawn) && initialSpawn.length >= 2) {
+    spawnPoints.unshift(new THREE.Vector3(initialSpawn[0], sceneFloorHeight, initialSpawn[1]));
+  }
   groundHeightCache.clear();
   resetAgentsForScene();
   clearBeacons();
