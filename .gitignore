@@ -1,2 +1,5 @@
 .DS_Store
 .vscode/
+
+# TriSplat is deployed from github.com/lhmd/trisplat as a project Pages site.
+trisplat/
