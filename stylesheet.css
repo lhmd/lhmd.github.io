@@ -190,6 +190,11 @@ span.highlight {
   text-decoration: underline;
 }
 
+.paper-highlight {
+  color: #c40000;
+  font-weight: 700;
+}
+
 .news-toggle {
   margin: 0;
   padding: 0;
