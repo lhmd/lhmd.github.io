@@ -7,6 +7,7 @@
   <title>Weijie Wang | 王伟杰</title>
   <meta name="author" content="Weijie Wang">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="theme.js"></script>
   <link rel="stylesheet" type="text/css" href="stylesheet.css">
   <link rel="icon" type="image/png" href="images/logo/zju.png">
   <link rel="apple-touch-icon" href="images/logo/zju.png">
@@ -14,8 +15,8 @@
   
 </head>
 
-<body>
-  <table
+<body class="academic-home">
+  <table class="page-shell"
     style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
     <tbody>
       <tr style="padding:0px">
@@ -23,7 +24,7 @@
           <table
             style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
             <tbody>
-              <tr style="padding:0px">
+              <tr class="profile-row" style="padding:0px">
                 <td style="padding:2.5%;width:68%;vertical-align:middle">
                   <p style="text-align:center">
                     <name>Weijie Wang &nbsp | &nbsp 王伟杰</name>
@@ -65,32 +66,17 @@
             </tbody>
           </table>
 
-          <table width="500" align="center" border="0" cellspacing="0" cellpadding="2">
-            <tbody>
-              <tr>
-                <td align="center" valign="middle">
-                  <a href="https://www.zju.edu.cn/english/" target="_blank">
-                    <img src="images/logo/zju.png" height="60" alt="Zhejiang University">
-                  </a>
-                </td>
-                <td align="center" valign="middle">
-                  <a href="https://seed.bytedance.com/en/" target="_blank">
-                    <img src="images/logo/seed.jpg" height="60" alt="ByteDance Seed">
-                  </a>
-                </td>
-                <td align="center" valign="middle">
-                  <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/" target="_blank">
-                    <img src="images/logo/microsoft.png" height="60" alt="Microsoft Research Asia">
-                  </a>
-                </td>
-                <!-- <td align="center" valign="middle">
-                  <a href="https://gigaai.cc/" target="_blank">
-                    <img src="images/logo/gigaai.jpg" height="60" alt="GigaAI">
-                  </a>
-                </td> -->
-              </tr>
-            </tbody>
-          </table>
+          <div class="affiliations" aria-label="Affiliations">
+            <a href="https://www.zju.edu.cn/english/" target="_blank">
+              <img class="zju-logo" src="images/logo/zju.png" alt="Zhejiang University">
+            </a>
+            <a href="https://seed.bytedance.com/en/" target="_blank">
+              <img class="seed-logo" src="images/logo/seed.jpg" alt="ByteDance Seed">
+            </a>
+            <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/" target="_blank">
+              <img class="microsoft-logo" src="images/logo/microsoft.png" alt="Microsoft Research Asia">
+            </a>
+          </div>
 
           
           <table
@@ -141,13 +127,13 @@
 
   <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
     <tbody>
-      <heading>Selected Publications</heading>
+      <heading id="publications">Selected Publications</heading>
       <br>
       <p>
         <span>&#42;</span> <em>Equal contribution</em> &nbsp/&nbsp <span>&#8224;</span> <em>Corresponding authors</em>
       </p>
 
-      <tr bgcolor="#ffffdc">
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='images/latent-spatial-memory.jpg' width="190">
         </td>
@@ -167,12 +153,12 @@
           <a class="a2" href="https://www.microsoft.com/en-us/research/people/yuqyang/" target="_blank">Yuqing Yang</a>,
           <a class="a2" href="https://bohanzhuang.github.io/" target="_blank">Bohan Zhuang</a><span>&#8224;</span>
           <br>
-          <a href="https://arxiv.org/abs/2606.09828" target="_blank">Paper</a>
-          /
-          <a href="https://aka.ms/latent-spatial-memory" target="_blank">Project</a>
-          /
-          <a href="https://github.com/microsoft/LatentSpatialMemory" target="_blank">Code</a>
-          <p></p>
+          <div class="paper-links" role="group" aria-label="Latent Spatial Memory for Video World Models resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2606.09828" target="_blank">Paper</a>
+            <a class="paper-link" href="https://aka.ms/latent-spatial-memory" target="_blank">Project</a>
+            <a class="paper-link" href="https://github.com/microsoft/LatentSpatialMemory" target="_blank">Code</a>
+          </div>
+
           <p>
             Latent Spatial Memory stores persistent 3D scene content directly as latent tokens for efficient,
             spatially consistent video world models.
@@ -180,7 +166,7 @@
         </td>
       </tr>
 
-      <tr bgcolor="#ffffdc">
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='https://lhmd.top/trisplat/assets/figures/pipeline2.png' width="190">
         </td>
@@ -198,21 +184,20 @@
           <a class="a2" href="https://donydchen.github.io/" target="_blank">Donny Y. Chen</a>,
           <a class="a2" href="https://bohanzhuang.github.io/" target="_blank">Bohan Zhuang</a><span>&#8224;</span>
           <br>
-          <a href="https://arxiv.org/abs/2605.26115" target="_blank">Paper</a>
-          /
-          <a href="https://lhmd.top/trisplat/" target="_blank">Project</a>
-          /
-          <a href="https://github.com/ziplab/TriSplat" target="_blank">Code</a>
-          /
-          <a href="https://huggingface.co/lhmd/TriSplat" target="_blank">Models</a>
-          <p></p>
+          <div class="paper-links" role="group" aria-label="TriSplat: Simulation-Ready Feed-Forward 3D Scene Reconstruction resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2605.26115" target="_blank">Paper</a>
+            <a class="paper-link" href="https://lhmd.top/trisplat/" target="_blank">Project</a>
+            <a class="paper-link" href="https://github.com/ziplab/TriSplat" target="_blank">Code</a>
+            <a class="paper-link" href="https://huggingface.co/lhmd/TriSplat" target="_blank">Models</a>
+          </div>
+
           <p>
             TriSplat predicts simulation-ready triangle primitives for feed-forward sparse-view 3D scene reconstruction.
           </p>
         </td>
       </tr>
 
-      <tr bgcolor="#ffffdc">
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='images/world-r1.jpg' width="190">
         </td>
@@ -234,16 +219,14 @@
           <a class="a2" href="https://www.microsoft.com/en-us/research/people/yuqyang/" target="_blank">Yuqing Yang</a><span>&#8224;</span>,
           <a class="a2" href="https://bohanzhuang.github.io/" target="_blank">Bohan Zhuang</a><span>&#8224;</span>
           <br>
-          <a href="https://arxiv.org/abs/2604.24764" target="_blank">Paper</a>
-          /
-          <a href="https://aka.ms/world-r1" target="_blank">Project</a>
-          /
-          <a href="https://github.com/microsoft/World-R1" target="_blank">Code</a>
-          /
-          <a class="paper-award" href="https://huggingface.co/papers/2604.24764" target="_blank">Hugging Face #1 Paper of the Day</a>
-          <br>
-          <em><strong>ICML 2026</strong></em>
-          <p></p>
+          <div class="paper-venue"><em><strong>ICML 2026</strong></em></div>
+<div class="paper-links" role="group" aria-label="World-R1: Reinforcing 3D Constraints for Text-to-Video Generation resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2604.24764" target="_blank">Paper</a>
+            <a class="paper-link" href="https://aka.ms/world-r1" target="_blank">Project</a>
+            <a class="paper-link" href="https://github.com/microsoft/World-R1" target="_blank">Code</a>
+          </div>
+          <div class="paper-recognition"><a class="paper-award" href="https://huggingface.co/papers/2604.24764" target="_blank">Hugging Face #1 Paper of the Day</a></div>
+
           <p>
             World-R1 aligns text-to-video generation with 3D constraints through reinforcement learning, improving
             geometric consistency while preserving visual quality and motion diversity.
@@ -251,7 +234,7 @@
         </td>
       </tr>
 
-      <tr bgcolor="#ffffdc">
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='images/ff3d-survey-overview.png' width="190">
         </td>
@@ -274,12 +257,12 @@
           <a class="a2" href="https://jwbian.net/" target="_blank">Jia-Wang Bian</a><span>&#8224;</span>,
           <a class="a2" href="https://bohanzhuang.github.io/" target="_blank">Bohan Zhuang</a><span>&#8224;</span>
           <br>
-          <a href="https://arxiv.org/abs/2604.14025" target="_blank">Paper</a>
-          /
-          <a href="https://ff3d-survey.github.io/" target="_blank">Project</a>
-          /
-          <a href="https://github.com/ziplab/Awesome-Feed-Forward-3D" target="_blank">GitHub</a>
-          <p></p>
+          <div class="paper-links" role="group" aria-label="Feed-Forward 3D Scene Modeling: A Problem-Driven Perspective resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2604.14025" target="_blank">Paper</a>
+            <a class="paper-link" href="https://ff3d-survey.github.io/" target="_blank">Project</a>
+            <a class="paper-link" href="https://github.com/ziplab/Awesome-Feed-Forward-3D" target="_blank">GitHub</a>
+          </div>
+
           <p>
             We present a problem-driven survey of feed-forward 3D scene modeling, covering representative methods,
             datasets, and downstream applications.
@@ -287,7 +270,7 @@
         </td>
       </tr>
 
-      <tr>
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='images/cov.jpg' width="190">
         </td>
@@ -305,14 +288,13 @@
           <a class="a2" href="" target="_blank">Gholamreza Haffari</a>,
           <a class="a2" href="https://bohanzhuang.github.io/" target="_blank">Bohan Zhuang</a><span>&#8224;</span>
           <br>
-          <a href="https://arxiv.org/abs/2601.05172" target="_blank">Paper</a>
-          /
-          <a href="https://ziplab.co/CoV/" target="_blank">Project</a>
-          /
-          <a href="https://github.com/ziplab/CoV" target="_blank">Code</a>
-          <br>
-          <em><strong>ACL 2026 Findings</strong></em>
-          <p></p>
+          <div class="paper-venue"><em><strong>ACL 2026 Findings</strong></em></div>
+<div class="paper-links" role="group" aria-label="CoV: Chain-of-View Prompting for Spatial Reasoning resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2601.05172" target="_blank">Paper</a>
+            <a class="paper-link" href="https://ziplab.co/CoV/" target="_blank">Project</a>
+            <a class="paper-link" href="https://github.com/ziplab/CoV" target="_blank">Code</a>
+          </div>
+
           <p>
             We propose Chain-of-View (CoV) prompting, a training-free test-time reasoning framework that transforms
             VLMs into active viewpoint reasoners for spatial reasoning in 3D environments.
@@ -320,7 +302,7 @@
         </td>
       </tr>
 
-      <tr bgcolor="#ffffdc">
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='images/drivegen3d.jpg' width="190">
           
@@ -348,19 +330,19 @@
           <a class="a2" href="https://donydchen.github.io/" target="_blank">Donny Y. Chen</a>,
           <a class="a2" href="https://ivg.au.tsinghua.edu.cn/Jiwen_Lu/" target="_blank">Jiwen Lu</a>
           <br>
-          <a href="https://arxiv.org/abs/2510.15264" target="_blank">Paper</a>
-          /
-          <a href="https://lhmd.top/drivegen3d/" target="_blank">Project</a>
-          <br>
-          <em><strong>ICME 2026</strong></em> <span class="paper-highlight">Oral (Top 3%)</span>
-          <p></p>
+          <div class="paper-venue"><em><strong>ICME 2026</strong></em> <span class="paper-highlight">Oral (Top 3%)</span></div>
+<div class="paper-links" role="group" aria-label="DriveGen3D: Boosting Feed-Forward Driving Scene Generation with Efficient Video Diffusion resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2510.15264" target="_blank">Paper</a>
+            <a class="paper-link" href="https://lhmd.top/drivegen3d/" target="_blank">Project</a>
+          </div>
+
           <p>
             We present DriveGen3D, a novel framework for generating high-quality and highly controllable dynamic 3D driving scenes that addresses critical limitations in existing methodologies.
           </p>
         </td>
       </tr>
 
-      <tr bgcolor="#ffffdc">
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='images/volsplat.jpg' width="190">
           
@@ -382,23 +364,21 @@
           <a class="a2" href="https://donydchen.github.io/" target="_blank">Donny Y. Chen</a>,
           <a class="a2" href="https://bohanzhuang.github.io/" target="_blank">Bohan Zhuang</a><span>&#8224;</span>
           <br>
-          <a href="https://arxiv.org/abs/2509.19297" target="_blank">Paper</a>
-          /
-          <a href="https://lhmd.top/volsplat/" target="_blank">Project</a>
-          /
-          <a href="https://github.com/ziplab/VolSplat" target="_blank">Code</a>
-          /
-          <a href="https://huggingface.co/lhmd/VolSplat" target="_blank">Models</a>
-          <br>
-          <em><strong>ECCV 2026</strong></em>
-          <p></p>
+          <div class="paper-venue"><em><strong>ECCV 2026</strong></em></div>
+<div class="paper-links" role="group" aria-label="VolSplat: Rethinking Feed-Forward 3D Gaussian Splatting with Voxel-Aligned Prediction resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2509.19297" target="_blank">Paper</a>
+            <a class="paper-link" href="https://lhmd.top/volsplat/" target="_blank">Project</a>
+            <a class="paper-link" href="https://github.com/ziplab/VolSplat" target="_blank">Code</a>
+            <a class="paper-link" href="https://huggingface.co/lhmd/VolSplat" target="_blank">Models</a>
+          </div>
+
           <p>
             VolSplat improves multi-view consistency and geometric accuracy for feed-forward 3DGS with voxel-aligned prediction.
           </p>
         </td>
       </tr>
 
-      <tr>
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='images/pmloss.png' width="190">
           
@@ -417,16 +397,14 @@
           <a class="a2" href="https://bohanzhuang.github.io/" target="_blank">Bohan Zhuang</a><span>&#8224;</span>
           
           <br>
-          <a href="https://arxiv.org/abs/2506.05327" target="_blank">Paper</a>
-          /
-          <a href="https://aim-uofa.github.io/PMLoss/" target="_blank">Project</a>
-          /
-          <a href="https://github.com/aim-uofa/PM-Loss/" target="_blank">Code</a>
-          /
-          <a href="https://huggingface.co/dc-walker/PM-Loss" target="_blank">Models</a>
-          <br>
-          <em><strong>3DV 2026</strong></em>
-          <p></p>
+          <div class="paper-venue"><em><strong>3DV 2026</strong></em></div>
+<div class="paper-links" role="group" aria-label="Revisiting Depth Representations for Feed-Forward 3D Gaussian Splatting resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2506.05327" target="_blank">Paper</a>
+            <a class="paper-link" href="https://aim-uofa.github.io/PMLoss/" target="_blank">Project</a>
+            <a class="paper-link" href="https://github.com/aim-uofa/PM-Loss/" target="_blank">Code</a>
+            <a class="paper-link" href="https://huggingface.co/dc-walker/PM-Loss" target="_blank">Models</a>
+          </div>
+
           <p>
             We introduce PM-Loss, a novel regularization loss based on a learned point map for feed-forward 3DGS,
             leading to smoother 3D geometry and better rendering.
@@ -434,7 +412,7 @@
         </td>
       </tr>
 
-      <tr bgcolor="#ffffdc">
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='images/zpressor.jpg' width="190">
           
@@ -451,23 +429,21 @@
           <a class="a2" href="https://github.com/AkideLiu" target="_blank">Akide Liu</a>,
           <a class="a2" href="https://bohanzhuang.github.io/" target="_blank">Bohan Zhuang</a>
           <br>
-          <a href="https://arxiv.org/abs/2505.23734" target="_blank">Paper</a>
-          /
-          <a href="https://lhmd.top/zpressor/" target="_blank">Project</a>
-          /
-          <a href="https://github.com/ziplab/ZPressor" target="_blank">Code</a>
-          /
-          <a href="https://huggingface.co/lhmd/ZPressor" target="_blank">Models</a>
-          <br>
-          <em><strong>NeurIPS 2025</strong></em>
-          <p></p>
+          <div class="paper-venue"><em><strong>NeurIPS 2025</strong></em></div>
+<div class="paper-links" role="group" aria-label="ZPressor: Bottleneck-Aware Compression for Scalable Feed-Forward 3DGS resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2505.23734" target="_blank">Paper</a>
+            <a class="paper-link" href="https://lhmd.top/zpressor/" target="_blank">Project</a>
+            <a class="paper-link" href="https://github.com/ziplab/ZPressor" target="_blank">Code</a>
+            <a class="paper-link" href="https://huggingface.co/lhmd/ZPressor" target="_blank">Models</a>
+          </div>
+
           <p>
             ZPressor is an architecture-agnostic module that compresses multi-view inputs for scalable feed-forward 3DGS.
           </p>
         </td>
       </tr>
 
-      <tr>
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='images/wonderturbo.png' width="190">
           
@@ -488,14 +464,13 @@
           <a class="a2" href="" target="_blank">Guan Huang</a>,
           <a class="a2" href="" target="_blank">Wenjun Mei</a><span>&#8224;</span>
           <br>
-          <a href="https://www.arxiv.org/abs/2504.02261" target="_blank">Paper</a>
-          /
-          <a href="https://wonderturbo.github.io/" target="_blank">Project</a>
-          /
-          <a href="https://github.com/GigaAI-research/WonderTurbo" target="_blank">Code</a>
-          <br>
-          <em><strong>ICCV 2025</strong></em>
-          <p></p>
+          <div class="paper-venue"><em><strong>ICCV 2025</strong></em></div>
+<div class="paper-links" role="group" aria-label="WonderTurbo: Generating Interactive 3D World in 0.72 Seconds resources">
+            <a class="paper-link paper-link-primary" href="https://www.arxiv.org/abs/2504.02261" target="_blank">Paper</a>
+            <a class="paper-link" href="https://wonderturbo.github.io/" target="_blank">Project</a>
+            <a class="paper-link" href="https://github.com/GigaAI-research/WonderTurbo" target="_blank">Code</a>
+          </div>
+
           <p>
             We introduce WonderTurbo, the first real-time interactive 3D scene generation framework capable of
             generating novel perspectives of 3D scenes within 0.72 seconds.
@@ -511,7 +486,7 @@
       <heading>Other Publications</heading>
       <br>
 
-      <tr>
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='https://shredded-pork.github.io/Flash-GRPO.github.io/pics/arch.png' width="190">
         </td>
@@ -533,14 +508,13 @@
           <a class="a2" href="https://nanduan.github.io/" target="_blank">Nan DUAN</a>,
           <a class="a2" href="https://bohanzhuang.github.io/" target="_blank">Bohan Zhuang</a><span>&#8224;</span>
           <br>
-          <a href="https://arxiv.org/abs/2605.15980" target="_blank">Paper</a>
-          /
-          <a href="https://shredded-pork.github.io/Flash-GRPO.github.io/" target="_blank">Project</a>
-          /
-          <a href="https://github.com/Shredded-Pork/Flash-GRPO" target="_blank">Code</a>
-          <br>
-          <em><strong>ICML 2026</strong></em>
-          <p></p>
+          <div class="paper-venue"><em><strong>ICML 2026</strong></em></div>
+<div class="paper-links" role="group" aria-label="Flash-GRPO: Efficient Alignment for Video Diffusion via One-Step Policy Optimization resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2605.15980" target="_blank">Paper</a>
+            <a class="paper-link" href="https://shredded-pork.github.io/Flash-GRPO.github.io/" target="_blank">Project</a>
+            <a class="paper-link" href="https://github.com/Shredded-Pork/Flash-GRPO" target="_blank">Code</a>
+          </div>
+
           <p>
             We introduce Flash-GRPO, a one-step policy optimization framework that improves video diffusion alignment
             efficiency with iso-temporal grouping and temporal gradient rectification.
@@ -548,7 +522,7 @@
         </td>
       </tr>
 
-      <tr>
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='images/digseg_teaser.png' width="190">
         </td>
@@ -569,12 +543,12 @@
           <a class="a2" href="" target="_blank">Yue Chen</a>,
           <a class="a2" href="" target="_blank">Zhou Zhao</a>
           <br>
-          <a href="https://arxiv.org/abs/2604.24575" target="_blank">Paper</a>
-          /
-          <a href="https://github.com/wang-haoxiao/DiGSeg" target="_blank">Code</a>
-          <br>
-          <em><strong>ECCV 2026</strong></em>
-          <p></p>
+          <div class="paper-venue"><em><strong>ECCV 2026</strong></em></div>
+<div class="paper-links" role="group" aria-label="Diffusion Model as a Generalist Segmentation Learner resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2604.24575" target="_blank">Paper</a>
+            <a class="paper-link" href="https://github.com/wang-haoxiao/DiGSeg" target="_blank">Code</a>
+          </div>
+
           <p>
             We introduce DiGSeg, a diffusion-based generalist segmentation framework that repurposes pretrained
             diffusion models for text-conditioned semantic and open-vocabulary segmentation.
@@ -582,7 +556,7 @@
         </td>
       </tr>
 
-      <tr>
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='images/mv_robobench.png' width="190">
         </td>
@@ -611,12 +585,12 @@
           <a class="a2" href="" target="_blank">Jiaolong Yang</a><span>&#8224;</span>,
           <a class="a2" href="" target="_blank">Baining Guo</a>
           <br>
-          <a href="https://arxiv.org/abs/2510.19400" target="_blank">Paper</a>
-          /
-          <a href="https://github.com/microsoft/MV-RoboBench" target="_blank">Code</a>
-          <br>
-          <em><strong>ICLR 2026</strong></em>
-          <p></p>
+          <div class="paper-venue"><em><strong>ICLR 2026</strong></em></div>
+<div class="paper-links" role="group" aria-label="Seeing Across Views: Benchmarking Spatial Reasoning of Vision-Language Models in Robotic Scenes resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2510.19400" target="_blank">Paper</a>
+            <a class="paper-link" href="https://github.com/microsoft/MV-RoboBench" target="_blank">Code</a>
+          </div>
+
           <p>
             We introduce MV-RoboBench, a benchmark for evaluating multi-view spatial reasoning in robotic manipulation,
             revealing large gaps between state-of-the-art VLMs and human performance.
@@ -624,7 +598,7 @@
         </td>
       </tr>
 
-      <tr>
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='images/revisual_r1.png' width="190">
           
@@ -646,12 +620,13 @@
           <a class="a2" href="" target="_blank">Xiaoye Qu</a><span>&#8224;</span>,
           <a class="a2" href="" target="_blank">Yu Cheng</a><span>&#8224;</span>
           <br>
-          <a href="https://arxiv.org/abs/2506.04207" target="_blank">Paper</a>
-          /
-          <a href="https://github.com/CSfufu/Revisual-R1" target="_blank">Code</a>
-          <br>
-          <em><strong>ICLR 2026</strong></em>
-          <p></p>
+          <div class="paper-venue"><em><strong>ICLR 2026</strong></em></div>
+<div class="paper-links" role="group" aria-label="Advancing Multimodal Reasoning: From Optimized Cold Start to Staged Reinforcement Learning
+             resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2506.04207" target="_blank">Paper</a>
+            <a class="paper-link" href="https://github.com/CSfufu/Revisual-R1" target="_blank">Code</a>
+          </div>
+
           <p>
             We introduce ReVisual-R1, achieving a new state-of-the-art among open-source 7B MLLMs on challenging
             benchmarks.
@@ -659,7 +634,7 @@
         </td>
       </tr>
       
-      <tr>
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='images/transdiff.jpg' width="190">
           
@@ -680,14 +655,14 @@
           <a class="a2" href="" target="_blank">Jianhua Zhang</a>,
           <a class="a2" href="" target="_blank">Hao Dong</a><span>&#8224;</span>
           <br>
-          <a href="https://arxiv.org/abs/2503.12779" target="_blank">Paper</a>
-          /
-          <a href="https://wang-haoxiao.github.io/TransDiff/" target="_blank">Project</a>
-          /
-          <a href="https://github.com/Trans-Diff/TransDiff" target="_blank">Code</a>
-          <br>
-          <em><strong>ICRA 2025</strong></em>
-          <p></p>
+          <div class="paper-venue"><em><strong>ICRA 2025</strong></em></div>
+<div class="paper-links" role="group" aria-label="TransDiff: Diffusion-Based Method for Manipulating Transparent Objects Using a Single RGB-D
+              Image resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2503.12779" target="_blank">Paper</a>
+            <a class="paper-link" href="https://wang-haoxiao.github.io/TransDiff/" target="_blank">Project</a>
+            <a class="paper-link" href="https://github.com/Trans-Diff/TransDiff" target="_blank">Code</a>
+          </div>
+
           <p>
             We propose a single-view RGB-D-based depth completion framework, TransDiff, that leverages the Denoising
             Diffusion Probabilistic Models(DDPM) to achieve material-agnostic object grasping in desktop.
@@ -696,7 +671,7 @@
       </tr>
 
       
-      <tr>
+      <tr class="paper-entry">
         <td style="padding:20px;width:30%;vertical-align:middle">
           <img src='images/street_gaussians.jpg' width="190">
           
@@ -716,16 +691,14 @@
           <a class="a2" href="" target="_blank">Xiaowei Zhou</a>,
           <a class="a2" href="" target="_blank">Sida Peng</a><span>&#8224;</span>
           <br>
-          <a href="https://arxiv.org/abs/2401.01339" target="_blank">Paper</a>
-          /
-          <a href="https://zju3dv.github.io/street_gaussians/" target="_blank">Project</a>
-          /
-          <a href="https://github.com/zju3dv/street_gaussians" target="_blank">Code</a>
-          /
-          <a href="https://drive.google.com/drive/folders/1ghpE_kBwqXiWgiSWAajByjPsmj1y0l1H" target="_blank">Data</a>
-          <br>
-          <em><strong>ECCV 2024</strong></em>
-          <p></p>
+          <div class="paper-venue"><em><strong>ECCV 2024</strong></em></div>
+<div class="paper-links" role="group" aria-label="Street Gaussians: Modeling Dynamic Urban Scenes with Gaussian Splatting resources">
+            <a class="paper-link paper-link-primary" href="https://arxiv.org/abs/2401.01339" target="_blank">Paper</a>
+            <a class="paper-link" href="https://zju3dv.github.io/street_gaussians/" target="_blank">Project</a>
+            <a class="paper-link" href="https://github.com/zju3dv/street_gaussians" target="_blank">Code</a>
+            <a class="paper-link" href="https://drive.google.com/drive/folders/1ghpE_kBwqXiWgiSWAajByjPsmj1y0l1H" target="_blank">Data</a>
+          </div>
+
           <p>
             This paper aims to tackle the problem of modeling dynamic urban street scenes from monocular videos. We
             introduce Street Gaussians, a new explicit scene representation that tackles some major limitations.
