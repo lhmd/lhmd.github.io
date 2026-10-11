@@ -9,9 +9,14 @@
     { id: 'rose', label: '06 浅瓷 · 酒红', paper: '#fcf1f2', ink: '#443137', accent: '#963a59' },
     { id: 'petrol', label: '07 冰白 · 深青', paper: '#edf8f8', ink: '#283d43', accent: '#087185' },
     { id: 'mono', label: '08 素白 · 石墨', paper: '#fafafa', ink: '#2c2e30', accent: '#515963' },
-    { id: 'plum', label: '09 深梅紫 · 杏金', paper: '#27222e', ink: '#f2e8ef', accent: '#e8b88b', dark: true }
+    { id: 'plum', label: '09 深梅紫 · 杏金', paper: '#27222e', ink: '#f2e8ef', accent: '#e8b88b', dark: true },
+    { id: 'lilac', label: '10 雾紫 · 鸢尾', paper: '#f3f0f7', ink: '#353047', accent: '#65539a', candidate: true },
+    { id: 'apricot', label: '11 陶杏 · 钴蓝', paper: '#f7ece4', ink: '#413333', accent: '#315b8c', candidate: true },
+    { id: 'forest', label: '12 深松 · 黄铜', paper: '#123f36', ink: '#e8dcc4', accent: '#d9b66a', dark: true, candidate: true },
+    { id: 'navy', label: '13 夜航 · 羊皮纸', paper: '#30364f', ink: '#f0f0db', accent: '#e1d9bc', dark: true, candidate: true }
   ];
-  const defaults = themes.map(theme => theme.id);
+  // New proposals stay out of the default rotation until explicitly selected.
+  const defaults = themes.filter(theme => !theme.candidate).map(theme => theme.id);
   const poolKey = 'lhmd.palette-pool.v1';
   const rotationKey = 'lhmd.palette-rotation.v1';
   const url = new URL(window.location.href);
@@ -36,6 +41,7 @@
   function apply(id) {
     current = id;
     document.documentElement.dataset.theme = id;
+    document.documentElement.dataset.colorScheme = themes.find(theme => theme.id === id).dark ? 'dark' : 'light';
     rotation.last = id;
     save('sessionStorage', rotationKey, rotation);
   }
@@ -76,8 +82,13 @@
       <details open>
         <summary class="theme-summary"><span>配色方案</span><span class="theme-current"></span></summary>
         <div class="theme-panel-content">
-          <p class="theme-instructions">点击配色预览，勾选加入随机池。每轮各出现一次，深浅同频。</p>
-          <div class="theme-options"></div>
+          <p class="theme-instructions">点击配色预览，勾选加入随机池。新配色默认不勾选，每轮各出现一次。</p>
+          <h3 class="theme-group-title">新增参考配色</h3>
+          <div class="theme-options theme-options-new"></div>
+          <details class="theme-existing">
+            <summary class="theme-group-title">现有配色（${defaults.length} 款）</summary>
+            <div class="theme-options"></div>
+          </details>
           <div class="theme-panel-footer">
             <span class="theme-status" role="status"></span>
             <button class="theme-reset" type="button">全部加入</button>
@@ -85,7 +96,8 @@
           </div>
         </div>
       </details>`;
-    const choices = panel.querySelector('.theme-options');
+    const newChoices = panel.querySelector('.theme-options-new');
+    const choices = panel.querySelector('.theme-options:not(.theme-options-new)');
 
     function render() {
       const active = themes.find(theme => theme.id === current);
@@ -94,7 +106,7 @@
         ? '已选 ' + pool.length + ' 款 · 自动记住选择'
         : '已选 ' + pool.length + ' 款 · 当前浏览器无法保存';
       themes.forEach(theme => {
-        const card = choices.querySelector('[data-palette="' + theme.id + '"]');
+        const card = panel.querySelector('[data-palette="' + theme.id + '"]');
         card.querySelector('button').setAttribute('aria-pressed', String(theme.id === current));
         const input = card.querySelector('input');
         input.checked = pool.includes(theme.id);
@@ -128,10 +140,10 @@
         save('sessionStorage', rotationKey, rotation);
         render();
       });
-      choices.append(card);
+      (theme.candidate ? newChoices : choices).append(card);
     });
     panel.querySelector('.theme-reset').addEventListener('click', () => {
-      pool = defaults.slice();
+      pool = themes.map(theme => theme.id);
       rotation.bag = [];
       save('localStorage', poolKey, pool);
       nextPalette();
