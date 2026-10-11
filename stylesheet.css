@@ -71,7 +71,7 @@
   --accent: #e8b88b; --accent-hover: #ffdbb9;
   --line: #493b4e; --button-line: #a27c76; --highlight: #453444;
 }
-html { background: var(--paper); scroll-padding-top: 24px; }
+html { background: var(--paper); scroll-padding-top: 24px; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { margin: 0; padding: 40px 24px 32px; background: var(--paper); color: var(--ink); }
 body, td, th, tr, p, a, strong, abs, button {
   font-family: var(--body-font);
@@ -102,10 +102,10 @@ heading, heading2 {
 heading + br, heading2 + br { display: none; }
 papertitle { font-family: var(--body-font); font-size: 16px; font-weight: 600; line-height: 1.5; }
 p { margin: .8em 0; }
-.page-shell { max-width: 900px !important; }
+.page-shell { width: 100%; max-width: 900px; min-width: 0; margin: 0 auto; }
 .profile-row > td:first-child { padding-left: 0 !important; }
 .profile-row > td:last-child { padding-right: 0 !important; }
-.profile-row img { border-radius: 2px; }
+.profile-row img { height: auto; border-radius: 2px; }
 .affiliations { display: flex; justify-content: center; align-items: center; gap: 32px; margin: 30px auto 36px; }
 .affiliations a { display: flex; align-items: center; min-width: 0; }
 .affiliations img { display: block; max-width: 100%; height: auto; }
@@ -152,7 +152,6 @@ td > img { max-width: 100%; height: auto; }
 .one { width: 160px; height: 160px; position: relative; }
 .two { width: 160px; height: 160px; position: absolute; }
 .two, .fade { transition: opacity .2s ease-in-out; }
-span.highlight { background: var(--highlight); }
 .news-list { margin: 1em 0 .6em; padding-left: 20px; }
 .news-list li { margin: .3em 0; }
 .news-toggle { margin: 0; padding: 0; border: 0; background: none; color: var(--accent); cursor: pointer; }
@@ -195,14 +194,22 @@ body:has(.theme-preview) { padding-bottom: 150px; }
 .theme-reset:hover, .theme-shuffle:hover { border-color: var(--accent); }
 @media (max-width: 600px) {
   body { padding: 24px 16px; }
+  /* Remove intrinsic table sizing on phones, including older Android browsers. */
+  .page-shell table, .page-shell tbody, .page-shell tr, .page-shell td {
+    display: block;
+    box-sizing: border-box;
+    width: 100% !important;
+    min-width: 0;
+    max-width: 100% !important;
+  }
   name { font-size: 28px; }
   heading, heading2 { font-size: 25px; }
-  .profile-row { display: flex; flex-direction: column-reverse; }
+  .page-shell .profile-row { display: flex; flex-direction: column-reverse; }
   .profile-row > td { display: block; width: 100% !important; max-width: 100% !important; padding: 0 !important; }
   .profile-row > td:last-child { width: 150px !important; margin: 0 auto 16px; }
-  .page-shell, .page-shell table { table-layout: fixed; }
-  .page-shell table { width: 100% !important; }
-  td { overflow-wrap: anywhere; }
+  td { overflow-wrap: break-word; overflow-wrap: anywhere; }
+  .experience-table tr { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; padding: 12px 0; }
+  .experience-table td { width: auto !important; padding: 0 !important; }
   .paper-entry { display: block; padding: 20px 0; border-bottom: 1px solid var(--line); }
   .paper-entry:last-child { border-bottom: 0; }
   .paper-entry > td { display: block; width: auto !important; padding: 8px 0 !important; border: 0; }
