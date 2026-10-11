@@ -125,10 +125,10 @@ td > img { max-width: 100%; height: auto; }
 .paper-entry a:has(papertitle):hover { color: var(--accent); }
 .paper-entry .a2 { color: var(--muted); }
 .paper-entry .a2:has(strong) { color: var(--ink); }
-.paper-entry p { color: var(--muted); margin: 10px 0 0; }
-.paper-venue { margin-top: 5px; color: var(--muted); }
+.paper-entry p { color: var(--muted); font-size: 15px; line-height: 1.7; margin: 10px 0 0; }
+.paper-venue { margin-top: 5px; color: var(--ink); }
 .paper-venue em { font-style: normal; }
-.paper-venue strong { font-size: 12px; font-weight: 600; letter-spacing: .04em; }
+.paper-venue strong { font-size: 14px; font-weight: 600; letter-spacing: .02em; }
 .paper-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .paper-link {
   display: inline-flex;
@@ -148,7 +148,7 @@ td > img { max-width: 100%; height: auto; }
 .paper-link:hover, .paper-link:focus-visible { background: var(--accent); border-color: var(--accent); color: var(--paper); text-decoration: none; }
 .paper-award, .paper-highlight { color: var(--accent); font-weight: 600; text-shadow: none; }
 .paper-recognition { margin-top: 7px; }
-.paper-recognition a, .paper-highlight { font-size: 12px; }
+.paper-recognition a, .paper-highlight { font-size: 13px; }
 .one { width: 160px; height: 160px; position: relative; }
 .two { width: 160px; height: 160px; position: absolute; }
 .two, .fade { transition: opacity .2s ease-in-out; }
