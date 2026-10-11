@@ -141,7 +141,7 @@ p { margin: .8em 0; }
 .microsoft-logo { width: 156px; }
 /* Blend the original Seed artwork's white canvas into each palette. */
 :root[data-color-scheme="dark"] img[src^="images/logo/"] { filter: grayscale(1) brightness(0) invert(.85); }
-:root[data-color-scheme="dark"] img.seed-logo { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; }
+:root[data-color-scheme="dark"] img.seed-logo { filter: grayscale(1) invert(1) brightness(3) contrast(2) brightness(.85); mix-blend-mode: screen; }
 td > img { max-width: 100%; height: auto; }
 .paper-entry > td { padding-top: 26px !important; padding-bottom: 26px !important; }
 .paper-entry > td:first-child { width: 240px !important; padding-left: 0 !important; }
