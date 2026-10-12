@@ -244,9 +244,8 @@ body:has(.theme-preview) { padding-bottom: 150px; }
   heading, heading2 { font-size: 25px; }
   .profile-row { display: flow-root; padding: 0; }
   .profile-name { margin-top: 0; margin-bottom: 20px; }
-  .profile-photo { float: right; width: 32%; max-width: 128px; margin: 4px 0 12px 18px; }
+  .profile-photo { display: none; }
   .profile-bio { overflow-wrap: break-word; }
-  .profile-links { clear: both; }
   td { overflow-wrap: break-word; overflow-wrap: anywhere; }
   .experience-table tr { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; padding: 12px 0; }
   .experience-table td { width: auto !important; padding: 0 !important; }
