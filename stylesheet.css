@@ -1,6 +1,6 @@
 /* Shared typography with a palette selected before first paint by theme.js. */
 :root {
-  color-scheme: light;
+  color-scheme: only light;
   --paper: #fdf6e3;
   --ink: #4a3223;
   --muted: #736553;
@@ -130,18 +130,26 @@ heading + br, heading2 + br { display: none; }
 papertitle { font-family: var(--body-font); font-size: 16px; font-weight: 600; line-height: 1.5; }
 p { margin: .8em 0; }
 .page-shell { width: 100%; max-width: 900px; min-width: 0; margin: 0 auto; }
-.profile-row > td:first-child { padding-left: 0 !important; }
-.profile-row > td:last-child { padding-right: 0 !important; }
-.profile-row img { height: auto; border-radius: 2px; }
+.profile-row {
+  display: grid;
+  grid-template-columns: minmax(0, 68fr) minmax(0, 32fr);
+  grid-template-areas: "name photo" "bio photo" "links photo";
+  column-gap: 44px;
+  padding: 22px 0;
+}
+.profile-name { grid-area: name; text-align: center; }
+.profile-bio { grid-area: bio; min-width: 0; }
+.profile-links { grid-area: links; text-align: center; }
+.profile-photo { grid-area: photo; align-self: center; min-width: 0; }
+.profile-photo img { display: block; width: 100%; height: auto; border-radius: 2px; }
 .affiliations { display: flex; justify-content: center; align-items: center; gap: 32px; margin: 30px auto 36px; }
 .affiliations a { display: flex; align-items: center; min-width: 0; }
 .affiliations img { display: block; max-width: 100%; height: auto; }
 .zju-logo { width: 52px; }
-.seed-logo { width: 240px; mix-blend-mode: multiply; }
+.seed-logo { width: 240px; }
 .microsoft-logo { width: 156px; }
-/* Blend the original Seed artwork's white canvas into each palette. */
+/* Transparent artwork needs no blend mode; all dark-theme logos share one treatment. */
 :root[data-color-scheme="dark"] img[src^="images/logo/"] { filter: grayscale(1) brightness(0) invert(.85); }
-:root[data-color-scheme="dark"] img.seed-logo { filter: grayscale(1) invert(1) brightness(3) contrast(2) brightness(.85); mix-blend-mode: screen; }
 td > img { max-width: 100%; height: auto; }
 .paper-entry > td { padding-top: 26px !important; padding-bottom: 26px !important; }
 .paper-entry > td:first-child { width: 240px !important; padding-left: 0 !important; }
@@ -234,9 +242,11 @@ body:has(.theme-preview) { padding-bottom: 150px; }
   }
   name { font-size: 28px; }
   heading, heading2 { font-size: 25px; }
-  .page-shell .profile-row { display: flex; flex-direction: column-reverse; }
-  .profile-row > td { display: block; width: 100% !important; max-width: 100% !important; padding: 0 !important; }
-  .profile-row > td:last-child { width: 150px !important; margin: 0 auto 16px; }
+  .profile-row { display: flow-root; padding: 0; }
+  .profile-name { margin-top: 0; margin-bottom: 20px; }
+  .profile-photo { float: right; width: 32%; max-width: 128px; margin: 4px 0 12px 18px; }
+  .profile-bio { overflow-wrap: break-word; }
+  .profile-links { clear: both; }
   td { overflow-wrap: break-word; overflow-wrap: anywhere; }
   .experience-table tr { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; padding: 12px 0; }
   .experience-table td { width: auto !important; padding: 0 !important; }

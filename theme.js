@@ -40,7 +40,10 @@
   function apply(id) {
     current = id;
     document.documentElement.dataset.theme = id;
-    document.documentElement.dataset.colorScheme = themes.find(theme => theme.id === id).dark ? 'dark' : 'light';
+    const dark = Boolean(themes.find(theme => theme.id === id).dark);
+    document.documentElement.dataset.colorScheme = dark ? 'dark' : 'light';
+    // Keep browser auto-darkening from applying a second palette over our own.
+    document.querySelector('meta[name="color-scheme"]').content = dark ? 'dark' : 'only light';
     rotation.last = id;
     save('sessionStorage', rotationKey, rotation);
   }
