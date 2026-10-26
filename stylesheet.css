@@ -130,6 +130,21 @@ heading + br, heading2 + br { display: none; }
 papertitle { font-family: var(--body-font); font-size: 16px; font-weight: 600; line-height: 1.5; }
 p { margin: .8em 0; }
 .page-shell { width: 100%; max-width: 900px; min-width: 0; margin: 0 auto; }
+.research-support { margin-top: 28px; }
+.support-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "title period" "description role";
+  column-gap: 28px;
+  row-gap: 3px;
+  padding: 16px 0;
+  line-height: 1.6;
+}
+.support-details { display: contents; }
+.support-details > strong { grid-area: title; }
+.support-description { grid-area: description; color: var(--muted); font-size: 14px; }
+.support-role { grid-area: role; text-align: right; white-space: nowrap; color: var(--accent); font-size: 13px; }
+.support-period { grid-area: period; text-align: right; color: var(--muted); font-size: 14px; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .profile-row {
   display: grid;
   grid-template-columns: minmax(0, 68fr) minmax(0, 32fr);
@@ -240,6 +255,8 @@ body:has(.theme-preview) { padding-bottom: 150px; }
     min-width: 0;
     max-width: 100% !important;
   }
+  .support-entry { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "title title" "description description" "period role"; row-gap: 5px; padding: 14px 0; }
+  .support-period { text-align: left; font-size: 13px; }
   name { font-size: 28px; }
   heading, heading2 { font-size: 25px; }
   .profile-row { display: flow-root; padding: 0; }
